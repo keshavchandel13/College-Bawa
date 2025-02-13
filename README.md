@@ -4,24 +4,24 @@
 College Connect 🚀
 A Social Platform for College Students 🎓💬
 
-📌 #About the Project
+📌 # About the Project
 College Connect is a MERN stack-based social platform designed for college students to connect, collaborate, and share resources. It helps students network, discuss ideas, and stay updated with campus events.
 
-🔥 #Key Features
+🔥 # Key Features
 ✅ User Authentication (JWT-based Login & Signup)
 ✅ Posts, Likes & Comments (Share thoughts & engage)
 ✅ Real-time Chat & Messaging (One-on-one & group chats)
 ✅ Study Groups & Collaboration (Form teams & work together)
 ✅ Event Announcements (Never miss out on college events)
 
-🛠 #Tech Stack
+🛠 # Tech Stack
 Technology	Description
 Frontend	React.js, TailwindCSS
 Backend	Node.js, Express.js
 Database	MongoDB Atlas
 Authentication	JWT (JSON Web Token)
 Deployment	Vercel (Frontend), Render (Backend)
-🚀 #Getting Started
+🚀 # Getting Started
 1️⃣ Clone the Repository
 git clone https://github.com/your-username/college-connect.git
 cd college-connect
