@@ -1,26 +1,20 @@
 const mongoose = require('mongoose') // Imported mongoose
 const dotenv = require('dotenv')
 require('dotenv').config();
-
-console.log("TEST_VAR:", process.env.TEST_VAR);
-if(process.env.MONGO_URI){
-    console.log("It exist")
-} else{
-    console.log("not")
-}
-console.log("MONGO_URI:", process.env.MONGO_URI); // Debug log
-
-
 // Establishing connection with mongodb atlas
 const connectDB = async()=>{
-    try{
+    try {
+        if (!process.env.MONGO_URI) {
+            throw new Error("MONGO_URI is missing in .env file");
+        }
+
         await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            dbName: "CollegeBawa", 
         });
-        console.log("MongoDb connected");
-    } catch(error){
-        console.log("MongoDb connection error: ",error);
+
+        console.log("MongoDB connected ");
+    } catch (error) {
+        console.error(" MongoDB connection error:", error.message);
         process.exit(1);
     }
 };
