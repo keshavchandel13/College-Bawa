@@ -28,3 +28,14 @@ exports.signup = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+
+// login APi: Om work
+exports.login= async() =>{
+
+};
+
+// reset-pass APi: ishmeet work
+exports.resetPassword= async() =>{
+
+};
