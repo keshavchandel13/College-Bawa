@@ -1,23 +1,23 @@
 const mongoose = require('mongoose')
 const userSchema = new Schema({
     name:{ // Name of the user
-      type: string,
+      type: String,
       required: true  
     }, 
     email:{ // Email of the user
-        type: string,
+        type: String,
         unique:true,
         required: true
     },
     password:{ // Hashed Password
-        type:string,
+        type:String,
         required:true
     },
     googleId:{ // Google Id
-        type:string
+        type:String
     },
     resetToken:{ // Reset token 
-        type:string
+        type:String
     },
 
 });

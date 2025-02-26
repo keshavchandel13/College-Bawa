@@ -2,6 +2,8 @@
 const User = require('../models/User'); // Import User model
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 exports.signup = async (req, res) => {
     try {
@@ -36,7 +38,7 @@ exports.login= async(req, res) =>{
         const{email, password} = req.body;
             
         //Check User's Existence
-        const user = await User.findOne(email) 
+        const user = await User.findOne({email}) 
         if(!user){
             return res.status(400).json({
                 message: "User not found"
@@ -44,7 +46,7 @@ exports.login= async(req, res) =>{
         }
 
         //Validate Password
-        const match = await bcrypt.compare(User.password, password);
+        const match = await bcrypt.compare(user.password, password);
         if(!match){
             return res.status(400).json({
                 message: "Invalid Username or Password"
@@ -70,41 +72,53 @@ exports.login= async(req, res) =>{
 };
 
 // reset-pass APi: ishmeet work
-exports.resetPassword= async() =>{
-    const { oldPassword, newPassword } = req.body;
+exports.resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
 
-    // Check if the old password is provided
-    if (!oldPassword || !newPassword) {
-        return res.status(400).send('Old and new password are required');
+        // Check if the token and new password are provided
+        if (!token || !newPassword) {
+            return res.status(400).send('Token and new password are required');
+        }
+
+        // Find the user by reset token
+        const user = await User.findOne({ resetToken: token });
+        if (!user) {
+            return res.status(400).send('Invalid or expired token');
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update password in the database and clear the reset token
+        user.password = hashedPassword;
+        user.resetToken = undefined;
+        await user.save();
+
+        res.status(200).send('Password updated successfully');
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-
-    // Find the user from the database
-    const user = await User.findById(req.user.id);
-    if (!user) {
-        return res.status(404).send('User not found');
-    }
-
-    // Compare old password with the stored password
-    const isMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!isMatch) {
-        return res.status(400).send('Old password is incorrect');
-    }
-
-    // Hash the new password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-    // Update password in the database
-    user.password = hashedPassword;
-    await user.save();
-
-    res.status(200).send('Password updated successfully');
-
-
-
 };
 
 //  ishmeet work
-exports.forgetPassword=async()=>{
+exports.forgetPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
 
-}
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const resetToken = crypto.randomBytes(32).toString("hex");
+        user.resetToken = resetToken;
+        await user.save();
+
+        const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
+        await sendEmail(user.email, "Password Reset", `Click here to reset: ${resetLink}`);
+
+        res.json({ message: "Reset link sent" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
