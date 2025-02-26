@@ -70,5 +70,35 @@ exports.login= async(req, res) =>{
 
 // reset-pass APi: ishmeet work
 exports.resetPassword= async() =>{
+    const { oldPassword, newPassword } = req.body;
+
+    // Check if the old password is provided
+    if (!oldPassword || !newPassword) {
+        return res.status(400).send('Old and new password are required');
+    }
+
+    // Find the user from the database
+    const user = await User.findById(req.user.id);
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
+    // Compare old password with the stored password
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+        return res.status(400).send('Old password is incorrect');
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).send('Password updated successfully');
+
+
 
 };
