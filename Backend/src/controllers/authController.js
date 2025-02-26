@@ -31,8 +31,41 @@ exports.signup = async (req, res) => {
 
 
 // login APi: Om work
-exports.login= async() =>{
+exports.login= async(req, res) =>{
+    try{
+        const{email, password} = req.body;
+            
+        //Check User's Existence
+        const user = await User.findOne(email) 
+        if(!user){
+            return res.status(400).json({
+                message: "User not found"
+            })
+        }
 
+        //Validate Password
+        const match = await bcrypt.compare(User.password, password);
+        if(!match){
+            return res.status(400).json({
+                message: "Invalid Username or Password"
+            })
+        }
+
+        //Generate Token
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        //Send Response with Token
+        res.status(200).json({
+            message: "Successful Login",
+            token
+        })
+    
+    }catch(error){
+        res.status(500).json({
+            message: "Server Error",
+            error: error.message
+        })
+    }
 };
 
 // reset-pass APi: ishmeet work
