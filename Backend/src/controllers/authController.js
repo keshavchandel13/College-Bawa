@@ -102,3 +102,8 @@ exports.resetPassword= async() =>{
 
 
 };
+
+//  ishmeet work
+exports.forgetPassword=async()=>{
+
+}

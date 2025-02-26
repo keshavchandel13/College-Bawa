@@ -7,6 +7,7 @@ const router = express.Router();
 // API Endpoints
 router.post("/signup", signup);
 router.post("/login", login);
+router.post("/forget-password", forgetPassword);
 router.post("/reset-password", resetPassword);
 router.post("/google-auth", googleAuth);
 
