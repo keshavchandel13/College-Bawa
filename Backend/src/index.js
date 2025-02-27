@@ -1,23 +1,30 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const session = require('express-session'); 
 // const cors = require("cors");
 // const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db")
+const passport = require('./config/passport');
 require('dotenv').config();
-
-
-// Routes
-// const authRoutes = require("./routes/authRoutes");
-// const userRoutes = require("./routes/userRoutes");
-
 // Initialize express app
 const app = express();
+
+
+// Importing Routes
+const authRoutes = require("./routes/authRoutes");
+// const userRoutes = require("./routes/userRoutes");
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Connect to database
 connectDB();
 
 //Routes
-// app.use("/api/auth",authRoutes) 
+app.use("/api/auth",authRoutes) 
 // app.use("/api/user",authRoutes) 
 
 // Home Route 

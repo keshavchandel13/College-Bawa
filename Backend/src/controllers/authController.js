@@ -1,10 +1,10 @@
-//  Signup Api
 const User = require('../models/User'); // Import User model
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 
+//  Signup Api
 exports.signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -32,7 +32,7 @@ exports.signup = async (req, res) => {
 };
 
 
-// login APi: Om work
+// login APi: 
 exports.login= async(req, res) =>{
     try{
         const{email, password} = req.body;
@@ -46,7 +46,7 @@ exports.login= async(req, res) =>{
         }
 
         //Validate Password
-        const match = await bcrypt.compare(user.password, password);
+        const match = await bcrypt.compare(password, user.password);
         if(!match){
             return res.status(400).json({
                 message: "Invalid Username or Password"
@@ -71,7 +71,7 @@ exports.login= async(req, res) =>{
     }
 };
 
-// reset-pass APi: ishmeet work
+// reset-pass APi:
 exports.resetPassword = async (req, res) => {
     try {
         const { token, newPassword } = req.body;
@@ -102,7 +102,7 @@ exports.resetPassword = async (req, res) => {
     }
 };
 
-//  ishmeet work
+// Forget password
 exports.forgetPassword = async (req, res) => {
     try {
         const { email } = req.body;
