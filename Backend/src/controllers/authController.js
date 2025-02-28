@@ -8,6 +8,12 @@ const sendEmail = require("../utils/sendEmail");
 exports.signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+        console.log("Request Body:", req.body);
+
+        //  validate the inputs
+        if(!name || !email || !password){
+            return res.status(400).json({message:"All fields are required"})
+        }
         let user= await User.findOne({email});
 
         // Check if user already exists
@@ -15,8 +21,8 @@ exports.signup = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // Hash the password only if it exists
+        const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
 
         // Create new user
         const newUser = new User({ name, email, password: hashedPassword });

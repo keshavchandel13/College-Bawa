@@ -12,7 +12,9 @@ const userSchema = new Schema({
     },
     password:{ // Hashed Password
         type:String,
-        required:true
+        required: function() {
+            return !this.googleId;  // Password required only if NOT using Google Auth
+        }
     },
     googleId:{ // Google Id
         type:String
