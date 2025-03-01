@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillGoogleCircle } from 'react-icons/ai';
+import forgetpassword from './forgetpassword';
 import Home from '../../pages/Home';
 import "../../styles/auth/login.css";  
 
@@ -79,7 +80,7 @@ function Login() {
         </form>
 
         <p className="forgot-password">
-          <a href="#">Forgot Password?</a>
+        <Link to={forgetpassword}>  Forgot Password? </Link>
         </p>
 
         <div className="or-line">
