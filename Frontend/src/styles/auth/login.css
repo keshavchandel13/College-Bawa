@@ -1,0 +1,8 @@
+.login-page{
+    background-image: url("/Login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+}
