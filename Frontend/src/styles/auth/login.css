@@ -1,8 +1,137 @@
-.login-page{
-    background-image: url("/Login.png");
+/* login.css */
+.login-page {
+    display: flex;
+    justify-content: flex-end; /* Aligns the container to the right */
+    align-items: center;
+    height: 100vh;
+    background-image: url('/Login.png'); /* Replace with your image URL */
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
-}
+  }
+  
+  .container {
+    background-color: transparent; /* No background color */
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 350px;
+    max-width: 100%;
+    margin-left: -10px;
+    margin-right: 4%; /* Move container slightly left */
+    
+    /* Adding the whitish shadowish border effect */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Whitish border */
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3); /* Subtle whitish shadow */
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    text-align: left; /* Whitish color for the heading */
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: transparent; /* No background color */
+    color: #FFFFFF;  /* Text color */
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(90deg, 
+      #628EFF 0%,   /* Blue */
+      #8740CD 53%,  /* Purple */
+      #580475 100%  /* Dark Purple */
+    );
+    color: #FFFFFF;  /* Text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    font-size: 16px;
+    background-color: transparent; /* No background color */
+  }
+  
+  button:hover {
+    background: linear-gradient(90deg, 
+      #628EFF 0%,   
+      #8740CD 53%,  
+      #580475 100%
+    );
+    background-color: transparent; /* No background on hover */
+  }
+  
+  .forgot-password {
+    margin: 10px 0;
+  }
+  
+  .forgot-password a {
+    color: #555;
+    text-decoration: none;
+  }
+  
+  .forgot-password a:hover {
+    color: #4CAF50;
+  }
+  
+  .or-line {
+    margin: 10px 0;
+  }
+  
+  .or-line span {
+    color: #555;
+  }
+  
+  /* Google Button (Only Icon, No Background) */
+  .google-button {
+    width: 60px; /* Set width for the button to fit the icon */
+    height: 60px; /* Set height for the button to fit the icon */
+    border-radius: 50%; /* Make the button circular */
+    border: none; /* Remove the border */
+    background-color: transparent; /* No background color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 20px auto; /* Center the button horizontally */
+  }
+  
+  .google-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Light hover effect */
+  }
+  
+  .signup-link {
+    margin: 10px 0;
+  }
+  
+  .signup-link a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-links {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #555;
+  }
+  
+  .footer-links a {
+    color: #555;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .footer-links a:hover {
+    color: #4CAF50;
+  }
+  
