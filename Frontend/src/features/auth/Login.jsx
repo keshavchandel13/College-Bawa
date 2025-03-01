@@ -1,7 +1,6 @@
 import React from 'react';
-// Import the Google icon from react-icons
 import { AiFillGoogleCircle } from 'react-icons/ai';
-import "../../styles/auth/login.css";  // Ensure this path is correct for your project
+import "../../styles/auth/login.css";  
 
 function Login() {
   return (
@@ -9,7 +8,7 @@ function Login() {
       <div className="container">
         <h2>Login</h2>
 
-        {/* Form with method POST */}
+        
         <form method="POST">
           <input type="email" name="email" placeholder="Email" required />
           <input type="password" name="password" placeholder="Password" required />
@@ -25,7 +24,7 @@ function Login() {
           <span>OR</span>
         </div>
 
-        {/* Google Login Button with Only Icon */}
+        
         <button type="button" className="google-button">
           <AiFillGoogleCircle style={{ fontSize: '40px' }} />
         </button>
