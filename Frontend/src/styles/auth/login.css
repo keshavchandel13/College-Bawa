@@ -1,16 +1,16 @@
 /* login.css */
 .login-page {
     display: flex;
-    justify-content: flex-end; /* Aligns the container to the right */
+    justify-content: flex-end; 
     align-items: center;
     height: 100vh;
-    background-image: url('/Login.png'); /* Replace with your image URL */
+    background-image: url('/Login.png'); 
     background-size: cover;
     background-position: center;
   }
   
   .container {
-    background-color: transparent; /* No background color */
+    background-color: transparent; 
     padding: 30px;
     border-radius: 8px;
     text-align: center;
@@ -20,8 +20,8 @@
     margin-right: 4%; /* Move container slightly left */
     
     /* Adding the whitish shadowish border effect */
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Whitish border */
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3); /* Subtle whitish shadow */
+    border: 1px solid rgba(255, 255, 255, 0.4); 
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3); 
   }
   
   h2 {
@@ -55,7 +55,7 @@
     cursor: pointer;
     margin: 10px 0;
     font-size: 16px;
-    background-color: transparent; /* No background color */
+    background-color: transparent; 
   }
   
   button:hover {
@@ -64,7 +64,7 @@
       #8740CD 53%,  
       #580475 100%
     );
-    background-color: transparent; /* No background on hover */
+    background-color: transparent; 
   }
   
   .forgot-password {
@@ -88,22 +88,22 @@
     color: #555;
   }
   
-  /* Google Button (Only Icon, No Background) */
+  
   .google-button {
-    width: 60px; /* Set width for the button to fit the icon */
-    height: 60px; /* Set height for the button to fit the icon */
-    border-radius: 50%; /* Make the button circular */
-    border: none; /* Remove the border */
-    background-color: transparent; /* No background color */
+    width: 60px;
+    height: 60px; 
+    border-radius: 50%; 
+    border: none; 
+    background-color: transparent; 
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin: 20px auto; /* Center the button horizontally */
+    margin: 20px auto; 
   }
   
   .google-button:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Light hover effect */
+    background-color: rgba(0, 0, 0, 0.1); 
   }
   
   .signup-link {
