@@ -12,6 +12,17 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validate email and password
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long.');
+      return;
+    }
+    setError(null);
     try {
       const response = await fetch(import.meta.env.VITE_LOGIN_API, {
         method: 'POST',
@@ -45,7 +56,7 @@ function Login() {
       <div className="container">
         <h2>Login</h2>
 
-        {error && <div className="error-message">{error}</div>} {/* Display error message if any */}
+        {error && <div className="error-message" style={{color:'red'}}>{error}</div>} {/* Display error message if any */}
 
         <form method="POST" onSubmit={handleSubmit}>
           <input

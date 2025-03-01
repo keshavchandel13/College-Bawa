@@ -10,7 +10,7 @@ function AuthRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/signup" element={<Signup />} /> 
       <Route path="/" element={<Navigate replace to="/login" />} />
      
     </Routes>
