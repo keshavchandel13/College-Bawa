@@ -3,7 +3,7 @@ import { Routes, Route,Navigate } from 'react-router-dom'; // React Router for r
 import Login from '../features/auth/Login';              // Login component
 import Signup from '../features/auth/Signup';            // Signup component
 import ProtectedRoute from '../components/ProtectedRoute'; // ProtectedRoute component
-
+import ForgetPassword from '../features/auth/forgetpassword';
 
 
 function AuthRoutes() {
@@ -11,6 +11,8 @@ function AuthRoutes() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} /> 
+      <Route path="/forgetpassword" element={< ForgetPassword/>} /> 
+      
       <Route path="/" element={<Navigate replace to="/login" />} />
      
     </Routes>
