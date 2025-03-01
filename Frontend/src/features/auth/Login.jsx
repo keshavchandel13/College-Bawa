@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, Links } from "react-router-dom";
 import { AiFillGoogleCircle } from 'react-icons/ai';
 import "../../styles/auth/login.css";  
 
 function Login() {
+  const [email,changeEmail] = useState('');
+  const handleChange = (e) => {
+    console.log(e.target);
+
+  }
+
+
   return (
     <div className="login-page">
       <div className="container">
@@ -10,7 +18,7 @@ function Login() {
 
         
         <form method="POST">
-          <input type="email" name="email" placeholder="Email" required />
+          <input type="email" name="email" placeholder="Email" required onChange={handleChange} />
           <input type="password" name="password" placeholder="Password" required />
           
           <button type="submit">Login</button>
@@ -30,7 +38,7 @@ function Login() {
         </button>
 
         <p className="signup-link">
-          <a href="#">Didn't have an account? Sign up</a>
+          <Link to={'/signup'}>Didn't have an account?Sign up</Link>
         </p>
 
         <div className="footer-links">

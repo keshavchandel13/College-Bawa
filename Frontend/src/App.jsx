@@ -1,14 +1,11 @@
-import React from 'react'
-import Login from './features/auth/Login'
-import './styles/global.css'
-import Signup from './features/auth/Signup'
-export default function App() {
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // Import Navigate
+import AuthRoutes from './routes/AuthRoutes';  // Authentication routes component
+
+function App() {
   return (
-    <div>
-      {/* <h1>Hello</h1> */}
-      {/* <Login/> */}
-      <Signup/>
-      
-    </div>
-  )
+  <AuthRoutes/>
+  );
 }
+
+export default App;
