@@ -8,7 +8,6 @@ const sendEmail = require("../utils/sendEmail");
 exports.signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        console.log("Request Body:", req.body);
 
         //  validate the inputs
         if(!name || !email || !password){
