@@ -53,7 +53,7 @@ function Signup() {
           <AiFillGoogleCircle style={{ fontSize: "40px" }} />
         </button>
 
-        <p className="sigin-link">
+        <p className="signup-link">
           <Link to="/login">Already Registered? Login</Link>
         </p>
 

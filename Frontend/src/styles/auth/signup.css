@@ -21,20 +21,20 @@
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
 }
 
-h2 {
+.signup-container h1 {
   font-size: 22px;
   margin-bottom: 6px;
   color: #FFFFFF;
   text-align: left;
 }
-h6 {
+.signup-container h6 {
   font-size: 12px;
-  margin-bottom: 2px;
+
   color: #FFFFFF;
   text-align: left;
 }
 
-input {
+.signup-container input {
   width: 100%;
   padding: 8px;
   margin: 4px 0;
@@ -64,24 +64,24 @@ button:hover {
   margin: 10px 0;
 }
 
-.forgot-password a {
+.signup-container .forgot-password a {
   color: #555;
   text-decoration: none;
 }
 
-.forgot-password a:hover {
+.signup-container .forgot-password a:hover {
   color: #4CAF50;
 }
 
-.or-line {
+.signup-container .or-line {
   margin: 10px 0;
 }
 
-.or-line span {
+.signup-container .or-line span {
   color: #555;
 }
 
-.google-button {
+.signup-container .google-button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -94,7 +94,7 @@ button:hover {
   margin: 20px auto;
 }
 
-.google-button:hover {
+.signup-container .google-button:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -102,7 +102,7 @@ button:hover {
   margin: 10px 0;
 }
 
-.sigin-link a {
+.signup-link a {
   color: #ffffff;
   text-decoration: none;
 }
