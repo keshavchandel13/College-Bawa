@@ -42,7 +42,7 @@ function Signup() {
         </form>
 
         <p className="forgot-password">
-          <Link to="/forgot-password">Forgot Password?</Link>
+          <Link to={"/forgetpassword"}>Forgot Password?</Link>
         </p>
 
         <div className="or-line">
@@ -53,7 +53,7 @@ function Signup() {
           <AiFillGoogleCircle style={{ fontSize: "40px" }} />
         </button>
 
-        <p className="sigin-link">
+        <p className="signup-link">
           <Link to="/login">Already Registered? Login</Link>
         </p>
 

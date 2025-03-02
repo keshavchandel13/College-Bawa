@@ -44,6 +44,7 @@ function Login() {
   };
 
   const handleChange = (e) => {
+    console.log(import.meta.env.VITE_LOGIN_API)
     const { name, value } = e.target;
     if (name === 'email') {
       setEmail(value);
