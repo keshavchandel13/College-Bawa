@@ -21,9 +21,9 @@
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
 }
 
-.signup-container h1 {
+.signup-container h2 {
   font-size: 22px;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
   color: #FFFFFF;
   text-align: left;
 }
