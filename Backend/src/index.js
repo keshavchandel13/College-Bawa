@@ -1,12 +1,25 @@
 const express = require("express");
 const session = require('express-session'); 
-// const cors = require("cors");
+const cors = require("cors");
 // const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db")
 const passport = require('./config/passport');
 require('dotenv').config();
 // Initialize express app
 const app = express();
+
+// Initializing cors
+const corsOptions = {
+    origin: 'http://localhost:5175', 
+    methods: 'GET,POST',
+    allowedHeaders: 'Content-Type',
+  };
+// Enable CORS
+app.use(cors(corsOptions));
+
+// Add this to handle preflight requests
+app.options('*', cors(corsOptions)); // Handles preflight for all routes
+app.use(express.json());
 
 
 // Importing Routes

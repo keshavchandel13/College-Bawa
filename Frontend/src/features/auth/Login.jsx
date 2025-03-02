@@ -25,8 +25,10 @@ function Login() {
     }
     setError(null);
     try {
-      const response = await fetch(import.meta.env.VITE_LOGIN_API, {
+      
+      const response = await fetch(`${import.meta.env.VITE_APP_LOGIN_API}`, {
         method: 'POST',
+        mode:'cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -44,7 +46,6 @@ function Login() {
   };
 
   const handleChange = (e) => {
-    console.log(import.meta.env.VITE_LOGIN_API)
     const { name, value } = e.target;
     if (name === 'email') {
       setEmail(value);
