@@ -5,6 +5,7 @@ import Signup from '../features/auth/Signup';            // Signup component
 import ProtectedRoute from '../components/ProtectedRoute'; // ProtectedRoute component
 import ForgetPassword from '../features/auth/forgetpassword';
 import Home from '../pages/Home';
+import ResetPassword from '../features/auth/ResetPassword';
 
 
 function AuthRoutes() {
@@ -13,7 +14,8 @@ function AuthRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} /> 
       <Route path="/forgetpassword" element={< ForgetPassword/>} /> 
-      <Route path="/Home" element={< Home/>} /> 
+      <Route path="/Home" element={< Home/>} />
+      <Route path="/resetpassword" element={< ResetPassword/>} /> 
       
       <Route path="/" element={<Navigate replace to="/login" />} />
      

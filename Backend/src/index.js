@@ -10,7 +10,7 @@ const app = express();
 
 // Initializing cors
 const corsOptions = {
-    origin: 'http://localhost:5175', 
+    origin: 'http://localhost:5173', 
     methods: 'GET,POST',
     allowedHeaders: 'Content-Type',
   };
@@ -48,5 +48,10 @@ app.get("/", (req,res)=>{
 // Starting server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=> console.log(`Server running on the port http://localhost:${PORT}`))
+
+
+
+
+
 
 
