@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import "../../styles/auth/forgotpassword.css";
 
+
 function ForgetPassword() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
