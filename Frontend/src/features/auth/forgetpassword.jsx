@@ -1,21 +1,50 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/auth/forgotpassword.css";
 
 
 function ForgetPassword() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setEmail(e.target.value);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add password reset functionality here (e.g., Firebase, API call, etc.)
-    console.log('Password reset for email:', email);
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateEmail(email)) {
+      setError('Invalid email address');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/forgot-password', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate('/reset-password');
+      } else {
+        setError(data.message || 'Something went wrong');
+      }
+    } catch (error) {
+      setError('Failed to send request');
+    }
+  };
+ 
 
   return (
     <div className="forgot-page">

@@ -89,7 +89,7 @@ exports.resetPassword = async (req, res) => {
         // Find the user by reset token
         const user = await User.findOne({ resetToken: token });
         if (!user) {
-            return res.status(400).send('Invalid or expired token');
+            return res.status(400).send('Invalid or expired otp');
         }
 
         // Hash the new password
@@ -115,12 +115,12 @@ exports.forgetPassword = async (req, res) => {
 
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        const resetToken = crypto.randomBytes(32).toString("hex");
+        const resetToken =  Math.floor(1000 + Math.random() * 9000).toString();
         user.resetToken = resetToken;
         await user.save();
 
-        const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
-        await sendEmail(user.email, "Password Reset", `Click here to reset: ${resetLink}`);
+        const resetLink = resetToken;
+        await sendEmail(user.email, "Password Reset", `Your OTP is ${resetLink}`);
 
         res.json({ message: "Reset link sent" });
     } catch (error) {
