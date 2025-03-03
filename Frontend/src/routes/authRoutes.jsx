@@ -15,7 +15,7 @@ function AuthRoutes() {
       <Route path="/signup" element={<Signup />} /> 
       <Route path="/forgetpassword" element={< ForgetPassword/>} /> 
       <Route path="/Home" element={< Home/>} />
-      <Route path="/resetpassword" element={< ResetPassword/>} /> 
+      <Route path="/reset-password" element={< ResetPassword/>} /> 
       
       <Route path="/" element={<Navigate replace to="/login" />} />
      

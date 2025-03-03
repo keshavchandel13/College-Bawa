@@ -24,7 +24,7 @@ function ForgetPassword() {
     }
 
     try {
-      const response = await fetch('/api/forgot-password', {
+      const response = await fetch(`${import.meta.env.VITE_APP_FORGET_API}`, {
         method: 'POST',
         mode: 'cors',
         headers: {

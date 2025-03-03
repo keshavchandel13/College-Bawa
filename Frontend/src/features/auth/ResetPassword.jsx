@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/auth/resetpassword.css";
 
 function ResetPassword() {
@@ -7,18 +7,46 @@ function ResetPassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (newPassword !== confirmPassword) {
+    setError('');
+    setSuccess('');
+
+    if (newPassword.trim() !== confirmPassword.trim()) {
       setError("Passwords do not match");
       return;
     }
-    
-    console.log('Resetting password with OTP:', otp);
-    console.log('New Password:', newPassword);
-    
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_RESET_API}`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: otp.trim(), newPassword: newPassword.trim() }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+
+      setSuccess('Password updated successfully. Redirecting to login...');
+      
+      // Redirect after success
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -28,6 +56,7 @@ function ResetPassword() {
         <h6>Enter the OTP sent to your email and set a new password</h6>
 
         {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>}
+        {success && <div className="success-message" style={{ color: 'green' }}>{success}</div>}
 
         <form method="POST" onSubmit={handleSubmit}>
           <input

@@ -83,13 +83,13 @@ exports.resetPassword = async (req, res) => {
 
         // Check if the token and new password are provided
         if (!token || !newPassword) {
-            return res.status(400).send('Token and new password are required');
+            return res.status(400).json({message:'Token and new password are required'});
         }
 
         // Find the user by reset token
         const user = await User.findOne({ resetToken: token });
         if (!user) {
-            return res.status(400).send('Invalid or expired otp');
+            return res.status(400).json({message:'Invalid or expired otp'});
         }
 
         // Hash the new password
@@ -101,7 +101,7 @@ exports.resetPassword = async (req, res) => {
         user.resetToken = undefined;
         await user.save();
 
-        res.status(200).send('Password updated successfully');
+        res.status(200).json({message:'Password updated successfully'});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -120,7 +120,11 @@ exports.forgetPassword = async (req, res) => {
         await user.save();
 
         const resetLink = resetToken;
-        await sendEmail(user.email, "Password Reset", `Your OTP is ${resetLink}`);
+        const emailSent = await sendEmail(user.email, "Password Reset", `Your OTP is ${resetLink}`);
+        if (!emailSent) {
+            return res.status(500).json({ message: "Failed to send reset otp" });
+        }
+      
 
         res.json({ message: "Reset link sent" });
     } catch (error) {
