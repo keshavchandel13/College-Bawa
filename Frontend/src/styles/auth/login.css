@@ -80,7 +80,7 @@ input:focus {
 }
 
 /* Buttons */
-button {
+ button {
   width: 100%;
   padding: 12px;
   font-size: 16px;
@@ -182,4 +182,15 @@ button:active {
 
 .footer-links a:hover {
   color: cyan;
+}
+
+/* Device =   Mobiles (Portrait)
+Screen = B/w 320px to 479px */
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .login-page{
+    background: black;
+  }
+
 }
