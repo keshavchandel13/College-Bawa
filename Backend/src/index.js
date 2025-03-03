@@ -4,6 +4,9 @@ const cors = require("cors");
 // const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db")
 const passport = require('./config/passport');
+const collegeRoutes = require("./routes/collegeRoutes");
+
+
 require('dotenv').config();
 // Initialize express app
 const app = express();
@@ -44,6 +47,9 @@ app.use("/api/auth",authRoutes)
 app.get("/", (req,res)=>{
     res.send("college bawa");
 });
+
+//Colleges API
+app.use("/api/college", collegeRoutes);
 
 // Starting server
 const PORT = process.env.PORT || 5000;
