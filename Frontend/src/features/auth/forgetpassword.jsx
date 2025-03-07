@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import "../../styles/auth/forgotpassword.css";
 
-
-function ForgetPassword() {
+function ForgetPassword({ setOtpRequested }) {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -11,6 +10,7 @@ function ForgetPassword() {
   const handleChange = (e) => {
     setEmail(e.target.value);
   };
+
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
@@ -36,6 +36,8 @@ function ForgetPassword() {
       const data = await response.json();
 
       if (response.ok) {
+        setOtpRequested(true);  // Update OTP status
+        localStorage.setItem('otpRequested', 'true');  // Store OTP status
         navigate('/reset-password');
       } else {
         setError(data.message || 'Something went wrong');
@@ -44,7 +46,6 @@ function ForgetPassword() {
       setError('Failed to send request');
     }
   };
- 
 
   return (
     <div className="forgot-page">
