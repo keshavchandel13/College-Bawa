@@ -1,24 +1,24 @@
-import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import { loginWithGoogle } from "../../api/auth";
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import {useGoogleLogin} from '@react-oauth/google'
 
+export default function LoginWithGoogle() {
+  const responseGoogle = async(authResult)=>{
+    try{
+      console.log(authResult);
 
-const LoginWithGoogle = () => {
-  const navigate = useNavigate();
+    } catch(err){
+      console.error('Error while requesting google code: ', err);
 
+    }
+  }
+  const googleLogin = useGoogleLogin({
+    onSuccess:responseGoogle,
+    onError:responseGoogle,
+    flow:'auth-code'
+  })
   return (
-    <GoogleLogin
-      onSuccess={(response) => {
-        console.log(response);
-        loginWithGoogle(response);
-        navigate("/dashboard");
-      }}
-      onError={() => {
-        console.log("Login Failed");
-      }}
-    />
-  );
-};
-
-export default LoginWithGoogle;
+    <div>
+      <button onClick={googleLogin}>login</button>
+    </div>
+  )
+}
