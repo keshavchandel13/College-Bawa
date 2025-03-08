@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
+import { useContext } from "react";
+import {AuthContext} from '../../context/AuthContext'
+import "../../styles/auth/login.css";
 import { AiFillGoogleCircle } from 'react-icons/ai';
-
-import Home from '../../pages/Home';
-import "../../styles/auth/login.css";  
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validate email and password
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Please enter a valid email address.');
@@ -24,22 +24,24 @@ function Login() {
       return;
     }
     setError(null);
+
     try {
-      
       const response = await fetch(`${import.meta.env.VITE_APP_LOGIN_API}`, {
         method: 'POST',
-        mode:'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      const data = await response.json();
-      if (response.ok) {
-        navigate('/Home');
-      } else {
-        setError(data.message);
+
+      if (!response.ok) {
+        throw new Error('Failed to login');
       }
+
+      const data = await response.json();
+      login(data.user);  // Save user data to context
+      localStorage.setItem('user', JSON.stringify(data.user));  // Store user data in localStorage
+      localStorage.setItem('token', data.token);  // Store token
+      navigate('/home');
     } catch (error) {
       setError('An error occurred. Please try again.');
     }
@@ -58,14 +60,12 @@ function Login() {
     <div className="login-page">
       <div className="container">
         <h2>Login</h2>
-
-        {error && <div className="error-message" style={{color:'red'}}>{error}</div>} {/* Display error message if any */}
-
+        {error && <div className="error-message">{error}</div>}
         <form method="POST" onSubmit={handleSubmit}>
           <input
             type="email"
             name="email"
-            value={email}  // Bind the email input to state
+            value={email}
             placeholder="Email"
             required
             onChange={handleChange}
@@ -73,18 +73,16 @@ function Login() {
           <input
             type="password"
             name="password"
-            value={password}  // Bind the password input to state
+            value={password}
             placeholder="Password"
             required
             onChange={handleChange}
           />
           <button type="submit">Login</button>
         </form>
-
         <p className="forgot-password">
-        <Link to={'/forgetpassword'}>  Forgot Password? </Link>
+          <Link to={'/forgetpassword'}> Forgot Password? </Link>
         </p>
-
         <div className="or-line">
           <span>OR</span>
         </div>
@@ -97,7 +95,6 @@ function Login() {
         <p className="signup-link">
           <Link to={'/signup'}>Don't have an account? Sign up</Link>
         </p>
-
         <div className="footer-links">
           <a href="#">Terms and Conditions</a>
           <a href="#">Support</a>
