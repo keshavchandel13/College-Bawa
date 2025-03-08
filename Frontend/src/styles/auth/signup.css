@@ -6,123 +6,50 @@
   background-image: url('/Signup.png');
   background-size: cover;
   background-position: center;
+  padding-right: 4%;
 }
 
 .signup-container {
   background-color: transparent;
-  padding: 25px;
-  border-radius: 8px;
+  padding: 30px;
+  border-radius: 12px;
   text-align: center;
   width: 350px;
   max-width: 100%;
-  margin-left: -10px;
+  margin-left: auto;
   margin-right: 4%;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+      0 15px 30px rgba(0, 255, 255, 0.3),  
+      0 20px 40px rgba(255, 0, 255, 0.25);
+  transform: perspective(1200px) rotateX(6deg) rotateY(-6deg) rotateZ(1deg);
+  transition: all 0.4s ease-in-out;
 }
 
-.signup-container h2 {
-  font-size: 22px;
-  margin-bottom: 2px;
-  color: #FFFFFF;
-  text-align: left;
-}
-.signup-container h6 {
-  font-size: 12px;
-
-  color: #FFFFFF;
-  text-align: left;
+.signup-container:hover {
+  transform: perspective(1200px) rotateX(3deg) rotateY(-3deg) rotateZ(0deg) translateY(-10px);
+  box-shadow: 
+      0 18px 40px rgba(0, 255, 255, 0.4), 
+      0 22px 50px rgba(255, 0, 255, 0.35),
+      inset 0 5px 15px rgba(255, 255, 255, 0.15);
 }
 
-.signup-container input {
-  width: 100%;
-  padding: 8px;
-  margin: 4px 0;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  background-color: transparent;
-  color: #FFFFFF;
-}
 
-button {
-  width: 100%;
-  padding: 10px;
-  background: linear-gradient(90deg, #628EFF 0%, #8740CD 53%, #580475 100%);
-  color: #FFFFFF;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 10px 0;
-  font-size: 16px;
-}
+@media (max-width: 1000px) {
+  .signup-page {
+    justify-content: center;
+    align-items: center;
+    background: black;
+    background-image: none;
+    padding-right: 0;
+  }
 
-button:hover {
-  background: linear-gradient(90deg, #628EFF 0%, #8740CD 53%, #580475 100%);
-}
-
-.forgot-password {
-  margin: 10px 0;
-}
-
-.signup-container .forgot-password a {
-  color: #555;
-  text-decoration: none;
-}
-
-.signup-container .forgot-password a:hover {
-  color: #4CAF50;
-}
-
-.signup-container .or-line {
-  margin: 10px 0;
-}
-
-.signup-container .or-line span {
-  color: #555;
-}
-
-.signup-container .google-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin: 20px auto;
-}
-
-.signup-container .google-button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.signin-link {
-  margin: 10px 0;
-}
-
-.signup-link a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.signin-link a:hover {
-  text-decoration: underline;
-}
-
-.footer-links {
-  margin-top: 20px;
-  font-size: 12px;
-  color: #555;
-}
-
-.footer-links a {
-  color: #555;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-.footer-links a:hover {
-  color: #4CAF50;
+  .signup-container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 90%;
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+    transform: none;
+  }
 }
