@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../features/auth/Login';
 import Signup from '../features/auth/Signup';
@@ -7,22 +7,10 @@ import ResetPassword from '../features/auth/ResetPassword';
 import Home from '../pages/Home';
 import LoginWithGoogle from '../features/auth/LoginWithGoogle';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { useAuth } from '../context/AuthContext'; // Import the AuthContext
 
 function AppRoutes() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [otpRequested, setOtpRequested] = useState(false);
-
-  // Check if user is logged in and if OTP was requested
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-    const otpStatus = localStorage.getItem('otpRequested');
-    if (user) {
-      setIsLoggedIn(true);
-    }
-    if (otpStatus === 'true') {
-      setOtpRequested(true);
-    }
-  }, []);
+  const { user } = useAuth(); // Get user from context
 
   // Google auth wrapper function
   const GoogleAuthWrapper = () => {
@@ -33,27 +21,40 @@ function AppRoutes() {
     );
   };
 
+  // Protected Route that redirects if user is not logged in
+  const ProtectedRoute = ({ children }) => {
+    return user ? children : <Navigate to="/login" />;
+  };
+
+  // Restricted Route that redirects if user is logged in
+  const RestrictedRoute = ({ children }) => {
+    return user ? <Navigate to="/home" /> : children;
+  };
+
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path='/google-login' element={<GoogleAuthWrapper/>} />
-      
+      <Route path="/login" element={<RestrictedRoute><Login /></RestrictedRoute>} />
+      <Route path="/signup" element={<RestrictedRoute><Signup /></RestrictedRoute>} />
+      <Route path='/google-login' element={<GoogleAuthWrapper />} />
+
       {/* Forget Password Route */}
       <Route 
         path="/forgetpassword" 
-        element={<ForgetPassword setOtpRequested={setOtpRequested} />} 
+        element={<RestrictedRoute><ForgetPassword /></RestrictedRoute>} 
       />
+
+      {/* Protected Route for Home */}
+      <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
 
       {/* Protected Route for Reset Password */}
       <Route 
         path="/reset-password" 
-        element={otpRequested ? <ResetPassword /> : <Navigate replace to="/forgetpassword" />}
+        element={<ProtectedRoute><ResetPassword /></ProtectedRoute>}
       />
 
       {/* Default Route */}
-      <Route path="/" element={<Navigate replace to="/login" />} />
+      <Route path="/" element={<Navigate replace to={user ? "/home" : "/login"} />} />
     </Routes>
   );
 }

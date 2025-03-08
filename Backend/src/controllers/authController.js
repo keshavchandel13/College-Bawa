@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken');
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const { oauth2client } = require('../utils/googleConfig');
+const axios = require('axios');
+require('dotenv').config();
+
 
 //  Signup Api
 exports.signup = async (req, res) => {
@@ -126,9 +129,10 @@ exports.forgetPassword = async (req, res) => {
             return res.status(500).json({ message: "Failed to send reset otp" });
         }
 
-
+        console.log('ho gya')
         res.json({ message: "Reset link sent" });
     } catch (error) {
+        console.log('nhi ho paya')
         res.status(500).json({ error: error.message });
     }
 };
@@ -138,14 +142,15 @@ exports.googleLogin = async (req, res) => {
     try {
         const { code } = req.query;
         const googleRes = await oauth2client.getToken(code);
-        oauth2client.setCreditials(googleRes.tokens);
+        oauth2client.setCredentials(googleRes.tokens);
         const userRes = await axios.get(
-            `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&acess_token%20=${googleRes.tokens.access_token}`
+            `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+
         )
         const { email, name } = userRes.data;
         let user = await User.findOne({ email });
         if (!user) {
-            user = new User.create({
+            user = await User.create({
                 name, email
             })
         }
@@ -163,3 +168,4 @@ exports.googleLogin = async (req, res) => {
 
     }
 }
+

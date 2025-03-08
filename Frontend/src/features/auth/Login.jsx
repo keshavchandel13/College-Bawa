@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import "../../styles/auth/login.css";
 import { AiFillGoogleCircle } from "react-icons/ai";
-import LoginWithGoogle from "./LoginWithGoogle";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +40,8 @@ function Login() {
       login(data.user); // Save user data to context
       localStorage.setItem("user", JSON.stringify(data.user)); // Store user data in localStorage
       localStorage.setItem("token", data.token); // Store token
-      navigate("/home");
+      console.log("Login successful, navigating to home...");
+  navigate('/home');
     } catch (error) {
       setError("An error occurred. Please try again.");
     }
@@ -61,7 +61,7 @@ function Login() {
       <div className="container">
         <h2>Login</h2>
         {error && <div className="error-message">{error}</div>}
-        <form method="POST" onSubmit={handleSubmit}>
+        <form method="POST" onSubmit={handleSubmit} autoComplete="on">
           <input
             type="email"
             name="email"
@@ -88,7 +88,7 @@ function Login() {
         </div>
 
         {/* Google login button */}
-        <Link to={"/google-login"}>
+        <Link to={'/google-login'}>
           {" "}
           <button type="button" className="google-button">
             <AiFillGoogleCircle style={{ fontSize: "40px" }} />
