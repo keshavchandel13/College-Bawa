@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/auth/forgotpassword.css";
 
 function ForgetPassword({ setOtpRequested }) {
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,32 +18,37 @@ function ForgetPassword({ setOtpRequested }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!validateEmail(email)) {
-      setError('Invalid email address');
+      setError("Invalid email address");
       return;
     }
 
     try {
       const response = await fetch(`${import.meta.env.VITE_APP_FORGET_API}`, {
-        method: 'POST',
-        mode: 'cors',
+        method: "POST",
+        mode: "cors",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
 
+
       const data = await response.json();
 
       if (response.ok) {
-        setOtpRequested(true);  // Update OTP status
-        localStorage.setItem('otpRequested', 'true');  // Store OTP status
-        navigate('/reset-password');
+        // console.log(setOtpRequested)
+        setOtpRequested(true); // Update OTP status
+        localStorage.setItem("otpRequested", "true"); // Store OTP status
+        navigate("/reset-password");
       } else {
-        setError(data.message || 'Something went wrong');
+        console.error("Response not OK:", data); // Log the response for debugging
+        setError(data.message || "Something went wrong");
       }
     } catch (error) {
-      setError('Failed to send request');
+      console.error('Fetch error:', error);
+      setError("Failed to send request");
     }
   };
 
@@ -53,7 +58,11 @@ function ForgetPassword({ setOtpRequested }) {
         <h2>Forgot Password?</h2>
         <h6>Please enter your email</h6>
 
-        {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>}
+        {error && (
+          <div className="error-message" style={{ color: "red" }}>
+            {error}
+          </div>
+        )}
 
         <form method="POST" onSubmit={handleSubmit}>
           <input
@@ -68,12 +77,12 @@ function ForgetPassword({ setOtpRequested }) {
         </form>
 
         <p className="back-to-login-link">
-          <Link to={'/login'}>Back to Login</Link>
+          <Link to={"/login"}>Back to Login</Link>
         </p>
 
         {/* Additional options inside the same container */}
         <p className="signup-link">
-          <Link to={'/signup'}>Don't have an account? Sign up</Link>
+          <Link to={"/signup"}>Don't have an account? Sign up</Link>
         </p>
 
         <div className="footer-links">

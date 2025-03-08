@@ -1,15 +1,17 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from '../features/auth/Login';
-import Signup from '../features/auth/Signup';
-import ForgetPassword from '../features/auth/ForgetPassword';
-import ResetPassword from '../features/auth/ResetPassword';
-import Home from '../pages/Home';
-import LoginWithGoogle from '../features/auth/LoginWithGoogle';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { useAuth } from '../context/AuthContext'; // Import the AuthContext
+import React from "react";
+import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "../features/auth/Login";
+import Signup from "../features/auth/Signup";
+import ForgetPassword from "../features/auth/ForgetPassword";
+import ResetPassword from "../features/auth/ResetPassword";
+import Home from "../pages/Home";
+import LoginWithGoogle from "../features/auth/LoginWithGoogle";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 function AppRoutes() {
+  const [otpRequested, setOtpRequested] = useState(false);
   const { user } = useAuth(); // Get user from context
 
   // Google auth wrapper function
@@ -25,6 +27,9 @@ function AppRoutes() {
   const ProtectedRoute = ({ children }) => {
     return user ? children : <Navigate to="/login" />;
   };
+  const GotOtp = ({ children }) => {
+    return otpRequested ? children : <Navigate to="/forgetpassword" />;
+  };
 
   // Restricted Route that redirects if user is logged in
   const RestrictedRoute = ({ children }) => {
@@ -34,27 +39,59 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/login" element={<RestrictedRoute><Login /></RestrictedRoute>} />
-      <Route path="/signup" element={<RestrictedRoute><Signup /></RestrictedRoute>} />
-      <Route path='/google-login' element={<GoogleAuthWrapper />} />
+      <Route
+        path="/login"
+        element={
+          <RestrictedRoute>
+            <Login />
+          </RestrictedRoute>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <RestrictedRoute>
+            <Signup />
+          </RestrictedRoute>
+        }
+      />
+      <Route path="/google-login" element={<GoogleAuthWrapper />} />
 
       {/* Forget Password Route */}
-      <Route 
-        path="/forgetpassword" 
-        element={<RestrictedRoute><ForgetPassword /></RestrictedRoute>} 
+      <Route
+        path="/forgetpassword"
+        element={
+          <RestrictedRoute>
+            <ForgetPassword setOtpRequested={setOtpRequested} />
+          </RestrictedRoute>
+        }
       />
 
       {/* Protected Route for Home */}
-      <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+      <Route
+        path="/home"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Protected Route for Reset Password */}
-      <Route 
-        path="/reset-password" 
-        element={<ProtectedRoute><ResetPassword /></ProtectedRoute>}
+      <Route
+        path="/reset-password"
+        element={
+          <GotOtp>
+            <ResetPassword />
+          </GotOtp>
+        }
       />
 
       {/* Default Route */}
-      <Route path="/" element={<Navigate replace to={user ? "/home" : "/login"} />} />
+      <Route
+        path="/"
+        element={<Navigate replace to={user ? "/home" : "/login"} />}
+      />
     </Routes>
   );
 }

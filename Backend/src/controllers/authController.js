@@ -129,8 +129,7 @@ exports.forgetPassword = async (req, res) => {
             return res.status(500).json({ message: "Failed to send reset otp" });
         }
 
-        console.log('ho gya')
-        res.json({ message: "Reset link sent" });
+        res.status(200).json({ message: "Reset link sent" });
     } catch (error) {
         console.log('nhi ho paya')
         res.status(500).json({ error: error.message });
