@@ -5,6 +5,8 @@ import Signup from '../features/auth/Signup';
 import ForgetPassword from '../features/auth/ForgetPassword';
 import ResetPassword from '../features/auth/ResetPassword';
 import Home from '../pages/Home';
+import LoginWithGoogle from '../features/auth/LoginWithGoogle';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function AppRoutes() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,11 +24,21 @@ function AppRoutes() {
     }
   }, []);
 
+  // Google auth wrapper function
+  const GoogleAuthWrapper = () => {
+    return (
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_APP_GOOGLE_CLIENT_ID}>
+        <LoginWithGoogle />
+      </GoogleOAuthProvider>
+    );
+  };
+
   return (
     <Routes>
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path='/google-login' element={<GoogleAuthWrapper/>} />
       
       {/* Forget Password Route */}
       <Route 
