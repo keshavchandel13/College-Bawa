@@ -5,7 +5,7 @@ const cors = require("cors");
 const connectDB = require("./config/db")
 const passport = require('./config/passport');
 const collegeRoutes = require("./routes/collegeRoutes");
-
+const userRoutes = require("./routes/userRoutes")
 
 require('dotenv').config();
 // Initialize express app
@@ -50,6 +50,7 @@ app.get("/", (req,res)=>{
 
 //Colleges API
 app.use("/api/college", collegeRoutes);
+app.use("/api/user", userRoutes)
 
 // Starting server
 const PORT = process.env.PORT || 5000;
