@@ -2,16 +2,15 @@ import React from "react";
 import "../styles/homepage/profilepage.css";
 
 const Profile = () => {
-  // Simulating dummy user data (replace this with dynamic user data later)
   const user = {
     name: "Keshav Chandel",
-    email: "keshav@collegebawa.com",
-    college: "ABC Institute of Technology",
+    email: "chandelkeshav4@gmail.com",
+    college: "Jaypee University of  Information  Technology",
     department: "Computer Science",
     bio: "Passionate about tech, community building and startup culture.",
     skills: ["React", "Node.js", "MongoDB", "DSA", "UI/UX"],
     profileImage:
-      "https://i.pinimg.com/736x/54/ab/8e/54ab8e32685c17305f0cbef83c6817ff.jpg", // Replace with actual user profile picture URL
+      "https://media.licdn.com/dms/image/v2/D5603AQEqtqiEje5g2g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718212393207?e=1747267200&v=beta&t=AzVXBRknU4N-uhW_f7Ib61L7ZmakyveqELjsEhO_Wh0",
   };
 
   return (

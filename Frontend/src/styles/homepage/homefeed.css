@@ -1,0 +1,104 @@
+/* homefeed.css */
+.home-feed-container {
+    padding: 1.5rem;
+    background: #f0f8ff;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-left: 324px; /* Space for sidebar */
+    margin-top: 2rem;
+    height: calc(100vh - 3rem); /* Adjust for full screen */
+    overflow-y: auto; /* Enable scrolling */
+  }
+  
+  .home-feed-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1565c0;
+    text-shadow: 1px 1px 2px #9ad0ec;
+    margin-bottom: 1.5rem;
+  }
+  
+  .posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .post {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 1.2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    max-width: 500px;
+  }
+  
+  .post:hover {
+    transform: scale(1.02);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffe6f0;
+  }
+  
+  .post-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .post-user {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .post-text {
+    font-size: 1rem;
+    color: #444;
+    margin-top: 1rem;
+  }
+  
+  .post-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .post-action-button {
+    background-color: #1565c0;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .post-action-button:hover {
+    background-color: #3a6ea5;
+  }
+  
+  .post-action-button.liked {
+    background-color: #ff69b4;
+  }
+  
+  .posts-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .posts-container::-webkit-scrollbar-thumb {
+    background-color: #1565c0;
+    border-radius: 10px;
+  }
+  
+  .posts-container::-webkit-scrollbar-track {
+    background-color: #e0f7fa;
+  }
+  

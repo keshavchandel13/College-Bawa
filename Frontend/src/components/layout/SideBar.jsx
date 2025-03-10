@@ -1,15 +1,16 @@
-import '../../styles/SideBar/sidebar.css'
+import '../../styles/SideBar/sidebar.css';
+import { Link } from "react-router-dom";
 import { Home, Search, Star, Users, MessageSquare, Bell, PlusCircle, User, MoreHorizontal } from "lucide-react";
 
 const menuItems = [
-  { icon: <Home />, label: "Home" },
+  { icon: <Home />, label: "Home", path: "/home/homefeed" },
   { icon: <Search />, label: "Search" },
   { icon: <Star />, label: "Reviews" },
   { icon: <Users />, label: "Communities" },
   { icon: <MessageSquare />, label: "Messages" },
   { icon: <Bell />, label: "Notification" },
   { icon: <PlusCircle />, label: "Post" },
-  { icon: <User />, label: "Profile",  path: "/profile"  },
+  { icon: <User />, label: "Profile", path: "/home/profile" },
   { icon: <MoreHorizontal />, label: "More" },
 ];
 
@@ -23,8 +24,17 @@ export default function Sidebar() {
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
           <li key={index} className="sidebar-item">
-            <span className="sidebar-icon">{item.icon}</span>
-            <span className="sidebar-label">{item.label}</span>
+            {item.path ? (
+              <Link to={item.path} className="sidebar-link">
+                <span className="sidebar-icon">{item.icon}</span>
+                <span className="sidebar-label">{item.label}</span>
+              </Link>
+            ) : (
+              <>
+                <span className="sidebar-icon">{item.icon}</span>
+                <span className="sidebar-label">{item.label}</span>
+              </>
+            )}
           </li>
         ))}
       </ul>
