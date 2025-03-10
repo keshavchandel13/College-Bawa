@@ -9,7 +9,7 @@ const menuItems = [
   { icon: <MessageSquare />, label: "Messages" },
   { icon: <Bell />, label: "Notification" },
   { icon: <PlusCircle />, label: "Post" },
-  { icon: <User />, label: "Profile" },
+  { icon: <User />, label: "Profile",  path: "/profile"  },
   { icon: <MoreHorizontal />, label: "More" },
 ];
 
