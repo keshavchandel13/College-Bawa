@@ -36,8 +36,9 @@
 }
 
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .signup-page {
+    display: flex;
     justify-content: center;
     align-items: center;
     background: black;
@@ -46,9 +47,9 @@
   }
 
   .signup-container {
-    margin-right: auto;
-    margin-left: auto;
-    width: 90%;
+    margin: 0 auto; /* Centers the container */
+    width: 90%; /* Makes it responsive */
+    max-width: 400px; /* Adjust as needed */
     box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
     transform: none;
   }
