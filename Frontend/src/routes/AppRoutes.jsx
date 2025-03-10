@@ -9,7 +9,7 @@ import Home from "../pages/Home";
 import LoginWithGoogle from "../features/auth/LoginWithGoogle";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useAuth } from "../context/AuthContext";
-
+import DashboardRoutes from "./DashboardRoutes";
 function AppRoutes() {
   const [otpRequested, setOtpRequested] = useState(false);
   const { user, loading } = useAuth(); // ⬅ loading added
@@ -61,11 +61,19 @@ function AppRoutes() {
           </RestrictedRoute>
         }
       />
-      <Route
+      {/* <Route
         path="/home"
         element={
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>
+        }
+      /> */}
+      <Route
+        path="/home/*"
+        element={
+          <ProtectedRoute>
+            <DashboardRoutes />
           </ProtectedRoute>
         }
       />
