@@ -11,7 +11,7 @@ const menuItems = [
   { icon: <Bell />, label: "Notification" },
   { icon: <PlusCircle />, label: "Post" },
   { icon: <User />, label: "Profile", path: "/home/profile" },
-  { icon: <MoreHorizontal />, label: "More" },
+  { icon: <MoreHorizontal />, label: "More", path:"/home/more"},
 ];
 
 export default function Sidebar() {

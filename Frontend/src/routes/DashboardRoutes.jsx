@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import HomeFeed from "../pages/HomeFeed";
+import Logout from "../features/auth/Logout";
 
 const DashboardRoutes = () => {
   return (
@@ -11,7 +12,7 @@ const DashboardRoutes = () => {
        <Route index element={<HomeFeed />} /> 
         <Route path="homefeed" element={<HomeFeed />} />
         <Route path="profile" element={<Profile />} />
-        {/* Add more nested routes here */}
+        <Route path="more" element={<Logout />} />
       </Route>
     </Routes>
   );
