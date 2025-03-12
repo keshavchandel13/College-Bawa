@@ -5,7 +5,7 @@
     border-radius: 10px;
     /* margin-left: 324px;  */
     /* margin-top: 2rem; */
-    height: calc(110vh - 3rem); /* Adjust for full screen */
+    height: calc(108vh - 3rem); /* Adjust for full screen */
     overflow-y: auto; /* Enable scrolling */
   }
   

@@ -1,9 +1,11 @@
-import React from "react";
+import React,{lazy} from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import Profile from "../pages/Profile";
-import HomeFeed from "../pages/HomeFeed";
-import Logout from "../features/auth/Logout";
+
+// Apllying lazy loading
+const Home = lazy(()=> import ("../pages/Home"))
+const HomeFeed = lazy(()=> import("../pages/HomeFeed"))
+const Logout = lazy(()=> import("../features/auth/Logout"))
+const Profile = lazy(()=> import("../pages/Profile"))
 
 const DashboardRoutes = () => {
   return (
