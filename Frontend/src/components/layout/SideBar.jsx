@@ -7,7 +7,7 @@ const menuItems = [
   { icon: <Search />, label: "Search" },
   { icon: <Star />, label: "Reviews" },
   { icon: <Users />, label: "Communities" },
-  { icon: <MessageSquare />, label: "Messages" },
+  { icon: <MessageSquare />, label: "Messages", path:"/home/chat" },
   { icon: <Bell />, label: "Notification" },
   { icon: <PlusCircle />, label: "Post" },
   { icon: <User />, label: "Profile", path: "/home/profile" },
