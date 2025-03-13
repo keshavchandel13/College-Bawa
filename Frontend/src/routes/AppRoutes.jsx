@@ -10,6 +10,8 @@ const ForgetPassword = lazy(() => import("../features/auth/ForgetPassword"));
 const ResetPassword = lazy(() => import("../features/auth/ResetPassword"));
 const LoginWithGoogle = lazy(() => import("../features/auth/LoginWithGoogle"));
 const DashboardRoutes = lazy(() => import("./DashboardRoutes"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+
 
 function AppRoutes() {
   const [otpRequested, setOtpRequested] = useState(false);
@@ -83,6 +85,7 @@ function AppRoutes() {
           path="/"
           element={<Navigate replace to={user ? "/home" : "/login"} />}
         />
+        <Route path="*" element={<NotFound />}/>
       </Routes>
     </Suspense>
   );

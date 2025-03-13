@@ -1,5 +1,6 @@
 import '../../styles/SideBar/sidebar.css';
 import { Link } from "react-router-dom";
+import React from 'react';
 import { Home, Search, Star, Users, MessageSquare, Bell, PlusCircle, User, MoreHorizontal } from "lucide-react";
 
 const menuItems = [
@@ -24,18 +25,18 @@ export default function Sidebar() {
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
           <li key={index} className="sidebar-item">
-            {item.path ? (
-              <Link to={item.path} className="sidebar-link">
-                <span className="sidebar-icon">{item.icon}</span>
-                <span className="sidebar-label">{item.label}</span>
-              </Link>
-            ) : (
-              <>
-                <span className="sidebar-icon">{item.icon}</span>
-                <span className="sidebar-label">{item.label}</span>
-              </>
-            )}
-          </li>
+          {item.path ? (
+            <Link to={item.path} className="sidebar-link">
+              <span className="sidebar-icon">{item.icon}</span>
+              <span className="sidebar-label">{item.label}</span>
+            </Link>
+          ) : (
+            <div className="sidebar-link">
+              <span className="sidebar-icon">{item.icon}</span>
+              <span className="sidebar-label">{item.label}</span>
+            </div>
+          )}
+        </li>
         ))}
       </ul>
     </div>
