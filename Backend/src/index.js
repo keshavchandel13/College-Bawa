@@ -1,64 +1,72 @@
 const express = require("express");
 const session = require('express-session'); 
 const cors = require("cors");
-// const cookieParser = require("cookie-parser");
-const connectDB = require("./config/db")
+const http = require("http");
+const { Server } = require("socket.io");
+require('dotenv').config();
+
+// App and DB setup
+const connectDB = require("./config/db");
 const passport = require('./config/passport');
 const collegeRoutes = require("./routes/collegeRoutes");
+const authRoutes = require("./routes/authRoutes");
+const { initSocket } = require('./sockets/socketHandler');
 
-
-require('dotenv').config();
 // Initialize express app
 const app = express();
 
-// Initializing cors
+// CORS setup
 const corsOptions = {
     origin: 'http://localhost:5173', 
     credentials: true,
     methods: 'GET,POST',
     allowedHeaders: 'Content-Type',
-  };
-// Enable CORS
+};
 app.use(cors(corsOptions));
-
-// Add this to handle preflight requests
-app.options('*', cors(corsOptions)); // Handles preflight for all routes
-app.use(express.json());
-
-
-// Importing Routes
-const authRoutes = require("./routes/authRoutes");
-// const userRoutes = require("./routes/userRoutes");
-
-// Middleware
+app.options('*', cors(corsOptions)); // Preflight
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+
+// Session & Passport
+app.use(session({ 
+    secret: process.env.SESSION_SECRET || 'secret', 
+    resave: false, 
+    saveUninitialized: false 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Connect to database
+// Connect to DB
 connectDB();
 
-//Routes
-app.use("/api/auth",authRoutes) 
-// app.use("/api/user",authRoutes) 
+// HTTP server & Socket.io
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:5173',
+        credentials: true
+    }
+});
+initSocket(io);
 
-// Home Route 
-app.get("/", (req,res)=>{
+// Routes
+app.use("/api/auth", authRoutes);
+app.use('/api/chats', require('./routes/chatRoutes'));
+app.use('/api/messages', require('./routes/messageRoutes'));
+app.use('/api/notification', require('./routes/notificationRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
+app.use("/api/college", collegeRoutes);
+
+// Root route
+app.get("/", (req, res) => {
     res.send("college bawa");
 });
 
-//Colleges API
-app.use("/api/college", collegeRoutes);
+// Fallback route (optional but recommended)
+app.use((req, res) => {
+    res.status(404).json({ message: "API route not found" });
+});
 
-// Starting server
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, ()=> console.log(`Server running on the port http://localhost:${PORT}`))
-
-
-
-
-
-
-
+server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
