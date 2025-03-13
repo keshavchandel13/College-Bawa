@@ -3,6 +3,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
+const { oauth2client } = require('../utils/googleConfig');
+const axios = require('axios');
+require('dotenv').config();
+
 
 //  Signup Api
 exports.signup = async (req, res) => {
@@ -10,10 +14,10 @@ exports.signup = async (req, res) => {
         const { name, email, password } = req.body;
 
         //  validate the inputs
-        if(!name || !email || !password){
-            return res.status(400).json({message:"All fields are required"})
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "All fields are required" })
         }
-        let user= await User.findOne({email});
+        let user = await User.findOne({ email });
 
         // Check if user already exists
         if (user) {
@@ -38,13 +42,13 @@ exports.signup = async (req, res) => {
 
 
 // login APi: 
-exports.login= async(req, res) =>{
-    try{
-        const{email, password} = req.body;
-            
+exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
         //Check User's Existence
-        const user = await User.findOne({email}) 
-        if(!user){
+        const user = await User.findOne({ email })
+        if (!user) {
             return res.status(400).json({
                 message: "User not found"
             })
@@ -52,7 +56,7 @@ exports.login= async(req, res) =>{
 
         //Validate Password
         const match = await bcrypt.compare(password, user.password);
-        if(!match){
+        if (!match) {
             return res.status(400).json({
                 message: "Invalid Username or Password"
             })
@@ -67,8 +71,8 @@ exports.login= async(req, res) =>{
             user,
             token
         })
-    
-    }catch(error){
+
+    } catch (error) {
         res.status(500).json({
             message: "Server Error",
             error: error.message
@@ -83,13 +87,13 @@ exports.resetPassword = async (req, res) => {
 
         // Check if the token and new password are provided
         if (!token || !newPassword) {
-            return res.status(400).json({message:'Token and new password are required'});
+            return res.status(400).json({ message: 'Token and new password are required' });
         }
 
         // Find the user by reset token
         const user = await User.findOne({ resetToken: token });
         if (!user) {
-            return res.status(400).json({message:'Invalid or expired otp'});
+            return res.status(400).json({ message: 'Invalid or expired otp' });
         }
 
         // Hash the new password
@@ -101,7 +105,7 @@ exports.resetPassword = async (req, res) => {
         user.resetToken = undefined;
         await user.save();
 
-        res.status(200).json({message:'Password updated successfully'});
+        res.status(200).json({ message: 'Password updated successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -115,7 +119,7 @@ exports.forgetPassword = async (req, res) => {
 
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        const resetToken =  Math.floor(1000 + Math.random() * 9000).toString();
+        const resetToken = Math.floor(1000 + Math.random() * 9000).toString();
         user.resetToken = resetToken;
         await user.save();
 
@@ -124,10 +128,43 @@ exports.forgetPassword = async (req, res) => {
         if (!emailSent) {
             return res.status(500).json({ message: "Failed to send reset otp" });
         }
-      
 
-        res.json({ message: "Reset link sent" });
+        res.status(200).json({ message: "Reset link sent" });
     } catch (error) {
+        console.log('nhi ho paya')
         res.status(500).json({ error: error.message });
     }
 };
+
+// Google login
+exports.googleLogin = async (req, res) => {
+    try {
+        const { code } = req.query;
+        const googleRes = await oauth2client.getToken(code);
+        oauth2client.setCredentials(googleRes.tokens);
+        const userRes = await axios.get(
+            `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+
+        )
+        const { email, name } = userRes.data;
+        let user = await User.findOne({ email });
+        if (!user) {
+            user = await User.create({
+                name, email
+            })
+        }
+        const { _id } = user;
+        const token = jwt.sign({ _id, email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        return res.status(200).json({
+            message: "Success",
+            token,
+            user
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: "internal server error"
+        })
+
+    }
+}
+

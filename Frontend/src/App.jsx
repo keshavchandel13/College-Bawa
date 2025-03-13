@@ -1,10 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // Import Navigate
-import AuthRoutes from './routes/AuthRoutes';  // Authentication routes component
+import AppRoutes from './routes/AppRoutes'; // Import your routing logic
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-  <AuthRoutes/>
+    <AuthProvider>
+      <AppRoutes />
+      </AuthProvider>
+
   );
 }
 

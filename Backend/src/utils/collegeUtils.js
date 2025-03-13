@@ -1,5 +1,5 @@
 const axios = require("axios");
-const College = require("../models/College");
+const College = require("../models/Colleges");
 
 async function getCollegeOptions(email) {
     try {

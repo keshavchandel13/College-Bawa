@@ -4,7 +4,7 @@ import { AiFillGoogleCircle } from "react-icons/ai";
 import "../../styles/auth/signup.css";
 
 function Signup() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +46,7 @@ function Signup() {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/login"); 
+        navigate("/login");
       } else {
         setError(data.message || "Signup failed. Please try again.");
       }
@@ -69,13 +69,45 @@ function Signup() {
         <h2>Signup</h2>
         <h6>Just Some Details To Get You In</h6>
 
-        {error && <div className="error-message" style={{ color: "red" }}>{error}</div>}
+        {error && (
+          <div className="error-message" style={{ color: "red" }}>
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
-          <input type="text" name="name" placeholder="Name" value={name} onChange={handleChange} required />
-          <input type="email" name="email" placeholder="Email" value={email} onChange={handleChange} required />
-          <input type="password" name="password" placeholder="Password" value={password} onChange={handleChange} required />
-          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={handleChange} required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={handleChange}
+            required
+          />
           <button type="submit">Sign Up</button>
         </form>
 
@@ -87,9 +119,13 @@ function Signup() {
           <span>OR</span>
         </div>
 
-        <button type="button" className="google-button">
-          <AiFillGoogleCircle style={{ fontSize: "40px" }} />
-        </button>
+        {/* Google login button */}
+        <Link to={"/google-login"}>
+          {" "}
+          <button type="button" className="google-button">
+            <AiFillGoogleCircle style={{ fontSize: "40px" }} />
+          </button>
+        </Link>
 
         <p className="signup-link">
           <Link to="/login">Already Registered? Login</Link>
