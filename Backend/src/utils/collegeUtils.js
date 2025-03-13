@@ -3,33 +3,36 @@ const College = require("../models/Colleges");
 
 async function getCollegeOptions(email) {
     try {
-        const domain = email.split("@")[1];
-
-        // Fetch college based on domain
-        const response = await axios.get(`http://universities.hipolabs.com/search?domain=${domain}`);
-
-        if (response.data.length > 0) {
-            return { 
-                college: response.data[0].name, 
-                disableDropdown: true, 
-                collegesList: [] 
-            };
+        if (!email || !email.includes("@")) {
+            return { success: false, message: "Invalid email format" };
         }
 
-        // If no college found, fetch stored colleges from the database
+        const domain = email.split("@")[1];
+
+        // Fetch college based on email domain from API
+        const response = await axios.get(`http://universities.hipolabs.com/search?domain=${domain}`);
+
+        let collegeName = "";
+        if (response.data.length > 0) {
+            collegeName = response.data[0].name;
+        }
+
+        // Fetch stored colleges from the database
         const storedColleges = await College.find().distinct("name");
+
         return { 
-            college: "", 
-            disableDropdown: false, 
-            collegesList: storedColleges 
+            success: true,
+            college: collegeName,  // Prefilled if found
+            disableDropdown: !!collegeName,  // Disable if API found a match
+            collegesList: collegeName ? [] : storedColleges  // Show stored colleges if no match found
         };
 
     } catch (error) {
         console.error("Error fetching college data:", error.message);
-
-        // Return stored colleges even if API fails
         const storedColleges = await College.find().distinct("name");
         return { 
+            success: false,
+            message: "Error fetching college data, using stored colleges",
             college: "", 
             disableDropdown: false, 
             collegesList: storedColleges 
@@ -37,4 +40,15 @@ async function getCollegeOptions(email) {
     }
 }
 
-module.exports = { getCollegeOptions };
+async function addCollegeIfNotExists(collegeName) {
+    if (!collegeName) return null;
+    
+    let collegeEntry = await College.findOne({ name: collegeName });
+    if (!collegeEntry) {
+        collegeEntry = new College({ name: collegeName });
+        await collegeEntry.save();
+    }
+    return collegeEntry.name;
+}
+
+module.exports = { getCollegeOptions, addCollegeIfNotExists };

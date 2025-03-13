@@ -9,8 +9,14 @@ require('dotenv').config();
 const connectDB = require("./config/db");
 const passport = require('./config/passport');
 const collegeRoutes = require("./routes/collegeRoutes");
+
+const userRoutes = require("./routes/userRoutes")
+
+require('dotenv').config();
+
 const authRoutes = require("./routes/authRoutes");
 const { initSocket } = require('./sockets/socketHandler');
+
 
 // Initialize express app
 const app = express();
@@ -62,10 +68,16 @@ app.get("/", (req, res) => {
     res.send("college bawa");
 });
 
+
+//Colleges API
+app.use("/api/college", collegeRoutes);
+app.use("/api/user", userRoutes)
+=======
 // Fallback route (optional but recommended)
 app.use((req, res) => {
     res.status(404).json({ message: "API route not found" });
 });
+
 
 // Start server
 const PORT = process.env.PORT || 5000;

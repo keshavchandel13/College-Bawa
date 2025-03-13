@@ -11,6 +11,8 @@ router.post("/get-college-options", async (req, res) => {
 
     const collegeData = await getCollegeOptions(email);
     res.json(collegeData);
+
+    
 });
 
 module.exports = router;

@@ -1,9 +1,9 @@
-const express = require('express');
-const { getCollegeOptions, addUserDetails } = require('../controllers/userDetailsController');
+const express = require("express");
+const { addUserDetails, getCollegeOptions } = require("../controllers/userDetailsController");
 
 const router = express.Router();
 
-router.post('/get-college-options', getCollegeOptions);
-router.post('/add-user-details', addUserDetails);
+router.post("/add-user-details", addUserDetails);
+router.post("/get-college-options", getCollegeOptions);
 
 module.exports = router;
