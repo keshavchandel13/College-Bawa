@@ -62,7 +62,7 @@ app.get("/", (req, res) => {
     res.send("college bawa");
 });
 
-// Fallback route (optional but recommended)
+// Fallback route 
 app.use((req, res) => {
     res.status(404).json({ message: "API route not found" });
 });

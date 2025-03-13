@@ -10,8 +10,6 @@ router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 router.post("/forget-password", authController.forgetPassword);
 router.post("/reset-password", authController.resetPassword);
-// Google Authentication Routes
-// router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] })); 
 router.get('/google', authController.googleLogin);
 
 
