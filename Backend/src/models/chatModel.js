@@ -6,7 +6,7 @@ const chatSchema = new Schema({
         type:String,
         trim:true,
     },
-    isGroup:{
+    isGroupChat:{
         type:Boolean,
         default:false,
     },
@@ -14,7 +14,7 @@ const chatSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'User',
     }],
-    lastMessage:{
+    latestMessage:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Message',
     },
