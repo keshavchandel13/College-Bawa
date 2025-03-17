@@ -9,7 +9,7 @@ router.post('/get-college-options', getCollegeOptions);
 router.post('/add-user-details', addUserDetails);
 
 // Protected Routes using authMiddleware
-router.get('/all-users', verifyToken, getAllUsers);
+router.get('/all-users',verifyToken, getAllUsers);
 router.get('/user/:id', verifyToken, getUserById);
 router.get('/update', verifyToken, updateUserProfile);
 

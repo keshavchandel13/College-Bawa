@@ -1,3 +1,4 @@
+let ioInstance;
 function initSocket(io){
     io.on("connection", (socket) => {
         console.log("user Connected"+socket.id);

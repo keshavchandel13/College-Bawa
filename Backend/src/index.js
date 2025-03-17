@@ -19,8 +19,8 @@ const app = express();
 const corsOptions = {
     origin: 'http://localhost:5173', 
     credentials: true,
-    methods: 'GET,POST',
-    allowedHeaders: 'Content-Type',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type','Authorization'],
 };
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Preflight
@@ -56,6 +56,7 @@ app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/notification', require('./routes/notificationRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use("/api/college", collegeRoutes);
+app.use("/api/user", require("./routes/userRoutes"));
 
 // Root route
 app.get("/", (req, res) => {

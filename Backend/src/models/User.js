@@ -25,6 +25,7 @@ const userSchema = new Schema({
     },
     googleId: { type: String },
     resetToken: { type: String },
+    profileImage: { type: String },
 }, 
 {timestamps: true }
 );

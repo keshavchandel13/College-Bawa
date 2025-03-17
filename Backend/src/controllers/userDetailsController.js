@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const College = require('../models/College');
+const College = require('../models/Colleges');
 const { getCollegeOptions } = require('../utils/collegeUtils');
 
 exports.getCollegeOptions = async (req, res) => {
