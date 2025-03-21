@@ -2,16 +2,16 @@ const Chat = require("../models/chatModel");
 const Message = require("../models/messageModel");
 
 const sendMessage = async (req, res) => {
-    try {
-        const { content, chatId, attachment } = req.body;
 
+    try {
+        const { content, chatId, attachment, id } = req.body;
         // Validate required fields
         if (!content && !attachment?.url) {
             return res.status(400).json({ error: "Message content or attachment required" });
         }
         // Create new message
         const newMessage = new Message({
-            sender: req.user.uid,
+            sender: id,
             content,
             chat: chatId,
             attachment
