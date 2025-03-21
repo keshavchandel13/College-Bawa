@@ -40,10 +40,6 @@ function Login() {
       login(data.user); // Save user data to context
       localStorage.setItem("user", JSON.stringify(data.user)); // Store user data in localStorage
       localStorage.setItem("token", data.token); // Store token
-      const token = localStorage.getItem("token");
-      console.log(token); // Check if the token exists and is correct
-
-      console.log("Login successful, navigating to home...");
       navigate("/home");
     } catch (error) {
       setError("An error occurred. Please try again.");

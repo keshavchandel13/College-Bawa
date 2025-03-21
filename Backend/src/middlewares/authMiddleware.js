@@ -4,9 +4,9 @@ require('dotenv').config();
 const authMiddleware = (req, res, next) => {
   // Extract the token from the Authorization header
   const token = req.header('Authorization')?.replace('Bearer ', '');
-  
   // Check if the token exists
   if (!token) {
+    console.log("Access Denied");
     return res.status(401).json({ message: 'Access denied: No token provided' });
   }
 
@@ -20,6 +20,7 @@ const authMiddleware = (req, res, next) => {
     // Proceed to the next middleware or route handler
     next();
   } catch (error) {
+    console.log(error)
     // Send a specific error if the token is invalid or expired
     res.status(400).json({ message: 'Invalid or expired token' });
   }

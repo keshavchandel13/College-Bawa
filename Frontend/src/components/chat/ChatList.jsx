@@ -1,41 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useChat } from "../../context/chatContext";
-import { fetchChats } from "../../features/chat/chatService";
+import {
+  fetchChats,
+  accessOrCreateChat,
+} from "../../features/chat/chatService";
 import UserSearchList from "./UserSearchList";
 
 const ChatList = ({ token }) => {
-  const { selectedChat, setSelectedChat, currentUser, selectedUser } = useChat();
-  const [chats, setChats] = useState([]);
-
-  useEffect(() => {
-    const loadChats = async () => {
-      const allChats = await fetchChats(token);
-      setChats(Array.isArray(allChats) ? allChats : []);
-    };
-    loadChats();
-  }, [token]);
-
+  const {
+    selectedChat,
+    setSelectedChat,
+    currentUser,
+    selectedUser,
+    setSelectedUser,
+  } = useChat();
+  // Function to handle the click on the selected user
+  const handleChatClick = async () => {};
   return (
-    <div className="w-full sm:w-1/3 md:w-1/4 lg:w-1/5 h-full border-r border-gray-300 bg-white rounded-lg">
+    <div className="w-1/4 p-4 sm:w-1/3 md:w-1/4 lg:w-1/5 h-full border-r border-gray-300 bg-white rounded-lg space-y-4">
       <h2 className="text-xl font-bold p-6 border-b">Chats</h2>
+
+      {/* User Search List with padding */}
       <UserSearchList />
-      {chats.map((chat) => {
-        const otherUser = chat.users.find((u) => u._id !== currentUser._id);
-        return (
-          <div
-            key={chat._id}
-            className={`p-4 cursor-pointer hover:bg-gray-100 ${
-              selectedChat?._id === chat._id ? "bg-gray-200 font-semibold" : ""
-            }`}
-            onClick={() => setSelectedChat(chat)}
-          >
-            <div className="text-sm">{otherUser?.name}</div>
-            <div className="text-xs text-gray-500 truncate">
-              {chat.latestMessage?.content}
-            </div>
-          </div>
-        );
-      })}
+
+      {/* Show selected user details if selected */}
+      {selectedUser && (
+        <div
+          className="m-1.5 p-4 bg-gray-200 border-b rounded-lg"
+          onClick={handleChatClick}
+        >
+          <div className="font-semibold">{selectedUser.name}</div>
+        </div>
+      )}
     </div>
   );
 };

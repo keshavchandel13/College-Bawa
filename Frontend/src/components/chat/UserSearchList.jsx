@@ -3,7 +3,8 @@ import { useChat } from "../../context/chatContext";
 import { fetchUsersByQuery } from "../../features/user/userService";
 
 const UserSearchList = () => {
-  const { selectedUser, setSelectedUser } = useChat();  // Access selectedUser from context
+  const {     currentUser,
+    selectedUser, setSelectedChat, setSelectedUser } = useChat(); // Access selectedUser from context
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -49,9 +50,11 @@ const UserSearchList = () => {
               key={user._id}
               className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
               onClick={() => {
-                setSelectedUser(user);  // Update selectedUser globally when clicked
-                setSearchQuery(user.name);
-                setShowDropdown(false);
+                setSelectedUser(user); // Update selectedUser globally when clicked
+                setSearchQuery(""); // Clear search query
+                setShowDropdown(false);                
+                setSelectedChat(null); // Clear selected chat
+
               }}
             >
               <div className="font-medium">{user.name}</div>

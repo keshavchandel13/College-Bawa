@@ -9,13 +9,14 @@ const Profile = lazy(()=> import("../pages/Profile"))
 const Chat = lazy(()=> import("../pages/Chat"))
 
 const DashboardRoutes = () => {
+  const token = localStorage.getItem('token'); 
   return (
     <Routes>
       <Route path="/" element={<Home />}>
        <Route index element={<HomeFeed />} /> 
         <Route path="homefeed" element={<HomeFeed />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="chat" element={<Chat />} />
+        <Route path="chat" element={<Chat token={token} />} />
         <Route path="more" element={<Logout />} />
       </Route>
     </Routes>

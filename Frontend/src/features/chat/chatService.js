@@ -48,3 +48,24 @@ export const searchUsers = async (query) => {
   console.log(res.data)
   return res.data;
 };
+
+export const accessOrCreateChat = async (userId) => {
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res = await axios.post(
+    "http://localhost:5000/api/chats", // correct endpoint
+    { userId },
+    config
+  );
+
+  return res.data;
+};
+
+

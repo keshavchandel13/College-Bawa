@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchUsersByQuery = async (query) => {
   try {
-    const token = localStorage.getItem('authToken'); 
+    const token = localStorage.getItem('token'); 
     const response = await axios.get(`http://localhost:5000/api/user/all-users?query=${query}`, {
       headers: {
         Authorization: `Bearer ${token}`,

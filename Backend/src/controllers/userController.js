@@ -1,25 +1,31 @@
 const User = require('../models/User');
 // Fetch All users (Except the logged in user) --> GET REQUEST with search query
+// Escape special characters in regex
+const escapeRegex = (text) => {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+// Fetch All users (Except the logged in user) --> GET REQUEST with search query
 const getAllUsers = async (req, res) => {
-    try {
-      const { query } = req.query;
-  
-      const searchFilter = query
-        ? {
-            $or: [
-              { name: { $regex: query, $options: "i" } },
-              { email: { $regex: query, $options: "i" } },
-            ],
-          }
-        : {};
-  
-      const users = await User.find(searchFilter).select("-password");
-      res.status(200).json(users);
-    } catch (error) {
-      console.error("Error in getAllUsers:", error);
-      res.status(500).json({ error: "Failed to fetch users" });
-    }
-  };
+  try {
+    const { query } = req.query;
+
+    const searchFilter = query
+      ? {
+          $or: [
+            { name: { $regex: escapeRegex(query), $options: "i" } },
+            { email: { $regex: escapeRegex(query), $options: "i" } },
+          ],
+        }
+      : {};
+
+    const users = await User.find(searchFilter).select("-password");
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error in getAllUsers:", error);
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
+};
 
 // Fetch a user by ID --> GET REQUEST
 const getUserById = async (req, res) => {

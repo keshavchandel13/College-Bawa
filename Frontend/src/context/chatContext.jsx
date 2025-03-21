@@ -4,7 +4,11 @@ const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(() => {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  });
+  
   const [selectedUser, setSelectedUser] = useState(null);  // New state for selected user
 
   return (
