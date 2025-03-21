@@ -7,6 +7,7 @@ const HomeFeed = lazy(()=> import("../pages/HomeFeed"))
 const Logout = lazy(()=> import("../features/auth/Logout"))
 const Profile = lazy(()=> import("../pages/Profile"))
 const Chat = lazy(()=> import("../pages/Chat"))
+const CreatePost = lazy(()=> import("../pages/CreatePost"))
 
 const DashboardRoutes = () => {
   const token = localStorage.getItem('token'); 
@@ -18,6 +19,7 @@ const DashboardRoutes = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="chat" element={<Chat token={token} />} />
         <Route path="more" element={<Logout />} />
+        <Route path="createpost" element={<CreatePost token={token} />} />
       </Route>
     </Routes>
   );
