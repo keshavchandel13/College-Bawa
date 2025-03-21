@@ -47,14 +47,13 @@ const ChatBox = ({ token }) => {
     if (selectedChat) {
       const newMessage = {
         content: messageContent,
-        sender: currentUser._id,
         chat: selectedChat._id,
       };
-
-      await sendMessage(newMessage); // Backend send
+  
+      await sendMessage(selectedChat._id,messageContent, currentUser._id,token); // Backend send
       setMessages((prev) => [...prev, newMessage]); // Local state update
       socket.emit("send-message", newMessage); // Socket emit
-    }
+    }  
   };
 
   return (
@@ -68,7 +67,7 @@ const ChatBox = ({ token }) => {
             ))}
             <div ref={messageEndRef} />
           </div>
-          <MessageInput onSendMessage={handleSendMessage} />
+          <MessageInput onSend={handleSendMessage} />
         </div>
       ) : (
         <div className="flex items-center justify-center h-full text-gray-600 text-lg">

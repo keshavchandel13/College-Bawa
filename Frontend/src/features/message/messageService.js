@@ -8,10 +8,10 @@ export const fetchMessages = async (chatId, token) => {
   return res.data;
 };
 
-export const sendMessage = async (chatId, content, token) => {
+export const sendMessage = async (chatId, content,id, token) => {
   const res = await axios.post(
-    "http://localhost:5000/api/message",
-    { chatId, content },
+    "http://localhost:5000/api/messages",
+    { chatId, content,id },
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return res.data;
