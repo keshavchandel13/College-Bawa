@@ -1,37 +1,38 @@
 const express = require("express");
-const session = require('express-session'); 
+const session = require("express-session");
 const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
-require('dotenv').config();
+require("dotenv").config();
 
 // App and DB setup
 const connectDB = require("./config/db");
-const passport = require('./config/passport');
+const passport = require("./config/passport");
 const collegeRoutes = require("./routes/collegeRoutes");
 const authRoutes = require("./routes/authRoutes");
-const { initSocket } = require('./sockets/socketHandler');
+const postRoutes = require("./routes/postRoutes"); // ✅ Added Post Routes
+const { initSocket } = require("./sockets/socketHandler");
 
 // Initialize express app
 const app = express();
 
 // CORS setup
 const corsOptions = {
-    origin: 'http://localhost:5173', 
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type','Authorization'],
+  origin: "http://localhost:5173",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Preflight
+app.options("*", cors(corsOptions)); // Preflight
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Session & Passport
-app.use(session({ 
-    secret: process.env.SESSION_SECRET || 'secret', 
-    resave: false, 
-    saveUninitialized: false 
+app.use(session({
+  secret: process.env.SESSION_SECRET || "secret",
+  resave: false,
+  saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -42,30 +43,31 @@ connectDB();
 // HTTP server & Socket.io
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: 'http://localhost:5173',
-        credentials: true
-    }
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true
+  }
 });
 initSocket(io);
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use('/api/chats', require('./routes/chatRoutes'));
-app.use('/api/messages', require('./routes/messageRoutes'));
-app.use('/api/notification', require('./routes/notificationRoutes'));
-app.use('/api/admin', require('./routes/adminRoutes'));
+app.use("/api/posts", postRoutes); // ✅ New Post Routes
+app.use("/api/chats", require("./routes/chatRoutes"));
+app.use("/api/messages", require("./routes/messageRoutes"));
+app.use("/api/notification", require("./routes/notificationRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/college", collegeRoutes);
 app.use("/api/user", require("./routes/userRoutes"));
 
 // Root route
 app.get("/", (req, res) => {
-    res.send("college bawa");
+  res.send("college bawa");
 });
 
-// Fallback route 
+// Fallback route
 app.use((req, res) => {
-    res.status(404).json({ message: "API route not found" });
+  res.status(404).json({ message: "API route not found" });
 });
 
 // Start server
