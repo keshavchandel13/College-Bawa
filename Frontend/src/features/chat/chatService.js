@@ -17,7 +17,6 @@ export const fetchChats = async () => {
         'Authorization': `Bearer ${token}`,
       },
     };
-    // jai ho
     // Make the GET request to the server with token in headers
     const res = await axios.get('http://localhost:5000/api/chats', config);
     // Return the data

@@ -1,3 +1,4 @@
+// context/chatContext.jsx
 import React, { createContext, useContext, useState } from "react";
 
 const ChatContext = createContext();
@@ -8,8 +9,10 @@ export const ChatProvider = ({ children }) => {
     const user = localStorage.getItem("user");
     return user ? JSON.parse(user) : null;
   });
-  
-  const [selectedUser, setSelectedUser] = useState(null);  // New state for selected user
+
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [activeChat, setActiveChat] = useState(null);
+  const [chats, setChats] = useState([]); // ADD THIS
 
   return (
     <ChatContext.Provider
@@ -18,8 +21,12 @@ export const ChatProvider = ({ children }) => {
         setSelectedChat,
         currentUser,
         setCurrentUser,
-        selectedUser,   // Pass selectedUser globally
-        setSelectedUser // Pass setter function for selectedUser
+        selectedUser,
+        setSelectedUser,
+        activeChat,
+        setActiveChat,
+        chats,
+        setChats, // ADD THIS
       }}
     >
       {children}

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useChat } from "../../context/chatContext";
 import { fetchUsersByQuery } from "../../features/user/userService";
+import { accessOrCreateChat } from "../../features/message/messageService";
 
-const UserSearchList = () => {
-  const {     currentUser,
-    selectedUser, setSelectedChat, setSelectedUser } = useChat(); // Access selectedUser from context
+const UserSearchList = ({ setChats, token }) => {
+  const { setActiveChat, setSelectedUser, currentUser, chats } = useChat();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -33,6 +33,29 @@ const UserSearchList = () => {
     }
   };
 
+  const handleSelectUser = async (user) => {
+    try {
+      const chat = await accessOrCreateChat(
+        { userId: user._id }, // pass only body here
+        token                 // pass token separately
+      );
+  
+      setSelectedUser(user);
+      setActiveChat(chat);
+  
+      const chatExists = chats.some((c) => c._id === chat._id);
+      if (!chatExists) {
+        setChats((prev) => [chat, ...prev]);
+      }
+  
+      setSearchQuery("");
+      setShowDropdown(false);
+    } catch (err) {
+      console.error("Error accessing/creating chat", err);
+    }
+  };
+  
+
   return (
     <div className="relative w-full max-w-md">
       <input
@@ -49,13 +72,7 @@ const UserSearchList = () => {
             <li
               key={user._id}
               className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-              onClick={() => {
-                setSelectedUser(user); // Update selectedUser globally when clicked
-                setSearchQuery(""); // Clear search query
-                setShowDropdown(false);                
-                setSelectedChat(null); // Clear selected chat
-
-              }}
+              onClick={() => {handleSelectUser(user)}}
             >
               <div className="font-medium">{user.name}</div>
               <div className="text-sm text-gray-500">{user.email}</div>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchMessages = async (chatId, token) => {
   
-  const res = await axios.get(`http://localhost:5000/api/message/${chatId}`, {
+  const res = await axios.get(`http://localhost:5000/api/messages/${chatId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
@@ -18,6 +18,7 @@ export const sendMessage = async (chatId, content,id, token) => {
 };
 
 export const accessOrCreateChat = async (body, token) => {
+
   const res = await fetch("http://localhost:5000/api/chats", {
     method: "POST",
     headers: {

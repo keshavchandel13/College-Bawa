@@ -44,7 +44,6 @@ const getMessagesForChat = async (req, res) => {
         if (!chatId) {
             return res.status(400).json({ error: "Chat ID is required" });
         }
-
         // Fetch messages for the given chat
         const messages = await Message.find({ chat: chatId })
             .populate("sender", "-password")
@@ -54,7 +53,6 @@ const getMessagesForChat = async (req, res) => {
         if (!messages) {
             return res.status(404).json({ error: "Messages not found" });
         }
-
         // Respond with the fetched messages
         res.json(messages);
     } catch (error) {

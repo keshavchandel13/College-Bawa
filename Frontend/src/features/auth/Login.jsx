@@ -23,7 +23,6 @@ function Login() {
       return;
     }
     setError(null);
-
     try {
       const response = await fetch(`${import.meta.env.VITE_APP_LOGIN_API}`, {
         method: "POST",
@@ -42,6 +41,7 @@ function Login() {
       localStorage.setItem("token", data.token); // Store token
       navigate("/home");
     } catch (error) {
+      console.error(error);
       setError("An error occurred. Please try again.");
     }
   };
