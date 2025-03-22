@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createPost } from "../../api/postApi";
+import { createPost } from "../../api/post";
 
 const PostForm = ({ onPostCreated, token }) => {
   const [content, setContent] = useState("");

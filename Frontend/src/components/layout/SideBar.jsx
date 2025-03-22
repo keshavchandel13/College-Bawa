@@ -10,7 +10,7 @@ const menuItems = [
   { icon: <Users />, label: "Communities" },
   { icon: <MessageSquare />, label: "Messages", path:"/home/chat" },
   { icon: <Bell />, label: "Notification" },
-  { icon: <PlusCircle />, label: "Post" },
+  { icon: <PlusCircle />, label: "Post", path: "/home/createpost" },
   { icon: <User />, label: "Profile", path: "/home/profile" },
   { icon: <MoreHorizontal />, label: "More", path:"/home/more"},
 ];

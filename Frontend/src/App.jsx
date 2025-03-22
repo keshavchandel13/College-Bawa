@@ -6,8 +6,6 @@ import Home from './pages/Home'; // Import Home
 function App() {
   return (
     <AuthProvider>
-      
-      <Home />  {/* Home Component Integrated */}
       <AppRoutes />
     </AuthProvider>
   );

@@ -1,15 +1,15 @@
 //Ye post display kregi file frontend mai backend se
 
 import React, { useEffect, useState } from "react";
-import { getPosts, likePost, commentOnPost, sharePost } from "../../api/postApi";
+import { likePost, commentOnPost, sharePost } from "../../api/post";
 import PostItem from "./PostItem";
 
 const Feed = ({ token }) => {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   const fetchPosts = async () => {
     const data = await getPosts();

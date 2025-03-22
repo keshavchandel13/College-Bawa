@@ -1,5 +1,4 @@
 import React from 'react';
-import Logout from '../features/auth/Logout';
 import Sidebar from '../components/layout/SideBar';
 import '../styles/homepage/home.css';
 import { Outlet } from "react-router-dom";

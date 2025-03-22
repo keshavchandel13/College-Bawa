@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PostForm from "../components/post/PostForm";
 import Feed from "../components/post/Feed";
 
-const CreatePost = () => {
+const CreatePost = (token) => {
   
 
   return (
