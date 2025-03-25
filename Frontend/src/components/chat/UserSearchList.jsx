@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useChat } from "../../context/chatContext";
 import { fetchUsersByQuery } from "../../features/user/userService";
-import { accessOrCreateChat } from "../../features/message/messageService";
+import { accessOrCreateChat } from "../../features/chat/chatService";
 
 const UserSearchList = ({ setChats, token }) => {
   const { setActiveChat, setSelectedUser, currentUser, chats } = useChat();
@@ -36,7 +36,7 @@ const UserSearchList = ({ setChats, token }) => {
   const handleSelectUser = async (user) => {
     try {
       const chat = await accessOrCreateChat(
-        { userId: user._id }, // pass only body here
+        { userId: user._id, currentUserId: currentUser._id }, // pass only body here
         token                 // pass token separately
       );
   

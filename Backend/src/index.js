@@ -52,7 +52,7 @@ initSocket(io);
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes); // ✅ New Post Routes
+app.use("/api/posts", postRoutes); 
 app.use("/api/chats", require("./routes/chatRoutes"));
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/notification", require("./routes/notificationRoutes"));

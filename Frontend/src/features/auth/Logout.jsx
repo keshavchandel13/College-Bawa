@@ -11,7 +11,7 @@ const Logout = () => {
     // Clear user data from localStorage or sessionStorage
     localStorage.removeItem("user"); // or sessionStorage depending on your use case
     localStorage.removeItem("jwtToken"); // assuming you store token in localStorage
-
+    
     // Call the logout function from context (if any other logic is required)
     logout();
 

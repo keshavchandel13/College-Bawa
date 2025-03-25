@@ -1,47 +1,129 @@
 const Chat = require('../models/chatModel');
-
+const User = require('../models/User');
+const Message = require('../models/messageModel');
 const accessOrCreateChat = async (req, res) => {
+  console.log("We are here in accessorcreatechat")
     try {
-        const { userId, uid: currentUserId } = req.body;
-
-        if (!userId && !uid) {
-            return res.status(400).json({ error: 'UserId is required' });
-        }
-
-        let chat = await Chat.findOne({
-            isGroupChat: false,
-            users: { $all: [userId, currentUserId] },
-        }).populate("users", "-password");
-
-        if (chat) {
-            return res.json(chat);
-        }
-
-        const newChat = new Chat({
-            users: [userId, currentUserId],
-        });
-
-        const createdChat = await newChat.save();
-        const fullChat = await Chat.findById(createdChat._id).populate("users", "-password");
-        res.status(201).json(fullChat);
+      const { userId,currentUserId } = req.body;
+      console.log("userId",userId)
+      console.log("currentUserId",currentUserId)
+  
+      if (!userId || !currentUserId) {
+        return res.status(400).json({ error: 'UserId is required' });
+      }
+  
+      // Check if a chat already exists between these two users (in any order)
+      let chat = await Chat.findOne({
+        isGroupChat: false,
+        users: { $all: [userId, currentUserId], $size: 2 },
+      }).populate("users", "-password");
+      console.log("chats: ",chat)
+      if (chat) {
+        return res.json(chat);
+      }
+  
+      // Create a new one-on-one chat
+      const createdChat = await Chat.create({
+        isGroupChat: false,
+        users: [userId, currentUserId],
+      });
+  
+      const fullChat = await Chat.findById(createdChat._id)
+        .populate("users", "-password");
+      console.log("full chats:",fullChat)
+      res.status(201).json(fullChat);
     } catch (error) {
-        console.error("Error in accessOrCreateChat:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+      console.error("Error in accessOrCreateChat:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-};
-
-const getUserChats = async (req, res) => {
+  };
+  // Get the messages of the user
+  const getUserChats = async (req, res) => {
+    const { userId, page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+  
     try {
-        const chats = await Chat.find({ users: req.user.uid })
-            .populate("users", "-password")
-            .populate("latestMessage")
-            .sort({ updatedAt: -1 });
-
-        res.json(chats);
+      // Fetch messages where the user is either the sender or has read the message
+      const messages = await Message.find({
+        $or: [
+          { sender: userId }, // Messages sent by the user
+          { readBy: userId },  // Messages read by the user (if you want to consider unread messages)
+        ]
+      })
+        .skip(skip)
+        .limit(parseInt(limit))
+        .populate('sender', 'name email') // Populate sender info
+        .populate('chat', 'chatName') // Populate chat details
+        .exec();
+        console.log(messages)
+  
+      const totalMessages = await Message.countDocuments({
+        $or: [
+          { sender: userId },
+          { readBy: userId },
+        ],
+      });
+  
+      const totalPages = Math.ceil(totalMessages / limit);
+      res.status(200).json({
+        messages,
+        page,
+        limit,
+        totalMessages,
+        totalPages,
+      });
     } catch (error) {
-        console.error("Error in getUserChats:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+      console.error("Error fetching user messages:", error);
+      res.status(500).json({ message: "Error fetching user messages" });
     }
-};
+  };
+  
+  const getUsersAndGroupsChattedWith = async (req, res) => {
+    try {
+      const {userId} = req.query;
+      if (!userId) {
+        return res.status(400).json({ error: "User Id not found" });
+      }
+  
+      // Fetching chats where the user is a participant
+      const chats = await Chat.find({ users: userId }).select("users isGroupChat");
+  
+      let uniqueUsersIds = new Set();
+      let userGroups = [];
+  
+      // Getting unique users & groups
+      chats.forEach(chat => {
+        if (chat.isGroupChat) {
+          userGroups.push(chat._id);
+        } else {
+          chat.users.forEach(user => {
+            if (user.toString() !== userId.toString()) {
+              uniqueUsersIds.add(user.toString());
+            }
+          });
+        }
+      });
+  
+      // Fetch user details for unique users (include profileImage)
+      const users = await User.find({ _id: { $in: Array.from(uniqueUsersIds) } })
+        .select("name email profileImage");
+  
+      // Fetch group details
+      const groups = await Chat.find({ _id: { $in: userGroups } })
+        .populate("groupAdmin", "name email profileImage")
+        .populate("users", "name email profileImage") // fetch group members too
+        .select("chatName groupImage isGroupChat users groupAdmin");
+  
+      res.json({
+        users,
+        groups
+      });
+  
+    } catch (error) {
+      console.error("Error in getUsersAndGroupsChattedWith fetching users and groups:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
 
-module.exports = { accessOrCreateChat, getUserChats };
+module.exports = { accessOrCreateChat, getUserChats, getUsersAndGroupsChattedWith };

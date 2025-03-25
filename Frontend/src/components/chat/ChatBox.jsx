@@ -2,45 +2,42 @@ import React, { useEffect, useRef, useState } from "react";
 import { useChat } from "../../context/chatContext";
 import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
-import { sendMessage, accessOrCreateChat, fetchMessages  } from "../../features/message/messageService";
+import { sendMessage } from "../../features/message/messageService";
 import socket from "../../sockets/socket";
+import { getUserChats } from "../../features/chat/chatService";
 
 const ChatBox = ({ token }) => {
-  const {  currentUser, selectedUser,setSelectedUser, setActiveChat, activeChat } = useChat();
-  const messageEndRef = useRef(null);
+  const { currentUser, selectedUser } = useChat();
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [error, setError] = useState(null);
+  const messageEndRef = useRef(null);
 
+  // Fetch messages from API
+  const fetchMessages = async (page = 1) => {
+    if (!selectedUser) return;
+    setLoading(true);
+    setError(null);
 
+    try {
+      const data = await getUserChats(selectedUser._id, page, 10);
+      setMessages((prev) => (page === 1 ? data.messages : [...prev, ...data.messages]));
+    } catch (err) {
+      setError("Failed to load messages");
+      console.error("Error fetching messages:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Access/Create chat
+  // Fetch messages when selectedUser changes
   useEffect(() => {
-    const createOrGetChat = async () => {
-      if (selectedUser) {
-        try {
-          const chat = await accessOrCreateChat({ userId: selectedUser._id, uid: currentUser._id }, token);
-          setActiveChat(chat);
-        } catch (error) {
-          console.error("Error accessing chat:", error);
-        }
-      }
-    };
-    createOrGetChat();
+    setMessages([]);
+    if (selectedUser) {
+      fetchMessages(1);
+    }
   }, [selectedUser]);
-
-  // Load previous messages when selectedUser changes
-  useEffect(() => {
-    const fetchChatMessages = async () => {
-      if (selectedUser) {
-        try {
-          const data = await fetchMessages(activeChat._id, token);
-          setMessages(data);
-        } catch (error) {
-          console.error("Error fetching messages:", error);
-        }
-      }
-    };
-    fetchChatMessages();
-  }, [activeChat]);
 
   // Listen for new messages
   useEffect(() => {
@@ -52,32 +49,58 @@ const ChatBox = ({ token }) => {
 
     socket.on("message-received", handleMessageReceived);
     return () => socket.off("message-received", handleMessageReceived);
-  }, [activeChat]);
+  }, [selectedUser]);
 
+  // Send a message
   const handleSendMessage = async (messageContent) => {
-    if (selectedUser) {
-      const newMessage = {
-        content: messageContent,
-        chat: selectedUser._id,
-      };
+    if (!selectedUser) return;
 
-      await sendMessage(activeChat._id, messageContent, currentUser._id, token);
+    const newMessage = {
+      content: messageContent,
+      chat: selectedUser._id,
+      sender: currentUser._id,
+    };
+
+    try {
+      await sendMessage(selectedUser._id, messageContent, currentUser._id, token);
       setMessages((prev) => [...prev, newMessage]);
       socket.emit("send-message", newMessage);
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+
+  // Load more messages
+  const loadMoreChats = () => {
+    if (!loading) {
+      setPage((prevPage) => prevPage + 1);
+      fetchMessages(page + 1);
     }
   };
 
   return (
     <div className="chatbox-container">
-      { selectedUser ? (
+      {error && <div className="error-message">Error: {error}</div>}
+
+      {selectedUser ? (
         <div>
           <div className="font-semibold text-lg">{selectedUser?.name}</div>
           <div className="h-[400px] overflow-y-auto">
-            {messages.map((msg, idx) => (
-              <MessageBubble key={idx} message={msg} currentUser={currentUser} />
-            ))}
+            {messages.length > 0 ? (
+              messages.map((message, idx) => (
+                <MessageBubble key={idx} message={message} currentUser={currentUser} />
+              ))
+            ) : (
+              <div>No messages available</div>
+            )}
             <div ref={messageEndRef} />
           </div>
+          {loading && <div>Loading more messages...</div>}
+          {!loading && messages.length > 0 && (
+            <button onClick={loadMoreChats} className="load-more-btn">
+              Load More Messages
+            </button>
+          )}
           <MessageInput onSend={handleSendMessage} />
         </div>
       ) : (
