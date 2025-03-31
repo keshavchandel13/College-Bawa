@@ -24,7 +24,7 @@ const UserSearchList = ({ setChats, token }) => {
 
   const loadUsers = async (query) => {
     try {
-      const users = await fetchUsersByQuery(query);
+      const users = await fetchUsersByQuery(token,query,currentUser._id);
       setSuggestions(users);
       setShowDropdown(true);
     } catch (err) {

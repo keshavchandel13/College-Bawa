@@ -61,10 +61,9 @@ const ChatList = ({ token }) => {
   return (
     <div className="w-[30%] min-w-[280px] p-4 h-full border-r border-gray-300 bg-white rounded-lg space-y-4">
       <h2 className="text-xl font-bold p-4 border-b">Chats</h2>
-
+  
       <UserSearchList setChats={setChats} token={token} />
-
-      {/* Combined Chat List */}
+  
       <div className="space-y-2">
         {allChats.length > 0 ? (
           allChats.map((chat) => (
@@ -72,16 +71,16 @@ const ChatList = ({ token }) => {
               key={chat._id}
               onClick={() => {
                 if (chat.chatType === "user") {
-                  setSelectedUser(chat);
+                  setSelectedUser (chat);
                   setActiveChat(null);
                 } else {
                   setActiveChat(chat);
-                  setSelectedUser(null);
+                  setSelectedUser (null);
                 }
               }}
               className={`cursor-pointer p-3 rounded-lg hover:bg-gray-100 ${
-                (selectedUser && chat.chatType === "user" && selectedUser._id === chat._id) ||
-                (chat.chatType === "group" && selectedUser?._id === chat._id)
+                (selectedUser  && chat.chatType === "user" && selectedUser ._id === chat._id) ||
+                (chat.chatType === "group" && selectedUser ?._id === chat._id)
                   ? "bg-gray-200"
                   : ""
               }`}
@@ -90,8 +89,8 @@ const ChatList = ({ token }) => {
                 <img
                   src={
                     chat.chatType === "user"
-                      ? chat.profileImage || "https://via.placeholder.com/40"
-                      : chat.groupImage || "https://via.placeholder.com/40"
+                      ? chat.profileImage || "https://picsum.photos/201"
+                      : chat.groupImage || "https://picsum.photos/203"
                   }
                   alt="Chat"
                   className="w-10 h-10 rounded-full border"

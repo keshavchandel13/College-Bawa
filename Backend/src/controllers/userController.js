@@ -8,16 +8,20 @@ const escapeRegex = (text) => {
 // Fetch All users (Except the logged in user) --> GET REQUEST with search query
 const getAllUsers = async (req, res) => {
   try {
-    const { query } = req.query;
-
+    const { query, currentUserId } = req.query; 
     const searchFilter = query
       ? {
-          $or: [
-            { name: { $regex: escapeRegex(query), $options: "i" } },
-            { email: { $regex: escapeRegex(query), $options: "i" } },
+          $and: [
+            { _id: { $ne: currentUserId } }, // Exclude the current user
+            {
+              $or: [
+                { name: { $regex: escapeRegex(query), $options: "i" } },
+                { email: { $regex: escapeRegex(query), $options: "i" } },
+              ],
+            },
           ],
         }
-      : {};
+      : { _id: { $ne: currentUserId } }; // Exclude the current user if no search query
 
     const users = await User.find(searchFilter).select("-password");
     res.status(200).json(users);

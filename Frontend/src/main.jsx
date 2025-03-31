@@ -7,7 +7,7 @@ import App from "./App.jsx";
 import { ChatProvider } from "./context/chatContext.jsx"; // Import chatContext
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+
     <ChatProvider>
       <BrowserRouter>
         {" "}
@@ -15,5 +15,5 @@ createRoot(document.getElementById("root")).render(
         <App />
       </BrowserRouter>
     </ChatProvider>
-  </StrictMode>
+
 );
