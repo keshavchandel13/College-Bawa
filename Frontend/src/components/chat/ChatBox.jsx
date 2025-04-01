@@ -37,6 +37,11 @@ const ChatBox = ({ token }) => {
       setMessages((prev) =>
         page === 1 ? [...data.messages] : [...data.messages, ...prev]
       );
+      if (page === 1) {
+        setTimeout(() => {
+          messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }, 0);
+      }
     } catch (err) {
       setError("Failed to load messages");
     } finally {
@@ -91,8 +96,6 @@ const ChatBox = ({ token }) => {
         message: response,
         senderId: currentUser._id,
       });
-
-      messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       setError("Error sending message");
     }
@@ -105,6 +108,14 @@ const ChatBox = ({ token }) => {
       return nextPage;
     });
   };
+
+  useEffect(() => {
+    if (page === 1 && messages.length > 0) {
+      setTimeout(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
+    }
+  }, [messages, page]);
 
   return (
     <div className="chatbox-container">
@@ -137,11 +148,14 @@ const ChatBox = ({ token }) => {
 
             <div ref={messageEndRef} />
           </div>
-
-          <MessageInput onSend={handleSendMessage} />
+          <div className="chat-box-message-input">
+            <MessageInput onSend={handleSendMessage} />
+          </div>
         </div>
       ) : (
-        <div className="select-chat-message">Select a chat to start messaging ✉️</div>
+        <div className="select-chat-message">
+          Select a chat to start messaging ✉️
+        </div>
       )}
     </div>
   );

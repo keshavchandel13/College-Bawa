@@ -9,10 +9,10 @@ const Chat = ({ token }) => {
 
   return (
     <div className="chat-container">
-      <div className="chat-list">
+      <div className="chat-list-main">
         <ChatList token={token} />
       </div>
-      <div className="chat-box">
+      <div className="chat-box-main">
         {selectedChat || selectedUser ? (
           <ChatBox token={token} />
         ) : (

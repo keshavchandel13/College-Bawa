@@ -6,7 +6,7 @@ const Navbar = ({ selectedUser }) => {
     <div className="navbar">
       <div className="navbar-content">
         <img
-          src={selectedUser?.profileImage || "https://picsum.photos/201"}
+          src={selectedUser?.profileImage || "/default.jpg"}
           alt="Profile"
           className="profile-image"
         />

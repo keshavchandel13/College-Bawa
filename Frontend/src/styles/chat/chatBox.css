@@ -7,8 +7,9 @@
 }
 
 .chatbox {
-  width: 80%;
-  max-width: 500px;
+  height: 100vh;
+  width: 119vh;
+
   background: white;
   border-radius: 15px;
   overflow: hidden;
@@ -60,4 +61,9 @@
   color: red;
   text-align: center;
   font-weight: bold;
+}
+.chat-box-message-input{
+  position: fixed;
+  bottom: 0;
+  width: 119vh;
 }
