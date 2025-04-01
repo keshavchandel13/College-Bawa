@@ -19,6 +19,7 @@ export const sendMessage = async (chatId, content, id, token) => {
       { chatId, content, id },
       { headers: { Authorization: `Bearer ${token}` } }
     );
+    console.log("Data from backend: ",res.data)
     return res.data;
   } catch (error) {
     console.error("Error sending message:", error);

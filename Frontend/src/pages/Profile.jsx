@@ -11,7 +11,7 @@ const Profile = () => {
     bio: "Passionate about tech, community building and startup culture.",
     skills: ["React", "Node.js", "MongoDB", "DSA", "UI/UX"],
     profileImage:
-      "https://media.licdn.com/dms/image/v2/D5603AQEqtqiEje5g2g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718212393207?e=1747267200&v=beta&t=AzVXBRknU4N-uhW_f7Ib61L7ZmakyveqELjsEhO_Wh0",
+      "/default.jpg",
   };
 
 

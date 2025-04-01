@@ -1,15 +1,22 @@
 const Chat = require("../models/chatModel");
 const Message = require("../models/messageModel");
-
-const sendMessage = async (req, res) => {
-
+const { getIo } = require("../sockets/socketHandler")
+const mongoose = require("mongoose");
+const sendMessage = async (req, res) => { 
     try {
         const { content, chatId, attachment, id } = req.body;
-        // Validate required fields
+
         if (!content && !attachment?.url) {
             return res.status(400).json({ error: "Message content or attachment required" });
         }
-        // Create new message
+
+        //  Check if chatId exists
+        const chatExists = await Chat.findById(chatId);
+        if (!chatExists) {
+            return res.status(400).json({ error: "Chat not found" });
+        }
+
+        //  Create new message linked to a valid chat
         const newMessage = new Message({
             sender: id,
             content,
@@ -17,21 +24,22 @@ const sendMessage = async (req, res) => {
             attachment
         });
 
-        // Save message to the database
         const savedMessage = await newMessage.save();
 
-        // Fetch the full message with sender and chat details
+        //  Populate sender and chat
         const fullMessage = await Message.findById(savedMessage._id)
             .populate("sender", "-password")
             .populate("chat");
 
-        // Update the latest message in the chat
         await Chat.findByIdAndUpdate(chatId, { latestMessage: fullMessage });
 
-        // Respond with the newly created message
+        //  Emit event to chat room
+        const io = getIo();
+        io.to(chatId).emit("receive-message", fullMessage);
+
         res.status(201).json(fullMessage);
     } catch (error) {
-        console.error("Error in sendMessage:", error);
+        console.error("❌ Error in sendMessage:", error);
         res.status(500).json({ error: "Failed to send message" });
     }
 };

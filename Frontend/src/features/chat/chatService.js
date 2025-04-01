@@ -1,5 +1,5 @@
 import axios from "axios";
-
+ 
 export const fetchUsers = async (userId) => {
   try { 
     // Get the token from localStorage (no need to pass it as an argument)
@@ -18,6 +18,7 @@ export const fetchUsers = async (userId) => {
     };
     // Make the GET request to the server with token in headers
     const res = await axios.get(`http://localhost:5000/api/chats/getuser?userId=${userId}`, config);
+    console.log(res.data)
     // Return the data
     return res.data;
   } catch (error) {
@@ -71,10 +72,8 @@ export const accessOrCreateChat = async (body, token) => {
   }
 };
 // Get user messages 
-export const getUserChats = async (userId, page = 1, limit = 10) => {
+export const getUserChats = async (token,userId,selectedUserId, page = 1, limit = 10) => {
   try {
-    const token = localStorage.getItem("token");
-
     if (!token) {
       console.error("No token found in localStorage");
       return;
@@ -88,7 +87,7 @@ export const getUserChats = async (userId, page = 1, limit = 10) => {
     };
 
     const res = await axios.get(
-      `http://localhost:5000/api/chats?userId=${userId}&page=${page}&limit=${limit}`,
+      `http://localhost:5000/api/chats?userId=${userId}&selectedUserId=${selectedUserId}&page=${page}&limit=${limit}`,
       config
     );
     console.log(res.data)

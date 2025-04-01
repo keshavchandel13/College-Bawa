@@ -2,18 +2,21 @@ import React from "react";
 import ChatBox from "../components/chat/ChatBox";
 import ChatList from "../components/chat/ChatList";
 import { useChat } from "../context/chatContext";
+import "../styles/chat/chat.css"; // Import external CSS file
 
 const Chat = ({ token }) => {
   const { selectedChat, selectedUser } = useChat();
 
   return (
-    <div className="h-screen w-full flex flex-col sm:flex-row bg-gray-50">
-      <ChatList token={token} />
-      <div className="flex-1 border-l border-gray-200">
+    <div className="chat-container">
+      <div className="chat-list-main">
+        <ChatList token={token} />
+      </div>
+      <div className="chat-box-main">
         {selectedChat || selectedUser ? (
           <ChatBox token={token} />
         ) : (
-          <div className="flex items-center justify-center h-full text-gray-600 text-lg">
+          <div className="chat-placeholder">
             Select a chat to start messaging ✉️
           </div>
         )}

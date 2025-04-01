@@ -10,14 +10,14 @@ const connectDB = require("./config/db");
 const passport = require("./config/passport");
 const collegeRoutes = require("./routes/collegeRoutes");
 const authRoutes = require("./routes/authRoutes");
-const postRoutes = require("./routes/postRoutes"); // ✅ Added Post Routes
+const postRoutes = require("./routes/postRoutes");
 const { initSocket } = require("./sockets/socketHandler");
 
 // Initialize express app
 const app = express();
 
 // CORS setup
-const corsOptions = {
+const corsOptions = { 
   origin: "http://localhost:5173",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -48,11 +48,11 @@ const io = new Server(server, {
     credentials: true
   }
 });
-initSocket(io);
+initSocket(io);  //  initSocket function
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes); 
+app.use("/api/posts", postRoutes);
 app.use("/api/chats", require("./routes/chatRoutes"));
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/notification", require("./routes/notificationRoutes"));

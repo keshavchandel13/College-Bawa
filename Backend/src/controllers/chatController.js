@@ -2,7 +2,6 @@ const Chat = require('../models/chatModel');
 const User = require('../models/User');
 const Message = require('../models/messageModel');
 const accessOrCreateChat = async (req, res) => {
-  console.log("We are here in accessorcreatechat")
     try {
       const { userId,currentUserId } = req.body;
       console.log("userId",userId)
@@ -37,46 +36,56 @@ const accessOrCreateChat = async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
   };
-  // Get the messages of the user
   const getUserChats = async (req, res) => {
-    const { userId, page = 1, limit = 10 } = req.query;
-    const skip = (page - 1) * limit;
-  
     try {
-      // Fetch messages where the user is either the sender or has read the message
-      const messages = await Message.find({
-        $or: [
-          { sender: userId }, // Messages sent by the user
-          { readBy: userId },  // Messages read by the user (if you want to consider unread messages)
-        ]
-      })
-        .skip(skip)
-        .limit(parseInt(limit))
-        .populate('sender', 'name email') // Populate sender info
-        .populate('chat', 'chatName') // Populate chat details
-        .exec();
-        console.log(messages)
-  
-      const totalMessages = await Message.countDocuments({
-        $or: [
-          { sender: userId },
-          { readBy: userId },
-        ],
-      });
-  
-      const totalPages = Math.ceil(totalMessages / limit);
-      res.status(200).json({
-        messages,
-        page,
-        limit,
-        totalMessages,
-        totalPages,
-      });
+        const { userId, selectedUserId, page = 1, limit = 10 } = req.query;
+        if (!userId || !selectedUserId) {
+            return res.status(400).json({ message: "Both userId and selectedUserId are required" });
+        }
+
+        const skip = (page - 1) * limit;
+
+        // 🔍 Find the chat document between the two users
+        const chat = await Chat.findOne({
+            isGroupChat: false,
+            users: { $all: [userId, selectedUserId] }  // Ensure both users are in the chat
+        });
+
+        if (!chat) {
+            return res.status(404).json({ message: "Chat not found" });
+        }
+
+        //  Fetch messages for this chat
+        const messages = await Message.find({ chat: chat._id }) // Now using correct `chatId`
+            .sort({ createdAt: -1 })  // Latest messages first
+            .skip(skip)
+            .limit(parseInt(limit))
+            .populate("sender", "name email") // Populate sender details
+            .exec();
+
+        const totalMessages = await Message.countDocuments({ chat: chat._id });
+
+        const totalPages = Math.ceil(totalMessages / limit);
+
+        res.status(200).json({
+            chat: {  // ✅ Send chatId along with messages
+                _id: chat._id,
+                isGroupChat: chat.isGroupChat,
+                users: chat.users,
+                createdAt: chat.createdAt,
+                updatedAt: chat.updatedAt
+            },
+            messages: messages.reverse(),
+            page: Number(page),
+            limit: Number(limit),
+            totalMessages,
+            totalPages,
+        });
     } catch (error) {
-      console.error("Error fetching user messages:", error);
-      res.status(500).json({ message: "Error fetching user messages" });
+        console.error("Error fetching chat messages:", error);
+        res.status(500).json({ message: "Error fetching chat messages" });
     }
-  };
+};
   
   const getUsersAndGroupsChattedWith = async (req, res) => {
     try {
@@ -86,8 +95,7 @@ const accessOrCreateChat = async (req, res) => {
       }
   
       // Fetching chats where the user is a participant
-      const chats = await Chat.find({ users: userId }).select("users isGroupChat");
-  
+      const chats = await Chat.find({ users: userId }).select("users isGroupChat");  
       let uniqueUsersIds = new Set();
       let userGroups = [];
   
@@ -113,7 +121,8 @@ const accessOrCreateChat = async (req, res) => {
         .populate("groupAdmin", "name email profileImage")
         .populate("users", "name email profileImage") // fetch group members too
         .select("chatName groupImage isGroupChat users groupAdmin");
-  
+
+     
       res.json({
         users,
         groups

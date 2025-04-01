@@ -1,16 +1,16 @@
 import React from "react";
+import "../../styles/chat/Navbar.css";
 
-const Navbar = ({ currentUser  }) => {
+const Navbar = ({ selectedUser }) => {
   return (
-    <div className="w-full bg-blue-600 text-white flex items-center justify-between px-4 py-3">
-      <h1 className="text-xl font-semibold">College Bawa Chat</h1>
-      <div className="flex items-center gap-3">
-        <span className="text-sm">{currentUser ?.name}</span>
+    <div className="navbar">
+      <div className="navbar-content">
         <img
-          src="/profile-placeholder.png"
+          src={selectedUser?.profileImage || "/default.jpg"}
           alt="Profile"
-          className="w-8 h-8 rounded-full"
+          className="profile-image"
         />
+        <span className="user-name">{selectedUser?.name || "User"}</span>
       </div>
     </div>
   );
