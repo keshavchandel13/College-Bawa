@@ -24,9 +24,9 @@ exports.addUserDetails = async (req, res) => {
             collegeEntry = new College({ name: college });
             await collegeEntry.save();
         }
-        
+
         let imageUrl = user.profileImage || "https://res.cloudinary.com/dvebgf4vr/image/upload/v1743272506/IMG_20231114_130924384_dpdkd7.jpg"; //Default image incase of no image uploaded
-        if(req.file) {
+        if (req.file) {
             imageUrl = await uploadToCloudinary(req.file.path, "user_uploads");
             fs.unlinkSync(req.file.path);
         }
