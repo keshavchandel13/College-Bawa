@@ -89,8 +89,8 @@ const ChatList = ({ token }) => {
               <img
                 src={
                   chat.chatType === "user"
-                    ? chat.profileImage || "https://picsum.photos/201"
-                    : chat.groupImage || "https://picsum.photos/203"
+                    ? chat.profileImage || "/default.jpg"
+                    : chat.groupImage || "/default.jpg"
                 }
                 alt="Chat"
                 className="chat-image"
