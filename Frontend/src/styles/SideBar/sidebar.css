@@ -17,9 +17,10 @@
 }
 
 .sidebar-logo {
+  padding: 6px;
   background-color: black;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 47px;
   border-radius: 50%;
   box-shadow: 2px 2px 5px rgba(255, 105, 180, 0.5);
 }

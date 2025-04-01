@@ -2,7 +2,6 @@ const Chat = require('../models/chatModel');
 const User = require('../models/User');
 const Message = require('../models/messageModel');
 const accessOrCreateChat = async (req, res) => {
-  console.log("We are here in accessorcreatechat")
     try {
       const { userId,currentUserId } = req.body;
       console.log("userId",userId)
@@ -56,7 +55,7 @@ const accessOrCreateChat = async (req, res) => {
             return res.status(404).json({ message: "Chat not found" });
         }
 
-        // ✅ Fetch messages for this chat
+        //  Fetch messages for this chat
         const messages = await Message.find({ chat: chat._id }) // Now using correct `chatId`
             .sort({ createdAt: -1 })  // Latest messages first
             .skip(skip)

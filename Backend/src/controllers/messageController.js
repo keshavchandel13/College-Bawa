@@ -7,18 +7,16 @@ const sendMessage = async (req, res) => {
         const { content, chatId, attachment, id } = req.body;
 
         if (!content && !attachment?.url) {
-            console.log("❌ Message content or attachment required");
             return res.status(400).json({ error: "Message content or attachment required" });
         }
 
-        // ✅ Check if chatId exists
+        //  Check if chatId exists
         const chatExists = await Chat.findById(chatId);
         if (!chatExists) {
-            console.error("❌ Chat not found in database:", chatId);
             return res.status(400).json({ error: "Chat not found" });
         }
 
-        // ✅ Create new message linked to a valid chat
+        //  Create new message linked to a valid chat
         const newMessage = new Message({
             sender: id,
             content,
@@ -28,16 +26,15 @@ const sendMessage = async (req, res) => {
 
         const savedMessage = await newMessage.save();
 
-        // ✅ Populate sender and chat
+        //  Populate sender and chat
         const fullMessage = await Message.findById(savedMessage._id)
             .populate("sender", "-password")
             .populate("chat");
 
         await Chat.findByIdAndUpdate(chatId, { latestMessage: fullMessage });
 
-        // ✅ Emit event to chat room
+        //  Emit event to chat room
         const io = getIo();
-        console.log("✅ Message sent successfully:", fullMessage);
         io.to(chatId).emit("receive-message", fullMessage);
 
         res.status(201).json(fullMessage);
