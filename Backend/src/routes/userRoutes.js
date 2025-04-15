@@ -11,7 +11,7 @@ const upload = require("upload");
 const router = express.Router();
 
 router.post('/get-college-options', getCollegeOptions);
-router.post('/add-user-details', addUserDetails, upload.single("profileImage"));
+// router.post('/add-user-details', addUserDetails, upload.single("profileImage"));
 
 // Protected Routes using authMiddleware
 router.get('/all-users', authMiddleware, getAllUsers);
