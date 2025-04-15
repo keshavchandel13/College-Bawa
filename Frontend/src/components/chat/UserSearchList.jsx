@@ -3,7 +3,7 @@ import { useChat } from "../../context/chatContext";
 import { fetchUsersByQuery } from "../../features/user/userService";
 import { accessOrCreateChat } from "../../features/chat/chatService";
 import "../../styles/chat/UserSearchList.css";
-
+import { IoIosSearch } from "react-icons/io";
 const UserSearchList = ({ setChats, token }) => {
   const { setActiveChat, setSelectedUser, currentUser, chats } = useChat();
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,13 +36,16 @@ const UserSearchList = ({ setChats, token }) => {
 
   return (
     <div className="search-container">
-      <input
-        type="text"
-        placeholder="Search users..."
-        className="search-input"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+      <div className="search-user-input-container">
+        <input
+          type="text"
+          placeholder="Search users..."
+          className="search-input"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <IoIosSearch className="search-user-input-container-icon" />
+      </div>
 
       {showDropdown && (
         <ul className="dropdown">
