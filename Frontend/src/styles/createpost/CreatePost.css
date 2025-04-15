@@ -1,0 +1,119 @@
+/* CreatePost.css */
+
+.create-post-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .create-post-heading {
+    font-size: 2.4rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .post-box {
+    background: linear-gradient(145deg, #ffffff, #f1f1f1);
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Write something */
+  .post-text-area label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #2d2d2d;
+  }
+  
+  .post-text-area textarea {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 1rem;
+    resize: none;
+    min-height: 130px;
+    transition: border-color 0.3s;
+  }
+  
+  .post-text-area textarea:focus {
+    outline: none;
+    border-color: #6a5acd;
+  }
+  
+  /* Image section */
+  .preview-section {
+    border-top: 1px solid #ddd;
+    padding-top: 18px;
+  }
+  
+  .file-input {
+    padding: 8px;
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .image-preview {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #aaa;
+    border-radius: 12px;
+    background-color: #f5f5f5;
+    padding: 16px;
+  }
+  
+  .preview-img {
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 10px;
+    object-fit: contain;
+  }
+  
+  /* Post Button */
+  .post-btn-wrapper {
+    margin-top: 20px;
+  }
+  
+  .post-btn {
+    width: 100%;
+    padding: 16px;
+    background: #6a5acd;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .post-btn:hover {
+    background: #5a4bcf;
+  }
+  
+  .login-message {
+    text-align: center;
+    margin-top: 30px;
+    color: #777;
+  }
+  
+  .recent-post-heading {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 30px 0 16px;
+    color: #444;
+  }
+  

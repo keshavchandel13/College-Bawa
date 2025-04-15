@@ -3,19 +3,38 @@ const Post = require("../models/Post");
 // Create a new post
 exports.createPost = async (req, res) => {
   try {
+    // Log to debug the incoming request
+    console.log("Request Body:", req.body);
+    console.log("Uploaded File:", req.file);
+
     const { content } = req.body;
-    
+
+    // Validate content before creating post
+    if (!content || !content.trim()) {
+      return res.status(400).json({ message: "Content is required" });
+    }
+
+    // Handle image file (if exists)
     let image = null;
     if (req.file) {
+      // Check if req.file exists and has a valid filename
       image = `/uploads/${req.file.filename}`;
     }
 
+    // Create the new post
     const post = new Post({ user: req.user.id, content, image });
+
+    // Save the post to the database
     await post.save();
 
+    // Respond with the created post data
     res.status(201).json({ message: "Post created", post });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    // Log the error for debugging
+    console.error("Error creating post:", error);
+
+    // Send a detailed error response
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

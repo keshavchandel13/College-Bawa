@@ -1,17 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/posts"; // Adjust if backend runs on a different port
-
-// Get all posts
-// export const getPosts = async () => {
-//   try {
-//     const response = await axios.get(API_URL);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching posts:", error);
-//     return [];
-//   }
-// };
+const API_URL = "http://localhost:5000/api/posts"; // Update if backend port changes
 
 // Create a new post
 export const createPost = async (content, image, token) => {
@@ -22,14 +11,14 @@ export const createPost = async (content, image, token) => {
 
     const response = await axios.post(API_URL, formData, {
       headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+        // Let Axios automatically set the correct Content-Type
       },
     });
 
     return response.data;
   } catch (error) {
-    console.error("Error creating post:", error);
+    console.error("Error creating post:", error?.response?.data || error.message);
     return null;
   }
 };
@@ -43,7 +32,7 @@ export const likePost = async (postId, token) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error liking post:", error);
+    console.error("Error liking post:", error?.response?.data || error.message);
   }
 };
 
@@ -56,7 +45,7 @@ export const commentOnPost = async (postId, text, token) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error commenting on post:", error);
+    console.error("Error commenting on post:", error?.response?.data || error.message);
   }
 };
 
@@ -69,6 +58,6 @@ export const sharePost = async (postId, token) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error sharing post:", error);
+    console.error("Error sharing post:", error?.response?.data || error.message);
   }
 };
