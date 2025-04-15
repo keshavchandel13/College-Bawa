@@ -5,9 +5,6 @@ const { getAllUsers, getUserById, updateUserProfile } = require('../controllers/
 
 //Cloudinary file upload 
 const upload = require("upload");
-
-
-
 const router = express.Router();
 
 router.post('/get-college-options', getCollegeOptions);
