@@ -1,17 +1,11 @@
 const User = require('../models/User');
 const College = require('../models/Colleges');
-const { getCollegeOptions } = require('../utils/collegeUtils');
-const fs = require("fs")
-const uploadToCloudinary = require("../utils/uploadToCloudinary")
-
-exports.getCollegeOptions = async (req, res) => {
-    const { email } = req.body;
-    const collegeData = await getCollegeOptions(email);
-    res.status(200).json(collegeData);
-};
+const uploadToCloudinary = require("../utils/uploadToCloudinary");
 
 exports.addUserDetails = async (req, res) => {
     const { email, address, age, branch, college } = req.body;
+    console.log("in add user")
+    console.log(email, address, age, branch, college);
     try {
         let user = await User.findOne({ email });
         if (!user) return res.status(404).json({ message: "User not found" });
@@ -25,12 +19,10 @@ exports.addUserDetails = async (req, res) => {
             await collegeEntry.save();
         }
 
-        let imageUrl = user.profileImage || "https://res.cloudinary.com/dvebgf4vr/image/upload/v1743272506/IMG_20231114_130924384_dpdkd7.jpg"; //Default image incase of no image uploaded
+        let imageUrl = user.profileImage || "https://res.cloudinary.com/dvebgf4vr/image/upload/v1743272506/IMG_20231114_130924384_dpdkd7.jpg"; // Default image
         if (req.file) {
-            imageUrl = await uploadToCloudinary(req.file.path, "user_uploads");
-            fs.unlinkSync(req.file.path);
+            imageUrl = await uploadToCloudinary(req.file.buffer, "user_uploads");
         }
-
 
         user.address = address;
         user.age = age;

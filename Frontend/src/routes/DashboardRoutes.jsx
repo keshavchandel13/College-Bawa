@@ -1,5 +1,6 @@
 import React,{lazy} from "react";
 import { Routes, Route } from "react-router-dom";
+import AddUserProfile from "../pages/AddUserProfile";
 
 // Applying lazy loading
 const Home = lazy(()=> import ("../pages/Home"))
@@ -16,7 +17,7 @@ const DashboardRoutes = () => {
       <Route path="/" element={<Home />}>
        <Route index element={<HomeFeed />} /> 
         <Route path="homefeed" element={<HomeFeed />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile" element={<AddUserProfile />} />
         <Route path="chat" element={<Chat token={token} />} />
         <Route path="more" element={<Logout />} />
         <Route path="createpost" element={<CreatePost token={token} />} />
