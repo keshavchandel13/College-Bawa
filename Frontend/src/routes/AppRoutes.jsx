@@ -11,6 +11,7 @@ const ResetPassword = lazy(() => import("../features/auth/ResetPassword"));
 const LoginWithGoogle = lazy(() => import("../features/auth/LoginWithGoogle"));
 const DashboardRoutes = lazy(() => import("./DashboardRoutes"));
 const NotFound = lazy(() => import("../pages/NotFound"));
+const AddUserProfile = lazy(() => import("../pages/AddUserProfile"));
 
 
 function AppRoutes() {
@@ -70,6 +71,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <DashboardRoutes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-user-profile"
+          element={
+            <ProtectedRoute>
+              <AddUserProfile userEmail={user?.email} />
             </ProtectedRoute>
           }
         />

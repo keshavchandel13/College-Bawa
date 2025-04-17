@@ -8,7 +8,6 @@ require("dotenv").config();
 // App and DB setup
 const connectDB = require("./config/db");
 const passport = require("./config/passport");
-const collegeRoutes = require("./routes/collegeRoutes");
 const authRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
 const { initSocket } = require("./sockets/socketHandler");
@@ -57,7 +56,6 @@ app.use("/api/chats", require("./routes/chatRoutes"));
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/notification", require("./routes/notificationRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
-app.use("/api/college", collegeRoutes);
 app.use("/api/user", require("./routes/userRoutes"));
 
 // Root route

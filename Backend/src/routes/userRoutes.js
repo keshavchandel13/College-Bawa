@@ -1,14 +1,13 @@
 const express = require('express');
-const { getCollegeOptions, addUserDetails } = require('../controllers/userDetailsController');
+const { addUserDetails } = require('../controllers/userDetailsController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const { getAllUsers, getUserById, updateUserProfile } = require('../controllers/userController');
+const upload = require("../middlewares/multer")
 
-//Cloudinary file upload 
-const upload = require("upload");
+
 const router = express.Router();
 
-router.post('/get-college-options', getCollegeOptions);
-// router.post('/add-user-details', addUserDetails, upload.single("profileImage"));
+router.post('/addUserDetails', upload.single("profileImage"), addUserDetails);
 
 // Protected Routes using authMiddleware
 router.get('/all-users', authMiddleware, getAllUsers);
