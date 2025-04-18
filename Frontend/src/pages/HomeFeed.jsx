@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/homepage/homefeed.css';
+import CreatePostModal from '../features/homefeed/CreatePostModal';
 
-const posts = [
+const initialPosts = [
   {
     id: 1,
     user: 'John Doe',
@@ -39,10 +40,13 @@ const posts = [
   },
 ];
 
-export default function HomeFeed() {
+export default function HomeFeed({ token }) {
   const [likedPosts, setLikedPosts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
-  // Toggle like on post
+  const openCreatePost = () => setShowModal(true);
+  const closeCreatePost = () => setShowModal(false);
+
   const toggleLike = (postId) => {
     setLikedPosts((prevLikes) =>
       prevLikes.includes(postId)
@@ -53,10 +57,36 @@ export default function HomeFeed() {
 
   return (
     <div className="home-feed-container">
-      <div className="home-feed-title">Explore</div>
+      <div className="home-feed-title">College Bawa</div>
 
+      {/* Stories Section */}
+      <div className="stories-container">
+        {[1, 2, 3, 4].map((num) => (
+          <div key={num} className="story">
+            <img src={`https://picsum.photos/id/24${num}/80/80`} alt="story" />
+            <span>Ustad {num}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Create Post Box */}
+      <div className="create-post-box">
+        <img src="https://picsum.photos/id/255/50/50" alt="Your Avatar" />
+        <input
+          type="text"
+          onClick={openCreatePost}
+          placeholder="What's on your mind?"
+          readOnly
+        />
+        <button onClick={openCreatePost}>Post</button>
+      </div>
+
+      {/* Create Post Modal */}
+      <CreatePostModal show={showModal} onClose={closeCreatePost} token={token} />
+
+      {/* Posts Section */}
       <div className="posts-container">
-        {posts.map((post) => (
+        {initialPosts.map((post) => (
           <div key={post.id} className="post">
             <div className="post-header">
               <img
@@ -67,7 +97,9 @@ export default function HomeFeed() {
               <span className="post-user">{post.user}</span>
             </div>
             <p className="post-caption">{post.caption}</p>
-            <img src={post.image} alt="Post visual" className="post-image" />
+            {post.image && (
+              <img src={post.image} alt="Post visual" className="post-image" />
+            )}
             <div className="post-actions">
               <button
                 className={`post-action-button ${likedPosts.includes(post.id) ? 'liked' : ''}`}

@@ -2,7 +2,7 @@ import React from "react";
 import ChatBox from "../components/chat/ChatBox";
 import ChatList from "../components/chat/ChatList";
 import { useChat } from "../context/chatContext";
-import "../styles/chat/chat.css"; // Import external CSS file
+import "../styles/chat/chat.css"; 
 
 const Chat = ({ token }) => {
   const { selectedChat, selectedUser } = useChat();

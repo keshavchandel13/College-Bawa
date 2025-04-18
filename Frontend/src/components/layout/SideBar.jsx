@@ -17,7 +17,7 @@ const menuItems = [
 
 export default function Sidebar() {
   return (
-    <div className="sidebar-container">
+    <div className="sidebar-container"> 
       <div className="sidebar-header">
         <img src="/logo2.png" alt="College Bawa Logo" className="sidebar-logo" />
         <h1 className="sidebar-title">College Bawa</h1>

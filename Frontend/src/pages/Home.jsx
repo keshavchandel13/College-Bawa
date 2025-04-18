@@ -4,9 +4,9 @@ import '../styles/homepage/home.css';
 import { Outlet } from "react-router-dom";
 function Home() {
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <div style={{ display: "flex", backgroundColor:" #f4f4f4" }}>
     <Sidebar />
-    <div style={{ flex: 1, overflowY: "auto" }}>
+    <div style={{ flex: 1, overflowY: "auto", paddingLeft:"60px" }}>
       <Outlet />
     </div>
   </div>

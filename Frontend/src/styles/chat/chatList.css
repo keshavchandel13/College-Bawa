@@ -1,24 +1,21 @@
 .chat-list {
-  width: 51vh;
   height: 100%;
   border-right: 1px solid #ddd;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  border-radius: 20px;
+  background-color: #f8f8f8;
   padding: 20px;
   overflow-y: auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.4s;
 }
-
-
 
 .chat-list-title {
   font-size: 24px;
   font-weight: bold;
   padding: 10px 0;
-  color: #ffffff;
+  color: #333; 
   text-align: center;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
 .chat-items {
@@ -28,27 +25,26 @@
 .chat-item {
   display: flex;
   align-items: center;
-  padding: 15px;
-  border-radius: 15px;
+  padding: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  margin-bottom: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); 
 }
 
 .chat-item:hover {
-  transform: translateY(-3px);
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  background-color: #f1f1f1; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .chat-item-active {
-  background: linear-gradient(145deg, #00b4db, #0083b0);
+  background-color: #0a84ff; 
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.4);
+  transform: translateY(-2px);
 }
 
 .chat-image {
@@ -56,40 +52,42 @@
   height: 45px;
   border-radius: 50%;
   margin-right: 15px;
-  border: 2px solid #ffffff;
-  transition: transform 0.3s;
-}
-
-.chat-image:hover {
-  transform: scale(1.05);
+  border: 2px solid #ddd;
+  object-fit: cover;
 }
 
 .chat-info {
   flex: 1;
-  color: #ffffff;
+  overflow: hidden;
 }
 
 .chat-name {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 16px;
-  color: #e0e0e0;
-  margin-bottom: 5px;
+  color: #333;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat-message {
   font-size: 13px;
-  color: #cccccc;
+  color: #777; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .no-chats {
   text-align: center;
   font-size: 16px;
-  color: #ffffff;
+  color: #888;
   padding-top: 20px;
 }
 
 .loading-text {
   padding: 10px;
-  color: #ffffff;
+  color: #555;
   text-align: center;
 }

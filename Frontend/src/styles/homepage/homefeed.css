@@ -1,101 +1,166 @@
 .home-feed-container {
-    padding: 1.5rem;
-    background: #fafafa;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    /* margin-left: 324px;  */
-    /* margin-top: 2rem; */
-    height: calc(108vh - 3rem); /* Adjust for full screen */
-    overflow-y: auto; /* Enable scrolling */
-  }
-  
-  .home-feed-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #1565c0;
-    margin-bottom: 1.5rem;
-  }
-  
-  .posts-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .post {
-    background: #fff;
-    padding: 1.2rem;
-    border-radius: 15px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  
-  .post-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .post-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .post-user {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .post-caption {
-    font-size: 1rem;
-    color: #444;
-    margin-top: 1rem;
-  }
-  
-  .post-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-top: 1rem;
-  }
-  
-  .post-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .post-action-button {
-    background-color: #1565c0;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .post-action-button:hover {
-    background-color: #3a6ea5;
-  }
-  
-  .post-action-button.liked {
-    background-color: #ff69b4;
-  }
-  
-  .posts-container::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .posts-container::-webkit-scrollbar-thumb {
-    background-color: #1565c0;
-    border-radius: 10px;
-  }
-  
-  .posts-container::-webkit-scrollbar-track {
-    background-color: #e0f7fa;
-  }
-  
+  padding: 1.5rem;
+  background: #fafafa;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: calc(108vh - 3rem);
+  overflow-y: auto;
+}
+
+.home-feed-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1565c0;
+  margin-bottom: 1.5rem;
+}
+
+/* Stories */
+.stories-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.story img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #1565c0;
+  object-fit: cover;
+}
+
+/* Create Post Box */
+.create-post-box {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.create-post-box img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.create-post-box input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 1rem;
+}
+
+.create-post-box button {
+  padding: 0.5rem 1.2rem;
+  background-color: #1565c0;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.create-post-box button:hover {
+  background-color: #0d47a1;
+}
+
+/* Posts */
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.post {
+  background: #fff;
+  padding: 1.2rem;
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-user {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.post-caption {
+  font-size: 1rem;
+  color: #444;
+  margin-top: 1rem;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.post-action-button {
+  background-color: #1565c0;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.post-action-button:hover {
+  background-color: #3a6ea5;
+}
+
+.post-action-button.liked {
+  background-color: #ff69b4;
+}
+
+.posts-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.posts-container::-webkit-scrollbar-thumb {
+  background-color: #1565c0;
+  border-radius: 10px;
+}
+
+.posts-container::-webkit-scrollbar-track {
+  background-color: #e0f7fa;
+}

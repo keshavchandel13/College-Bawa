@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useChat } from "../../context/chatContext";
 import { fetchUsersByQuery } from "../../features/user/userService";
-import { accessOrCreateChat } from "../../features/chat/chatService";
 import "../../styles/chat/UserSearchList.css";
 import { IoIosSearch } from "react-icons/io";
-const UserSearchList = ({ setChats, token }) => {
-  const { setActiveChat, setSelectedUser, currentUser, chats } = useChat();
+const UserSearchList = ({token }) => {
+  const {  currentUser } = useChat();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
