@@ -4,7 +4,8 @@ import "../styles/createpost/CreatePost.css";
 
 const CreatePost = ({ token }) => {
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null); // To store the selected image
+  const [imageFile, setImageFile] = useState(null); // File to send to backend
+  const [previewUrl, setPreviewUrl] = useState(null); // URL for preview
   const [refreshFeed, setRefreshFeed] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -15,25 +16,28 @@ const CreatePost = ({ token }) => {
 
     const formData = new FormData();
     formData.append("content", content);
-    if (image) {
-      formData.append("image", image); // Attach the image file to the request
+    if (imageFile) {
+      console.log("🖼️ Image file:", imageFile);
+      formData.append("image", imageFile); // Correctly send the File
     }
 
     try {
       const response = await fetch("http://localhost:5000/api/posts", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: formData, // Send the form data as the body
+        body: formData, // Let browser set content-type for FormData
       });
 
       if (!response.ok) {
         throw new Error("Failed to post");
       }
 
-      setContent(""); // Clear the textarea
-      setImage(null); // Clear the selected image
+      // Reset state on success
+      setContent("");
+      setImageFile(null);
+      setPreviewUrl(null);
       setRefreshFeed((prev) => !prev);
     } catch (err) {
       alert("Something went wrong!");
@@ -43,11 +47,12 @@ const CreatePost = ({ token }) => {
     }
   };
 
-  // Handle file selection and image preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file)); // Generate a preview URL for the image
+      console.log("📥 Selected file:", file);
+      setImageFile(file); // File for backend
+      setPreviewUrl(URL.createObjectURL(file)); // Blob for preview
     }
   };
 
@@ -78,9 +83,9 @@ const CreatePost = ({ token }) => {
                 onChange={handleImageChange}
                 className="file-input"
               />
-              {image && (
+              {previewUrl && (
                 <div className="image-preview">
-                  <img src={image} alt="Preview" className="preview-img" />
+                  <img src={previewUrl} alt="Preview" className="preview-img" />
                 </div>
               )}
             </div>

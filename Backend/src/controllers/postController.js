@@ -4,10 +4,11 @@ const Post = require("../models/Post");
 exports.createPost = async (req, res) => {
   try {
     // Log to debug the incoming request
-    console.log("Request Body:", req.body);
+ 
     console.log("Uploaded File:", req.file);
 
     const { content } = req.body;
+
 
     // Validate content before creating post
     if (!content || !content.trim()) {
@@ -21,8 +22,9 @@ exports.createPost = async (req, res) => {
       image = `/uploads/${req.file.filename}`;
     }
 
-    // Create the new post
-    const post = new Post({ user: req.user.id, content, image });
+    // Create the new 
+    console.log(req.user.userId, content, image)
+    const post = new Post({ user: req.user.userId, content, image });
 
     // Save the post to the database
     await post.save();

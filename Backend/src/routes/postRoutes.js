@@ -33,10 +33,14 @@ const upload = multer({
 // Routes
 router.post("/", authMiddleware, (req, res) => {
   upload(req, res, (err) => {
+    console.log("🖼️ req.file:", req.file);
+    console.log("I am here un route")
+    console.log(req.body)
     if (err) {
       // Handle file upload errors
       return res.status(400).json({ message: "File upload failed", error: err.message });
     }
+    
     // Proceed with creating the post
     createPost(req, res);
   });
