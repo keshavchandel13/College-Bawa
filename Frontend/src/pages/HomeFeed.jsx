@@ -5,14 +5,14 @@ import CreatePostModal from '../features/homefeed/CreatePostModal';
 const initialPosts = [
   {
     id: 1,
-    user: 'John Doe',
+    user: 'Coder Chacha',
     caption: 'Excited for the upcoming coding challenge. Let’s smash it!',
     profilePicture: 'https://picsum.photos/id/238/50/50',
     image: 'https://picsum.photos/id/238/500/300',
   },
   {
     id: 2,
-    user: 'Jane Smith',
+    user: 'Coder dada',
     caption: 'Looking for study partners for the upcoming exams!',
     profilePicture: 'https://picsum.photos/id/237/50/50',
     image: 'https://picsum.photos/id/237/500/300',
