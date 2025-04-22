@@ -58,7 +58,7 @@ const CreatePost = ({ token }) => {
 
   return (
     <div className="create-post-container">
-      <h1 className="create-post-heading">📣 Create a Post</h1>
+      <h1 className="create-post-heading"> Create a Post</h1>
 
       {token ? (
         <>
@@ -102,10 +102,6 @@ const CreatePost = ({ token }) => {
             </div>
           </div>
 
-          <div>
-            <h2 className="recent-post-heading">📰 Recent Posts</h2>
-            <Feed token={token} refresh={refreshFeed} />
-          </div>
         </>
       ) : (
         <div className="login-message">
