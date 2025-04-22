@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { submitUserProfile } from "../api/profile";
 import "../styles/homepage/addUserProfile.css";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const AddUserProfile = () => {
+const AddUserProfile = ({ onEditClick }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,9 +38,13 @@ const AddUserProfile = () => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Complete Your Profile</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="add-user-profile__container">
+      <h2 className="add-user-profile__title">Complete Your Profile</h2>
+      <IoIosCloseCircleOutline
+        onClick={onEditClick}
+        className="add-user-profile__close-icon"
+      />
+      <form onSubmit={handleSubmit} className="add-user-profile__form">
         <input
           type="text"
           name="name"
@@ -47,6 +52,7 @@ const AddUserProfile = () => {
           value={formData.name}
           onChange={handleChange}
           required
+          className="add-user-profile__input"
         />
         <input
           type="email"
@@ -55,6 +61,7 @@ const AddUserProfile = () => {
           value={formData.email}
           onChange={handleChange}
           required
+          className="add-user-profile__input"
         />
         <input
           type="text"
@@ -63,6 +70,7 @@ const AddUserProfile = () => {
           value={formData.college}
           onChange={handleChange}
           required
+          className="add-user-profile__input"
         />
         <input
           type="text"
@@ -71,6 +79,7 @@ const AddUserProfile = () => {
           value={formData.department}
           onChange={handleChange}
           required
+          className="add-user-profile__input"
         />
         <textarea
           name="bio"
@@ -79,6 +88,7 @@ const AddUserProfile = () => {
           value={formData.bio}
           onChange={handleChange}
           required
+          className="add-user-profile__textarea"
         />
         <input
           type="text"
@@ -87,6 +97,7 @@ const AddUserProfile = () => {
           value={formData.skills}
           onChange={handleChange}
           required
+          className="add-user-profile__input"
         />
         <input
           type="file"
@@ -94,10 +105,13 @@ const AddUserProfile = () => {
           accept="image/*"
           onChange={handleChange}
           required
+          className="add-user-profile__file"
         />
-        <button type="submit">Submit</button>
+        <button type="submit" className="add-user-profile__button">Submit</button>
       </form>
-      {message && <p style={{ textAlign: "center", marginTop: "10px" }}>{message}</p>}
+      {message && (
+        <p className="add-user-profile__message">{message}</p>
+      )}
     </div>
   );
 };

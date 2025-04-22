@@ -1,8 +1,8 @@
 import React from "react";
 import "../styles/homepage/profilepage.css";
-import { userProfile } from "../features/profile/userProfile";
+import { FaEdit } from "react-icons/fa"; // using react-icons for pencil icon
 
-const Profile = () => {
+const Profile = ({ onEditClick }) => {
   const user = {
     name: "Keshav Chandel",
     email: "chandelkeshav4@gmail.com",
@@ -10,10 +10,8 @@ const Profile = () => {
     department: "Computer Science",
     bio: "Passionate about tech, community building and startup culture.",
     skills: ["React", "Node.js", "MongoDB", "DSA", "UI/UX"],
-    profileImage:
-      "/default.jpg",
+    profileImage: "/default.jpg",
   };
-
 
   return (
     <div className="profile-container">
@@ -22,6 +20,7 @@ const Profile = () => {
           <img src={user.profileImage} alt="Profile" className="profile-image" />
           <h2>{user.name}</h2>
           <p className="bio">{user.bio}</p>
+          <FaEdit className="edit-icon" onClick={onEditClick} title="Edit Profile" />
         </div>
         <div className="profile-details">
           <p><strong>Email:</strong> {user.email}</p>

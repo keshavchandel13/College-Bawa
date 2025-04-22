@@ -92,7 +92,7 @@ const ChatList = ({ token }) => {
                 ? chat.profileImage || "/default.jpg"
                 : chat.groupImage || "/default.jpg";
 
-            const name =
+            const name = 
               chat.chatType === "user" ? chat.name : chat.chatName;
 
             const lastMessage =
