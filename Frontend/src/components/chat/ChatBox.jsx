@@ -4,7 +4,7 @@ import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
 import { sendMessage } from "../../features/message/messageService";
 import socket from "../../sockets/socket";
-import { getUserChats } from "../../features/chat/chatService";
+import {accessOrCreateChat, getUserChats } from "../../features/chat/chatService";
 import Navbar from "./Navbar";
 import "../../styles/chat/chatBox.css";
 
@@ -18,42 +18,53 @@ const ChatBox = ({ token }) => {
   const messageContainerRef = useRef(null);
   const [chatId, setChatId] = useState(null);
 
-  const fetchMessages = async (page = 1) => {
-    if (!selectedUser) return;
-    setLoading(true);
-    setError(null);
 
-    try {
-      const data = await getUserChats(
-        token,
-        currentUser._id,
-        selectedUser._id,
-        page,
-        10
-      );
-      if (data.chat) {
-        setChatId(data.chat._id);
-      }
-      setMessages((prev) =>
-        page === 1 ? [...data.messages] : [...data.messages, ...prev]
-      );
-      if (page === 1) {
-        setTimeout(() => {
-          messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-        }, 0);
-      }
-    } catch (err) {
-      setError("Failed to load messages");
-    } finally {
-      setLoading(false);
+const fetchMessages = async (page = 1) => {
+  if (!selectedUser) return;
+  setLoading(true);
+  setError(null);
+
+  try {
+    // 1️⃣ Access or create the chat first
+    const chat = await accessOrCreateChat(
+      { userId: selectedUser._id, currentUserId: currentUser._id },
+      token
+    );
+    setChatId(chat._id); // Update chat ID state
+
+    // 2️⃣ Then fetch messages
+    const data = await getUserChats(
+      token,
+      currentUser._id,
+      selectedUser._id,
+      page,
+      10
+    );
+
+    setMessages((prev) =>
+      page === 1 ? [...data.messages] : [...data.messages, ...prev]
+    );
+
+    if (page === 1) {
+      setTimeout(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Failed to load messages");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     if (!selectedUser) {
       setMessages([]);
       return;
     }
+    setPage(1);
+    setChatId(null);
     setLoading(true);
     fetchMessages(1);
   }, [selectedUser, token]);
@@ -102,12 +113,11 @@ const ChatBox = ({ token }) => {
   };
 
   const loadMoreChats = () => {
-    setPage((prevPage) => {
-      const nextPage = prevPage + 1;
-      fetchMessages(nextPage);
-      return nextPage;
-    });
+    const nextPage = page + 1;
+    fetchMessages(nextPage);
+    setPage(nextPage);
   };
+  
 
   useEffect(() => {
     if (page === 1 && messages.length > 0) {
@@ -119,7 +129,7 @@ const ChatBox = ({ token }) => {
 
   return (
     <div className="chatbox-container">
-      {error && <div className="error-message">{error}</div>}
+      {/* {error && <div className="error-message">{error}</div>} */}
 
       {selectedUser ? (
         <div className="chatbox">

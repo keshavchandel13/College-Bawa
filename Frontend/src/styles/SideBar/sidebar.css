@@ -11,6 +11,7 @@
   overflow: hidden;
   transition: width 0.3s ease;
   position: fixed;
+  z-index: 9999; 
 }
 
 .sidebar-container:hover {

@@ -56,7 +56,7 @@ const accessOrCreateChat = async (req, res) => {
         }
 
         //  Fetch messages for this chat
-        const messages = await Message.find({ chat: chat._id }) // Now using correct `chatId`
+        const messages = await Message.find({ chat: chat._id }) 
             .sort({ createdAt: -1 })  // Latest messages first
             .skip(skip)
             .limit(parseInt(limit))

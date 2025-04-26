@@ -1,70 +1,52 @@
-.chat-list {
-  height: 100%;
-  border-right: 1px solid #ddd;
-  background-color: #f8f8f8;
-  padding: 20px;
-  overflow-y: auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.4s;
-}
-
-.chat-list-title {
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px 0;
-  color: #333; 
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 10px;
-}
-
 .chat-items {
   margin-top: 20px;
-}
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
+
+}
+.chat-list-title{
+  font-size: 1.6rem;
+  font-weight: 600;
+}
 .chat-item {
   display: flex;
   align-items: center;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
-  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
-  background: #ffffff;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); 
+  background-color: transparent;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .chat-item:hover {
-  transform: translateY(-2px);
-  background-color: #f1f1f1; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
 }
 
 .chat-item-active {
-  background-color: #0a84ff; 
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.4);
+  background-color: #e6f0ff;
 }
 
 .chat-image {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  margin-right: 15px;
-  border: 2px solid #ddd;
   object-fit: cover;
+  margin-right: 12px;
 }
 
 .chat-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
 .chat-name {
   font-weight: 600;
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 4px;
+  font-size: 15px;
+  color: #111;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -72,21 +54,8 @@
 
 .chat-message {
   font-size: 13px;
-  color: #777; 
+  color: #666;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.no-chats {
-  text-align: center;
-  font-size: 16px;
-  color: #888;
-  padding-top: 20px;
-}
-
-.loading-text {
-  padding: 10px;
-  color: #555;
-  text-align: center;
 }

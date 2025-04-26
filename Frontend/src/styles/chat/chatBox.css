@@ -3,23 +3,18 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #f4f4f9;
+  background: #f0f2f5; /* soft light gray-blue background */
 }
 
 .chatbox {
+  width: -webkit-fill-available;
   height: 100vh;
-  width: 119vh;
-
-  background: white;
-  border-radius: 15px;
+  background: #ffffff; /* clean white background */
   overflow: hidden;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .chatbox-header {
-  background: linear-gradient(to right, #4a90e2, #007bff);
-  color: white;
-  padding: 4px;
+  color: #ffffff;
   font-size: 18px;
   font-weight: bold;
   text-align: center;
@@ -31,12 +26,12 @@
   height: 400px;
   overflow-y: auto;
   padding: 15px;
-  background: #fafafa;
+  background: #f9f9fb; /* near white with blue tint */
 }
 
 .no-messages {
   text-align: center;
-  color: gray;
+  color: #999ea5; /* soft gray */
   font-style: italic;
 }
 
@@ -44,26 +39,35 @@
   display: block;
   margin: 10px auto;
   padding: 5px 15px;
-  background: #4a90e2;
-  color: white;
+  background: #6ba9f0; /* matching soft blue */
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.load-more:hover {
+  background: #5d9be8; /* slightly deeper soft blue on hover */
 }
 
 .select-chat-message {
   font-size: 18px;
-  color: gray;
+  color: #888d94; /* neutral gray-blue */
   text-align: center;
 }
 
 .error-message {
-  color: red;
+  color: #e05c5c; /* soft red */
   text-align: center;
   font-weight: bold;
 }
-.chat-box-message-input{
+
+.chat-box-message-input {
   position: fixed;
   bottom: 0;
-  width: 119vh;
+  width: -webkit-fill-available;
+  background: #ffffff;
+  padding: 10px;
+  border-top: 1px solid #e1e4e8; /* soft divider line */
 }

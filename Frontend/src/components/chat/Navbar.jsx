@@ -8,7 +8,7 @@ const Navbar = ({ selectedUser }) => {
         <img
           src={selectedUser?.profileImage || "/default.jpg"}
           alt="Profile"
-          className="profile-image"
+          className="chat-image"
         />
         <span className="user-name">{selectedUser?.name || "User"}</span>
       </div>

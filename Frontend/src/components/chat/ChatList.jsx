@@ -46,7 +46,6 @@ const ChatList = ({ token }) => {
           const dateB = new Date(b.latestMessage?.createdAt || b.createdAt);
           return dateB - dateA;
         });
-
         setAllChats(mergedChats);
       } catch (error) {
         console.error("Failed to load chats:", error);
@@ -77,7 +76,7 @@ const ChatList = ({ token }) => {
       <h2 className="chat-list-title">Chats</h2>
 
       {/* Search input for users */}
-      <UserSearchList setChats={setChats} token={token} />
+      <UserSearchList token={token} />
 
       <div className="chat-items">
         {allChats.length > 0 ? (

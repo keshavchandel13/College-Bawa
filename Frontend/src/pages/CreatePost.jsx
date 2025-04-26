@@ -18,7 +18,7 @@ const CreatePost = ({ token }) => {
     formData.append("content", content);
     if (imageFile) {
       console.log("🖼️ Image file:", imageFile);
-      formData.append("image", imageFile); // Correctly send the File
+      formData.append("image", imageFile);
     }
 
     try {
@@ -27,7 +27,7 @@ const CreatePost = ({ token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: formData, // Let browser set content-type for FormData
+        body: formData, 
       });
 
       if (!response.ok) {

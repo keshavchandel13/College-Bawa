@@ -3,11 +3,12 @@ import { useChat } from "../../context/chatContext";
 import { fetchUsersByQuery } from "../../features/user/userService";
 import "../../styles/chat/UserSearchList.css";
 import { IoIosSearch } from "react-icons/io";
-const UserSearchList = ({token }) => {
-  const {  currentUser } = useChat();
+const UserSearchList = ({  token }) => {
+  const { currentUser } = useChat();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const {setSelectedUser, setActiveChat } = useChat();
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -50,13 +51,21 @@ const UserSearchList = ({token }) => {
         <ul className="dropdown">
           {suggestions.length > 0 ? (
             suggestions.map((user) => (
-              <li key={user._id} className="dropdown-item">
-                <div>{user.name}</div>
+              <li
+                key={user._id}
+                className="dropdown-item"
+                onClick={() => {
+                    setSelectedUser(user);
+                    setShowDropdown(false);
+                    setActiveChat(null);
+                  }}
+              >
+                <span>{user.name}</span>
                 <small>{user.email}</small>
               </li>
             ))
           ) : (
-            <div className="dropdown-no-results">No users found.</div>
+            <li className="dropdown-no-results">No users found.</li>
           )}
         </ul>
       )}

@@ -77,7 +77,7 @@ function Login() {
             required
             onChange={handleChange}
           />
-          <button type="submit">Login</button>
+          <button className="login-button" type="submit">Login</button>
         </form>
         <p className="forgot-password">
           <Link to={"/forgetpassword"}> Forgot Password? </Link>
