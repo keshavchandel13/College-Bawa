@@ -19,7 +19,7 @@ const DashboardRoutes = () => {
       <Route path="/" element={<Home />}>
         <Route index element={<HomeFeed token={token}/>} />
         <Route path="homefeed" element={<HomeFeed token={token} />} />
-        <Route path="profile" element={ !edit?  <Profile onEditClick={() => setEdit(true)}/>:<AddUserProfile onEditClick={()=>setEdit(false)}/>} />
+        <Route path="profile" element={ !edit?  <Profile onEditClick={() => setEdit(true)} token={token}/>:<AddUserProfile onEditClick={()=>setEdit(false)}/>} />
         <Route path="chat" element={<Chat token={token} />} />
         <Route path="more" element={<Logout />} />
         <Route path="createpost" element={<CreatePost token={token} />} />

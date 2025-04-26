@@ -44,7 +44,7 @@ const AddUserProfile = ({ onEditClick }) => {
         onClick={onEditClick}
         className="add-user-profile__close-icon"
       />
-      <form onSubmit={handleSubmit} className="add-user-profile__form">
+      <form onSubmit={handleSubmit} className="add-user-profile__form" autoComplete="">
         <input
           type="text"
           name="name"

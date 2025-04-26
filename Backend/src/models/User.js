@@ -21,7 +21,10 @@ const userSchema = new Schema({
         school: { type: String },
         address: { type: String },
         college: { type: String },
-        branch: { type: String }
+        branch: { type: String },
+        skills:{type:String},
+        bio:{type:String}
+
     },
     googleId: { type: String },
     resetToken: { type: String },

@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/homepage/profilepage.css";
-import { FaEdit } from "react-icons/fa"; // using react-icons for pencil icon
+import { FaEdit } from "react-icons/fa";
+import { getUserProfile } from '../api/profile';
 
-const Profile = ({ onEditClick }) => {
-  const user = {
-    name: "Keshav Chandel",
-    email: "chandelkeshav4@gmail.com",
-    college: "Jaypee University of  Information  Technology",
-    department: "Computer Science",
-    bio: "Passionate about tech, community building and startup culture.",
-    skills: ["React", "Node.js", "MongoDB", "DSA", "UI/UX"],
-    profileImage: "/default.jpg",
-  };
+const Profile = ({ onEditClick , token}) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getUserProfile(token);
+        setUser(data);
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return <div>Loading Profile...</div>;
+  }
+
+  if (!user) {
+    return <div>No user profile found.</div>;
+  }
 
   return (
     <div className="profile-container">
@@ -24,14 +40,10 @@ const Profile = ({ onEditClick }) => {
         </div>
         <div className="profile-details">
           <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>College:</strong> {user.college}</p>
-          <p><strong>Department:</strong> {user.department}</p>
-          <p><strong>Skills:</strong></p>
-          <ul className="skills-list">
-            {user.skills.map((skill, idx) => (
-              <li key={idx}>{skill}</li>
-            ))}
-          </ul>
+          <p><strong>College:</strong> {user.additionalDetails.college}</p>
+          <p><strong>Department:</strong> {user.additionalDetails.branch}</p>
+          <p><strong>Skills:</strong> {user.additionalDetails.skills}</p> 
+
         </div>
       </div>
     </div>
