@@ -3,7 +3,8 @@ import { submitUserProfile } from "../api/profile";
 import "../styles/homepage/addUserProfile.css";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const AddUserProfile = ({ onEditClick }) => {
+const AddUserProfile = ({ onEditClick , setEdit }) => {
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,9 +30,12 @@ const AddUserProfile = ({ onEditClick }) => {
     e.preventDefault();
 
     try {
+      setLoading(true)
       const response = await submitUserProfile(formData);
       setMessage("Profile submitted successfully!");
       console.log("API response:", response);
+      setLoading(false)
+      setEdit(false)
     } catch (err) {
       setMessage("Error submitting profile.");
     }
@@ -107,7 +111,7 @@ const AddUserProfile = ({ onEditClick }) => {
           required
           className="add-user-profile__file"
         />
-        <button type="submit" className="add-user-profile__button">Submit</button>
+        <button type="submit" className="add-user-profile__button">{loading?"Submitting...":"Submit"}</button>
       </form>
       {message && (
         <p className="add-user-profile__message">{message}</p>

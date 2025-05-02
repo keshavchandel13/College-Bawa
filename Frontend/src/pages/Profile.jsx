@@ -13,6 +13,7 @@ const Profile = ({ onEditClick , token}) => {
         const data = await getUserProfile(token);
         setUser(data);
       } catch (err) {
+        console.error('Failed to fetch profile', err);
       } finally {
         setLoading(false);
       }
@@ -33,17 +34,16 @@ const Profile = ({ onEditClick , token}) => {
     <div className="profile-container">
       <div className="profile-card glass-effect">
         <div className="profile-header">
-          <img src={user.profileImage} alt="Profile" className="profile-image" />
-          <h2>{user.name}</h2>
-          <p className="bio">{user.bio}</p>
+          <img src={user.profileImage || '/default.jpg'} alt="Profile" className="profile-image" />
+          <h2>{user.name || "No Name"}</h2>
+          <p className="bio">{user.additionalDetails?.bio || "No bio added yet"}</p>
           <FaEdit className="edit-icon" onClick={onEditClick} title="Edit Profile" />
         </div>
         <div className="profile-details">
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>College:</strong> {user.additionalDetails.college}</p>
-          <p><strong>Department:</strong> {user.additionalDetails.branch}</p>
-          <p><strong>Skills:</strong> {user.additionalDetails.skills}</p> 
-
+          <p><strong>Email:</strong> {user.email || "No email"}</p>
+          <p><strong>College:</strong> {user.additionalDetails?.college || "College not specified"}</p>
+          <p><strong>Department:</strong> {user.additionalDetails?.branch || "Branch not specified"}</p>
+          <p><strong>Skills:</strong> {user.additionalDetails?.skills || "No skills added"}</p> 
         </div>
       </div>
     </div>

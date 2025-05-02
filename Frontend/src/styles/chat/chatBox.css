@@ -3,13 +3,14 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #f0f2f5; /* soft light gray-blue background */
+  background: #f0f2f5; 
+ 
 }
 
 .chatbox {
   width: -webkit-fill-available;
   height: 100vh;
-  background: #ffffff; /* clean white background */
+  background: #ffffff;
   overflow: hidden;
 }
 

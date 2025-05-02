@@ -17,8 +17,7 @@ export const fetchUsers = async (userId) => {
       },
     };
     // Make the GET request to the server with token in headers
-    const res = await axios.get(`http://localhost:5000/api/chats/getuser?userId=${userId}`, config);
-    console.log(res.data)
+    const res = await axios.get(`http://localhost:5000/api/chats/getuser?userId=${userId}`, config); 
     // Return the data
     return res.data;
   } catch (error) {

@@ -14,7 +14,7 @@ export default function LoginWithGoogle() {
         const {email, name} = result.data.user;
         const token = result.data.token;
         const obj = {email, name, token};
-        localStorage.setItem('user-info', JSON.stringify(obj));
+        localStorage.setItem('user', JSON.stringify(obj));
         login (obj);
         navigate('/home')
       }

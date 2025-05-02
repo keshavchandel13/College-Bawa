@@ -1,9 +1,10 @@
 .navbar {
   width: 100%;
-  background: #5c8fdd; /* Soft blue, a bit lighter for a modern look */
+  background: #336699;
   color: white;
   display: flex;
   align-items: center;
+  border-bottom-left-radius: 20px;
   padding: 10px 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }

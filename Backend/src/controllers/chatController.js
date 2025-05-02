@@ -4,8 +4,6 @@ const Message = require('../models/messageModel');
 const accessOrCreateChat = async (req, res) => {
     try {
       const { userId,currentUserId } = req.body;
-      console.log("userId",userId)
-      console.log("currentUserId",currentUserId)
   
       if (!userId || !currentUserId) {
         return res.status(400).json({ error: 'UserId is required' });
@@ -16,7 +14,6 @@ const accessOrCreateChat = async (req, res) => {
         isGroupChat: false,
         users: { $all: [userId, currentUserId], $size: 2 },
       }).populate("users", "-password");
-      console.log("chats: ",chat)
       if (chat) {
         return res.json(chat);
       }
@@ -29,7 +26,6 @@ const accessOrCreateChat = async (req, res) => {
   
       const fullChat = await Chat.findById(createdChat._id)
         .populate("users", "-password");
-      console.log("full chats:",fullChat)
       res.status(201).json(fullChat);
     } catch (error) {
       console.error("Error in accessOrCreateChat:", error);
@@ -118,11 +114,10 @@ const accessOrCreateChat = async (req, res) => {
   
       // Fetch group details
       const groups = await Chat.find({ _id: { $in: userGroups } })
-        .populate("groupAdmin", "name email profileImage")
+        .populate("groupAdmin", "name email profileImage") 
         .populate("users", "name email profileImage") // fetch group members too
         .select("chatName groupImage isGroupChat users groupAdmin");
 
-     
       res.json({
         users,
         groups

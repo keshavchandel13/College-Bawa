@@ -33,6 +33,7 @@ export const getUserProfile = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   });
+  console.log(res)
   return res.data;
 };
 
