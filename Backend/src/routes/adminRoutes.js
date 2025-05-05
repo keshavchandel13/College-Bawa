@@ -1,10 +1,10 @@
 const express = require("express");
 const { getDashboardStats, deleteUser } = require("../controllers/adminControllers");
-const verifyToken = require("../middlewares/authMiddleware");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.get("/stats", verifyToken, getDashboardStats);
-router.delete("/users/:id", verifyToken, deleteUser);
+router.get("/stats", authMiddleware, getDashboardStats);
+router.delete("/users/:id", authMiddleware, deleteUser);
 
 module.exports = router;

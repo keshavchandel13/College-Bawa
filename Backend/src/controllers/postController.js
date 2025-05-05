@@ -1,14 +1,11 @@
 const Post = require("../models/Post");
+const uploadToCloudinary = require("../utils/uploadToCloudinary");
 
 // Create a new post
 exports.createPost = async (req, res) => {
   try {
-    // Log to debug the incoming request
- 
     console.log("Uploaded File:", req.file);
-
     const { content } = req.body;
-
 
     // Validate content before creating post
     if (!content || !content.trim()) {
@@ -18,13 +15,26 @@ exports.createPost = async (req, res) => {
     // Handle image file (if exists)
     let image = null;
     if (req.file) {
-      // Check if req.file exists and has a valid filename
-      image = `/uploads/${req.file.filename}`;
+      try {
+        // Upload to Cloudinary in user_post folder
+        const result = await uploadToCloudinary(req.file.buffer, "user_post");
+        image = result;
+      } catch (uploadError) {
+        console.error("Cloudinary upload error:", uploadError);
+        return res.status(500).json({ 
+          message: "Image upload failed",
+          error: uploadError.message 
+        });
+      }
     }
 
-    // Create the new 
+    // Create the new post
     console.log(req.user.userId, content, image)
-    const post = new Post({ user: req.user.userId, content, image });
+    const post = new Post({ 
+      user: req.user.userId, 
+      content, 
+      image 
+    });
 
     // Save the post to the database
     await post.save();
@@ -32,14 +42,10 @@ exports.createPost = async (req, res) => {
     // Respond with the created post data
     res.status(201).json({ message: "Post created", post });
   } catch (error) {
-    // Log the error for debugging
     console.error("Error creating post:", error);
-
-    // Send a detailed error response
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
 // Get all posts with user details
 exports.getPosts = async (req, res) => {
   try {

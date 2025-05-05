@@ -16,29 +16,43 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
+  // Retrieve user data from localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
+  const profilePic = localStorage.getItem("profileImage");
+
   return (
     <div className="sidebar-container"> 
       <div className="sidebar-header">
         <img src="/logo2.png" alt="College Bawa Logo" className="sidebar-logo" />
         <h1 className="sidebar-title">College Bawa</h1>
       </div>
+      
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
           <li key={index} className="sidebar-item">
-          {item.path ? (
-            <Link to={item.path} className="sidebar-link">
-              <span className="sidebar-icon">{item.icon}</span>
-              <span className="sidebar-label">{item.label}</span>
-            </Link>
-          ) : (
-            <div className="sidebar-link">
-              <span className="sidebar-icon">{item.icon}</span>
-              <span className="sidebar-label">{item.label}</span>
-            </div>
-          )}
-        </li>
+            {item.path ? (
+              <Link to={item.path} className="sidebar-link">
+                <span className="sidebar-icon">{item.icon}</span>
+                <span className="sidebar-label">{item.label}</span>
+              </Link>
+            ) : (
+              <div className="sidebar-link">
+                <span className="sidebar-icon">{item.icon}</span>
+                <span className="sidebar-label">{item.label}</span>
+              </div>
+            )}
+          </li>
         ))}
       </ul>
+
+      {/* User Info Section */}
+      <div className="sidebar-user">
+        {profilePic && <img src={profilePic} alt="Profile" className="sidebar-user-pic" />}
+        <div className="sidebar-user-info">
+         <Link to={"/home/profile"} style={{ textDecoration: 'none' }}> <span className="sidebar-user-name">{user ? user.name : "User"}</span> </Link>
+         <p>Online</p>
+        </div>
+      </div>
     </div>
   );
 }

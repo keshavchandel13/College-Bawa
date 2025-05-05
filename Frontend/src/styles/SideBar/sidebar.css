@@ -104,3 +104,44 @@
 .sidebar-container:hover .sidebar-label {
   opacity: 1;
 }
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  margin-top: auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-user:hover {
+  background-color: #e0e0e0;
+}
+
+.sidebar-user-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.sidebar-user-info {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-user-info p{
+  color:tomato;
+}
+
+.sidebar-user-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  white-space: nowrap;
+}
+
+.sidebar-user-name:hover {
+  color: #2d2d2d;
+}
+

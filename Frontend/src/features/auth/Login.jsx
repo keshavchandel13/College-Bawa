@@ -37,7 +37,9 @@ function Login() {
 
       const data = await response.json();
       login(data.user); // Save user data to context
+
       localStorage.setItem("user", JSON.stringify(data.user)); // Store user data in localStorage
+      localStorage.setItem("profileImage", data.user.profileImage); 
       localStorage.setItem("token", data.token); // Store token
       navigate("/home");
     } catch (error) {

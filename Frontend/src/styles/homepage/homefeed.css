@@ -54,9 +54,10 @@
 }
 
 .create-post-box img {
+  object-fit:cover;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 61px;
+  height: 61px;
 }
 
 .create-post-box input {
@@ -122,8 +123,8 @@
 }
 
 .post-image {
+  height: 32rem;
   width: 100%;
-  height: auto;
   border-radius: 10px;
   margin-top: 1rem;
 }

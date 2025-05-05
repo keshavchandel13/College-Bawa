@@ -1,68 +1,44 @@
 const express = require("express");
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-
-const {
-  createPost,
-  getPosts,
-  likePost,
-  commentOnPost,
-  sharePost
-} = require("../controllers/postController");
+const { createPost, getPosts, likePost, commentOnPost, sharePost } = require("../controllers/postController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-// 🔧 Ensure uploads folder exists
-const uploadDir = path.join(__dirname, "..", "uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
-// 📦 Set up multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
-// ⛔ 10MB file limit, single "image" field
+// Multer configuration for image upload (in-memory storage for Cloudinary)
 const upload = multer({ 
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);  // Allow image files only
+    } else {
+      cb(new Error('Only image files are allowed!'), false);  // Reject non-image files
+    }
+  }
 }).single("image");
 
-// ✅ Route for creating post
-router.post("/", authMiddleware, (req, res, next) => {
-  // Run multer first
-  upload(req, res, function (err) {
+// Route to create a post
+router.post("/", authMiddleware, (req, res) => {
+  upload(req, res, (err) => {
     if (err) {
-      console.error("Multer error:", err);
-      return res.status(400).json({ message: "File upload failed", error: err.message });
+      const errorMessage = err.code === 'LIMIT_FILE_SIZE' ? "File too large. Max 10MB allowed" : "File upload failed";
+      return res.status(400).json({ message: errorMessage, error: err.message });
     }
-
-    console.log("🖼️ Uploaded file:", req.file);
-    console.log("📝 Post content:", req.body);
-
-    // ✅ Forward to controller
-    createPost(req, res);
+    createPost(req, res);  // Forward to controller after file upload
   });
 });
 
-// ✅ Route to get all posts
-router.get("/", getPosts);
+// Route to get all posts
+router.get("/", authMiddleware, getPosts);
 
-// ✅ Like a post
+// Route to like a post
 router.post("/:id/like", authMiddleware, likePost);
 
-// ✅ Comment on a post
+// Route to comment on a post
 router.post("/:id/comment", authMiddleware, commentOnPost);
 
-// ✅ Share a post
+// Route to share a post
 router.post("/:id/share", authMiddleware, sharePost);
 
 module.exports = router;

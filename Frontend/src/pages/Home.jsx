@@ -12,7 +12,7 @@ function Home() {
       }}
     >
       <Sidebar />
-      <div style={{ flex: 1, overflowY: "auto", paddingLeft: "60px" }}>
+      <div style={{ flex: 1, overflowY: "auto", paddingLeft: "60px", height: "100vh", backgroundColor:"#f4f4f4" }}>
         <Outlet />
       </div>
     </div>

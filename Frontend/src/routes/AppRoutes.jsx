@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 // Lazy loaded components
 const Login = lazy(() => import("../features/auth/Login"));
+const AdminDashboard = lazy(() => import("../admin/AdminDashboard"));
 const Signup = lazy(() => import("../features/auth/Signup"));
 const ForgetPassword = lazy(() => import("../features/auth/ForgetPassword"));
 const ResetPassword = lazy(() => import("../features/auth/ResetPassword"));
@@ -12,7 +13,6 @@ const LoginWithGoogle = lazy(() => import("../features/auth/LoginWithGoogle"));
 const DashboardRoutes = lazy(() => import("./DashboardRoutes"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const AddUserProfile = lazy(() => import("../pages/AddUserProfile"));
-
 
 function AppRoutes() {
   const [otpRequested, setOtpRequested] = useState(false);
@@ -94,7 +94,8 @@ function AppRoutes() {
           path="/"
           element={<Navigate replace to={user ? "/home" : "/login"} />}
         />
-        <Route path="*" element={<NotFound />}/>
+        <Route path="*" element={<NotFound />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Suspense>
   );
