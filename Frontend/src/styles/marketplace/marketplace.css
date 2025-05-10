@@ -93,6 +93,7 @@ body {
   /* Each Post Card */
   .post-card {
     display: flex;
+    flex-wrap: wrap; /* Allow items to wrap if they overflow */
     gap: 18px;
     padding: 18px;
     border: 1px solid #ddd;
@@ -100,11 +101,17 @@ body {
     background-color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease;
+    word-wrap: break-word; /* Handle long words */
+    overflow: hidden;
   }
   
-  .post-card:hover {
-    transform: translateY(-4px);
+  .post-content h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: #007bff;
+    word-break: break-word; /* Ensure long titles break instead of overflowing */
   }
+  
   
   /* Image Style */
   .post-image {
