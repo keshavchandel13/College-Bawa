@@ -6,7 +6,7 @@ import { Home, Search, Star, Users, MessageSquare, Bell, PlusCircle, User, MoreH
 const menuItems = [
   { icon: <Home />, label: "Home", path: "/home/homefeed" },
   { icon: <Search />, label: "Search", path:"/home/search" },
-  { icon: <Star />, label: "Reviews" },
+  { icon: <Star />, label: "Market Place",path:"/home/MarketPlace" },
   { icon: <Users />, label: "Communities" },
   { icon: <MessageSquare />, label: "Messages", path:"/home/chat" },
   { icon: <Bell />, label: "Notification" },
