@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import '../styles/marketplace/marketplace.css'; // Include your styles here
+import '../styles/marketplace/marketplace.css';
+import SearchBar from '../features/marketplace/SearchBar';
+import ToggleButtons from '../features/marketplace/ToggleButton';
+import SellForm from '../features/marketplace/SellForm';
+import PostList from '../features/marketplace/PostList';
 
 const initialPosts = [
   {
     id: 1,
     category: 'Books',
     title: 'Data Structures & Algorithms',
-    price: '$25',
+    price: '300 Rs',
     description: 'Clean, lightly used textbook for DSA.',
     image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80'
   },
@@ -14,43 +18,38 @@ const initialPosts = [
     id: 2,
     category: 'Handmade Notes',
     title: 'Physics Class 12 Notes',
-    price: '$10',
+    price: '150 Rs',
     description: 'Handwritten, well-organized and colored notes.',
-    image: 'https://images.unsplash.com/photo-1616401789869-356aa8e75b1d?auto=format&fit=crop&w=600&q=80'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq5g0JmbY-pJVbyOZTQp6k6lRmCmyUSwYotw&s'
   },
   {
     id: 3,
     category: 'Projects',
-    title: 'Arduino Home Automation',
-    price: '$50',
+    title: 'Arduino Uno',
+    price: '500 Rs',
     description: 'Complete working project with code and hardware.',
-    image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1c2?auto=format&fit=crop&w=600&q=80'
+    image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSW67LKE1m5sInWse4RKZxBB3ETzRWb3b7mr3xhXe6HXbUe0pMHQynoOAIzdHvyRVIdQFhJdg-IER8ka4ZgigUL5qQBcfpkAsFaGOIj9Atfy-ityu4Tu_IuFWm6AL0y5puIs2-0eA&usqp=CAc'
   },
 ];
 
 export default function Marketplace() {
   const [posts, setPosts] = useState(initialPosts);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showForm, setShowForm] = useState(false); // Toggle between buy and sell view
+  const [showForm, setShowForm] = useState(false);
   const [newPost, setNewPost] = useState({
     category: 'Books',
     description: '',
     price: '',
     image: ''
   });
-  const [imagePreview, setImagePreview] = useState(''); // State for image preview
+  const [imagePreview, setImagePreview] = useState('');
 
   const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSellClick = () => {
-    setShowForm(true); // Show the form to sell an item
-  };
-
-  const handleBuyClick = () => {
-    setShowForm(false); // Show the buy posts again
-  };
+  const handleSellClick = () => setShowForm(true);
+  const handleBuyClick = () => setShowForm(false);
 
   const handleInputChange = (e) => {
     setNewPost({ ...newPost, [e.target.name]: e.target.value });
@@ -59,9 +58,8 @@ export default function Marketplace() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Generate a local URL for the file
       setNewPost({ ...newPost, image: file });
-      setImagePreview(URL.createObjectURL(file)); // Set the image preview
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -75,12 +73,12 @@ export default function Marketplace() {
       description: newPost.description,
       price: `$${newPost.price}`,
       category: newPost.category,
-      image: imagePreview || '' // Use the local image URL or fallback to empty
+      image: imagePreview
     };
     setPosts([postToAdd, ...posts]);
     setNewPost({ category: 'Books', description: '', price: '', image: '' });
-    setImagePreview(''); // Clear the image preview after submission
-    setShowForm(false); // After submitting, hide the form again
+    setImagePreview('');
+    setShowForm(false);
   };
 
   return (
@@ -88,84 +86,18 @@ export default function Marketplace() {
       <h1 className="page-title">🎓 Student Marketplace</h1>
       <p className="page-subtitle">Buy & sell study materials, notes, and projects</p>
 
-      <input
-        type="text"
-        placeholder="Search Books, Notes, Projects..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-bar"
-      />
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <ToggleButtons showForm={showForm} handleBuyClick={handleBuyClick} handleSellClick={handleSellClick} />
 
-      <div className="button-group">
-        <button className={!showForm ? 'active' : ''} onClick={handleBuyClick}>
-          Buy
-        </button>
-        <button className={showForm ? 'active' : ''} onClick={handleSellClick}>
-          Sell
-        </button>
-      </div>
-
-      {showForm ? (
-        <form className="sell-form" onSubmit={handleSubmit}>
-          <h3>List Your Item for Sale</h3>
-
-          <label>Category:</label>
-          <select name="category" value={newPost.category} onChange={handleInputChange}>
-            <option value="Books">Books</option>
-            <option value="Handmade Notes">Handmade Notes</option>
-            <option value="Projects">Projects</option>
-          </select>
-
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={newPost.description}
-            onChange={handleInputChange}
-            required
-            placeholder="Describe the item..."
+      {showForm
+        ? <SellForm
+            newPost={newPost}
+            handleInputChange={handleInputChange}
+            handleFileChange={handleFileChange}
+            imagePreview={imagePreview}
+            handleSubmit={handleSubmit}
           />
-
-          <label>Price ($):</label>
-          <input
-            type="number"
-            name="price"
-            value={newPost.price}
-            onChange={handleInputChange}
-            required
-            min="1"
-          />
-
-          <label>Upload Image:</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            required
-          />
-
-          {imagePreview && (
-            <div className="image-preview">
-              <img src={imagePreview} alt="Preview" className="preview-image" />
-            </div>
-          )}
-
-          <button type="submit">Post Item</button>
-        </form>
-      ) : (
-        <div className="posts-container">
-          {filteredPosts.map(post => (
-            <div key={post.id} className="post-card">
-              <img src={post.image} alt={post.title} className="post-image" />
-              <div className="post-content">
-                <h3>{post.title}</h3>
-                <p>{post.description}</p>
-                <span>{post.price}</span>
-                <div className="category-label">{post.category}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+        : <PostList posts={filteredPosts} />}
     </div>
   );
 }
