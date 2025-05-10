@@ -11,6 +11,8 @@ const Chat = lazy(() => import("../pages/Chat"));
 const CreatePost = lazy(() => import("../pages/CreatePost"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
 const More = lazy(() => import("../features/more/More"));
+const Community = lazy(() => import("../pages/Community"));
+
 
 const DashboardRoutes = () => {
   const token = localStorage.getItem("token");
@@ -41,6 +43,7 @@ const DashboardRoutes = () => {
         <Route path="createpost" element={<CreatePost token={token} />} />
         <Route path="search" element={<SearchPage token={token} />} />
         <Route path="MarketPlace" element={<MarketPlace token={token} />} />
+        <Route path="community" element={<Community token={token} />} />
       </Route>
     </Routes>
   );

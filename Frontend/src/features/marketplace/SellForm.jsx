@@ -23,7 +23,7 @@ export default function SellForm({
         placeholder="Describe the item..."
       />
 
-      <label>Price ($):</label>
+      <label>Price:</label>
       <input
         type="number"
         name="price"
