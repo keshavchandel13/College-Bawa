@@ -149,3 +149,71 @@ body {
     font-weight: 500;
   }
   
+  /* Sell Form */
+  .sell-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .sell-form h3 {
+    text-align: center;
+    font-size: 24px;
+    color: #003c77;
+    margin-bottom: 16px;
+  }
+  
+  /* Form Input Fields */
+  .sell-form label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .sell-form input,
+  .sell-form select,
+  .sell-form textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .sell-form input:focus,
+  .sell-form select:focus,
+  .sell-form textarea:focus {
+    box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.2);
+  }
+  
+  /* Sell Form Textarea */
+  .sell-form textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+  
+  /* Submit Button */
+  .sell-form button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #28a745, #43e97b);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .sell-form button:hover {
+    background: linear-gradient(45deg, #218838, #36d779);
+    transform: translateY(-1px);
+  }
+  
+  .sell-form button:focus {
+    box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.2);
+  }
+  

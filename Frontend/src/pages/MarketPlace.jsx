@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import "../styles/marketplace/marketplace.css";
+import '../styles/marketplace/marketplace.css'; // Include your styles here
 
-
-const mockPosts = [
+const initialPosts = [
   {
     id: 1,
     category: 'Books',
@@ -30,12 +29,59 @@ const mockPosts = [
 ];
 
 export default function Marketplace() {
+  const [posts, setPosts] = useState(initialPosts);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState('all');
+  const [showForm, setShowForm] = useState(false); // Toggle between buy and sell view
+  const [newPost, setNewPost] = useState({
+    category: 'Books',
+    description: '',
+    price: '',
+    image: ''
+  });
+  const [imagePreview, setImagePreview] = useState(''); // State for image preview
 
-  const filteredPosts = mockPosts.filter(post =>
+  const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleSellClick = () => {
+    setShowForm(true); // Show the form to sell an item
+  };
+
+  const handleBuyClick = () => {
+    setShowForm(false); // Show the buy posts again
+  };
+
+  const handleInputChange = (e) => {
+    setNewPost({ ...newPost, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Generate a local URL for the file
+      setNewPost({ ...newPost, image: file });
+      setImagePreview(URL.createObjectURL(file)); // Set the image preview
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newId = posts.length + 1;
+    const title = `${newPost.category} Item #${newId}`;
+    const postToAdd = {
+      id: newId,
+      title,
+      description: newPost.description,
+      price: `$${newPost.price}`,
+      category: newPost.category,
+      image: imagePreview || '' // Use the local image URL or fallback to empty
+    };
+    setPosts([postToAdd, ...posts]);
+    setNewPost({ category: 'Books', description: '', price: '', image: '' });
+    setImagePreview(''); // Clear the image preview after submission
+    setShowForm(false); // After submitting, hide the form again
+  };
 
   return (
     <div className="marketplace-container">
@@ -51,27 +97,75 @@ export default function Marketplace() {
       />
 
       <div className="button-group">
-        <button className={filter === 'buy' ? 'active' : ''} onClick={() => setFilter('buy')}>
+        <button className={!showForm ? 'active' : ''} onClick={handleBuyClick}>
           Buy
         </button>
-        <button className={filter === 'sell' ? 'active' : ''} onClick={() => setFilter('sell')}>
+        <button className={showForm ? 'active' : ''} onClick={handleSellClick}>
           Sell
         </button>
       </div>
 
-      <div className="posts-container">
-        {filteredPosts.map(post => (
-          <div key={post.id} className="post-card">
-            <img src={post.image} alt={post.title} className="post-image" />
-            <div className="post-content">
-              <h3>{post.title}</h3>
-              <p>{post.description}</p>
-              <span>{post.price}</span>
-              <div className="category-label">{post.category}</div>
+      {showForm ? (
+        <form className="sell-form" onSubmit={handleSubmit}>
+          <h3>List Your Item for Sale</h3>
+
+          <label>Category:</label>
+          <select name="category" value={newPost.category} onChange={handleInputChange}>
+            <option value="Books">Books</option>
+            <option value="Handmade Notes">Handmade Notes</option>
+            <option value="Projects">Projects</option>
+          </select>
+
+          <label>Description:</label>
+          <textarea
+            name="description"
+            value={newPost.description}
+            onChange={handleInputChange}
+            required
+            placeholder="Describe the item..."
+          />
+
+          <label>Price ($):</label>
+          <input
+            type="number"
+            name="price"
+            value={newPost.price}
+            onChange={handleInputChange}
+            required
+            min="1"
+          />
+
+          <label>Upload Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            required
+          />
+
+          {imagePreview && (
+            <div className="image-preview">
+              <img src={imagePreview} alt="Preview" className="preview-image" />
             </div>
-          </div>
-        ))}
-      </div>
+          )}
+
+          <button type="submit">Post Item</button>
+        </form>
+      ) : (
+        <div className="posts-container">
+          {filteredPosts.map(post => (
+            <div key={post.id} className="post-card">
+              <img src={post.image} alt={post.title} className="post-image" />
+              <div className="post-content">
+                <h3>{post.title}</h3>
+                <p>{post.description}</p>
+                <span>{post.price}</span>
+                <div className="category-label">{post.category}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
