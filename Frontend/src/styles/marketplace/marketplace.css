@@ -1,5 +1,4 @@
 
-/* Fullscreen Marketplace Layout */
 .marketplace-container {
   width: 100%;
   box-sizing: border-box;
@@ -70,13 +69,15 @@
 
 /* Posts Section */
 .posts-container {
-  display: flex;
+  display: grid; /* Changed from flex to grid */
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 28px;
-   justify-content: center; 
+  justify-content: center;
   align-items: start;
-  margin: 0 auto; 
+  margin: 0 auto;
+  max-width: 960px; /* Optional: limit max width for better alignment */
 }
+
 
 /* Each Post Card */
 .post-card {
