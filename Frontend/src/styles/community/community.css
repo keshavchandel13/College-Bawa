@@ -4,6 +4,47 @@
   padding: 40px 20px;
   font-family: sans-serif;
 }
+.create-community-container {
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.create-community-container h2 {
+  color: #00aaff;
+  margin-bottom: 1rem;
+}
+
+.create-community-container input,
+.create-community-container textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 8px;
+
+}
+
+.create-community-container input::placeholder,
+.create-community-container textarea::placeholder {
+  color: #aaa;
+}
+
+.create-btn {
+  background-color: #00aaff;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.create-btn:hover {
+  background-color: #008ecc;
+}
 
 h1 {
   text-align: center;
@@ -101,3 +142,9 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
 }
+
+.footer-community{
+  display: flex;
+  gap: 20%;
+}
+

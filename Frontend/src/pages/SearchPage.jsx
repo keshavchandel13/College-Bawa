@@ -4,8 +4,9 @@ import SearchCard from '../features/search/SearchCard';
 import TopSection from '../features/search/TopSection';
 import '../styles/search/search.css'
 const dummyUsers = [
-  { id: 1, name: 'Aman Sharma', description: 'CSE Student, IIT Delhi' },
+  { id: 1, name: 'Aman Sharma', description: 'CSE Student, JUIT Solan' },
   { id: 2, name: 'Priya Verma', description: 'ECE, NIT Trichy' },
+  { id: 2, name: 'Shivam Chambyal', description: 'CSE,  IIT Mandi' },
 ];
 
 const dummyColleges = [
@@ -55,9 +56,11 @@ const SearchPage = () => {
           <SearchCard key={result.id} title={result.name} description={result.description} />
         ))}
       </div>
+        <div className="search-footer">
 
       <TopSection title="Top Searches" items={topSearches} />
       <TopSection title="Top Universities" items={topUniversities} />
+        </div>
     </div>
   );
 };

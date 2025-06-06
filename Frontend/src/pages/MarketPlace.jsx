@@ -83,7 +83,7 @@ export default function Marketplace() {
 
   return (
     <div className="marketplace-container">
-      <h1 className="page-title">🎓 Student Marketplace</h1>
+      <h1 className="page-title">Student Marketplace</h1>
       <p className="page-subtitle">Buy & sell study materials, notes, and projects</p>
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />

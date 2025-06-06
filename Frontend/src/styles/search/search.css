@@ -25,11 +25,11 @@
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
-  background-color: #ccc;
+  background-color:gray;
 }
 
 .switch-btn.active {
-  background-color: #003366;
+  background-color: gray;
   color: white;
 }
 
@@ -94,4 +94,8 @@
   border-radius: 20px;
   font-size: 0.9rem;
   color: #333;
+}
+.search-footer{
+  display: flex;
+  gap: 20%;
 }

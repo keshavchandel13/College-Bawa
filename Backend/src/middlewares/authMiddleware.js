@@ -6,7 +6,6 @@ const authMiddleware = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   // Check if the token exists
   if (!token) {
-    console.log("Access Denied");
     return res.status(401).json({ message: 'Access denied: No token provided' });
   }
 
@@ -21,8 +20,10 @@ const authMiddleware = (req, res, next) => {
     next();
   } catch (error) {
     console.log(error)
-    // Send a specific error if the token is invalid or expired
-    res.status(400).json({ message: 'Invalid or expired token' });
+    if(error.name === 'TokenExpiredError'){
+      return res.status(401).json({ message: 'Expired token' });
+    }
+    return res.status(403).json({message:"Invalid Token"});
   }
 };
 
