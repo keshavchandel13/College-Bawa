@@ -1,32 +1,35 @@
-import React, { useEffect, useState } from "react";
-// import '../../styles/homepage/post.css';
+import React from 'react';
+import '../../styles/homepage/post.css';
 
-
-export default function Post({ post, isLiked, toggleLike,token }) {
-
+export default function Post({ post, isLiked, toggleLike }) {
   return (
-    <div className="post">
-      <div className="post-header">
+    <div className="ig-post">
+      <div className="ig-post-header">
         <img
           src={post.user.profileImage}
-          alt={`${post.user} avatar`}
-          className="post-avatar"
+          alt={`${post.user.name} avatar`}
+          className="ig-avatar"
         />
-        <span className="post-user">{post.user.name}</span>
+        <span className="ig-username">{post.user.name}</span>
       </div>
-      <p className="post-caption">{post.content}</p>
+
       {post.image && (
-        <img src={post.image} alt="Post visual" className="post-image" />
+        <img src={post.image} alt="Post visual" className="ig-post-image" />
       )}
-      <div className="post-actions">
+
+      <div className="ig-post-actions">
         <button
-          className={`post-action-button ${isLiked ? "liked" : ""}`}
+          className={`ig-like-button ${isLiked ? "liked" : ""}`}
           onClick={() => toggleLike(post.id)}
         >
-          {isLiked ? "Liked" : "Like"}
+          {isLiked ? "♥" : "♡"}
         </button>
-        <button className="post-action-button">Comment</button>
+        <button className="ig-comment-button">💬</button>
       </div>
+
+      <p className="ig-caption">
+        <span className="ig-username">{post.user.name}</span> {post.content}
+      </p>
     </div>
   );
 }

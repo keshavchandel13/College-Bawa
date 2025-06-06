@@ -2,7 +2,8 @@ import React, { useState, Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useAuth } from "../context/AuthContext";
-
+import LoadingSpinner from '../components/globalComponent/LoadingSpinner'
+import DashboardRoutes from "./DashboardRoutes";
 // Lazy loaded components
 const Login = lazy(() => import("../features/auth/Login"));
 const AdminDashboard = lazy(() => import("../admin/AdminDashboard"));
@@ -10,7 +11,6 @@ const Signup = lazy(() => import("../features/auth/Signup"));
 const ForgetPassword = lazy(() => import("../features/auth/ForgetPassword"));
 const ResetPassword = lazy(() => import("../features/auth/ResetPassword"));
 const LoginWithGoogle = lazy(() => import("../features/auth/LoginWithGoogle"));
-const DashboardRoutes = lazy(() => import("./DashboardRoutes"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const AddUserProfile = lazy(() => import("../pages/AddUserProfile"));
 
@@ -25,7 +25,7 @@ function AppRoutes() {
   );
 
   const ProtectedRoute = ({ children }) => {
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <LoadingSpinner/>;
     return user ? children : <Navigate to="/login" />;
   };
 
@@ -39,7 +39,7 @@ function AppRoutes() {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner/>}>
       <Routes>
         <Route
           path="/login"

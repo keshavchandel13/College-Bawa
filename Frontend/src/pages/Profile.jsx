@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/homepage/profilepage.css";
 import { FaEdit } from "react-icons/fa";
 import { getUserProfile } from '../api/profile';
+import LoadingSpinner from "../components/globalComponent/LoadingSpinner";
 
 const Profile = ({ onEditClick , token}) => {
   const [user, setUser] = useState(null);
@@ -23,7 +24,7 @@ const Profile = ({ onEditClick , token}) => {
   }, []);
 
   if (loading) {
-    return <div>Loading Profile...</div>;
+    return <div><LoadingSpinner/></div>; 
   }
 
   if (!user) {

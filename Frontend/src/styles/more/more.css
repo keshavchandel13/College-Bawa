@@ -48,6 +48,13 @@
     color: white;
     justify-content: center;
   }
+  .logout-item button {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+  }
   
   .logout-item:hover {
     background: linear-gradient(to right, #ff5f6d, #ffc371);

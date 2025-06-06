@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../styles/homepage/homefeed.css";
 import CreatePostModal from "../features/homefeed/CreatePostModal";
-import Story from "../features/homefeed/Story";
 import Post from "../features/homefeed/Post";
 import CreatePostBox from "../features/homefeed/CreatePostBox";
 import { getposts } from "../api/homefeed/GetPost";
+import Suggestion from "../features/homefeed/Suggestion";
 
 export default function HomeFeed({ token }) {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -35,19 +35,11 @@ export default function HomeFeed({ token }) {
     };
     getPost();
   }, [token]);
-  
+
 
   return (
     <div className="home-feed-container">
       <div className="home-feed-title">College Bawa</div>
-
-      {/* Stories Section */}
-      {/* <div className="stories-container">
-        {[1, 2, 3, 4].map((num) => (
-          <Story key={num} num={num} />
-        ))}
-      </div> */}
-
       {/* Create Post Box */}
       <CreatePostBox openCreatePost={openCreatePost} />
 
@@ -58,18 +50,28 @@ export default function HomeFeed({ token }) {
         token={token}
       />
 
-      {/* Posts Section */}
-      <div className="posts-container">
-        {posts.map((post) => (
-          <Post
-            key={post._id}
-            post={post}
-            likedPosts={likedPosts.includes(post._id)}
-            toggleLike={toggleLike}
-            token={token}
-          />
-        ))}
+      <div className="post-suggestion-container">
+
+        {/* Posts Section */}
+        <div className="posts-container">
+          {posts.map((post) => (
+            <Post
+              key={post._id}
+              post={post}
+              likedPosts={likedPosts.includes(post._id)}
+              toggleLike={toggleLike}
+              token={token}
+            />
+          ))}
+        </div>
+
+        {/* Suggestion section */}
+        <div className="suggestion-container">
+          <Suggestion/>
+        </div>
+
       </div>
+
     </div>
   );
 }

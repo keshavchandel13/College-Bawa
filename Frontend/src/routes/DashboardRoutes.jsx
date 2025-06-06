@@ -1,17 +1,17 @@
 import React, { lazy, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import AddUserProfile from "../pages/AddUserProfile";
-import MarketPlace from "../pages/MarketPlace";
+import HomeFeed from '../pages/HomeFeed'
+
 // Applying lazy loading
 const Home = lazy(() => import("../pages/Home"));
-const HomeFeed = lazy(() => import("../pages/HomeFeed"));
-const Logout = lazy(() => import("../features/auth/Logout"));
 const Profile = lazy(() => import("../pages/Profile"));
 const Chat = lazy(() => import("../pages/Chat"));
 const CreatePost = lazy(() => import("../pages/CreatePost"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
 const More = lazy(() => import("../features/more/More"));
 const Community = lazy(() => import("../pages/Community"));
+const MarketPlace = lazy(()=> import('../pages/MarketPlace'))
+const AddUserProfile = lazy(()=> import('../pages/AddUserProfile'))
 
 
 const DashboardRoutes = () => {
