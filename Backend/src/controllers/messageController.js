@@ -39,7 +39,7 @@ const sendMessage = async (req, res) => {
 
         res.status(201).json(fullMessage);
     } catch (error) {
-        console.error("❌ Error in sendMessage:", error);
+        console.error("Error in sendMessage:", error);
         res.status(500).json({ error: "Failed to send message" });
     }
 };

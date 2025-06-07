@@ -31,7 +31,6 @@ const initialPosts = [
     image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSW67LKE1m5sInWse4RKZxBB3ETzRWb3b7mr3xhXe6HXbUe0pMHQynoOAIzdHvyRVIdQFhJdg-IER8ka4ZgigUL5qQBcfpkAsFaGOIj9Atfy-ityu4Tu_IuFWm6AL0y5puIs2-0eA&usqp=CAc'
   },
 ];
-
 export default function Marketplace() {
   const [posts, setPosts] = useState(initialPosts);
   const [searchTerm, setSearchTerm] = useState('');
