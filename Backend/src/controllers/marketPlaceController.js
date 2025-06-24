@@ -26,11 +26,13 @@ const getItems = async(req, res) =>{
     }
     catch(err){
         console.log("Error In MarketPlace: ",err);
+        res.status(500).json({ message: "Server Error", error: err.message });
     }
 
 }
 // Post Items to Sell
 const postItems = async(req, res) =>{
+    
 
 }
 

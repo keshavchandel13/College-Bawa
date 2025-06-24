@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/posts"; // Update if backend port changes
+const API_URL = "http://localhost:5000/api/posts"; 
 
 // Create a new post
 export const createPost = async (content, image, token) => {

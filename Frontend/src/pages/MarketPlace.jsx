@@ -4,6 +4,7 @@ import SearchBar from '../features/marketplace/SearchBar';
 import ToggleButtons from '../features/marketplace/ToggleButton';
 import SellForm from '../features/marketplace/SellForm';
 import PostList from '../features/marketplace/PostList';
+import { useEffect } from 'react';
 
 const initialPosts = [
   {
@@ -79,6 +80,8 @@ export default function Marketplace() {
     setImagePreview('');
     setShowForm(false);
   };
+
+  useEffect
 
   return (
     <div className="marketplace-container">
