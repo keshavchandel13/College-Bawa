@@ -1,36 +1,66 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../../styles/profile/profileview.css";
 
-export default function UserProfile() {
-  const [user, setUser] = useState(null);
+const UserProfile = ({ user }) => {
   const navigate = useNavigate();
-  const email = ""; // Replace with actual logged-in user's email
-
-  useEffect(() => {
-    axios.post('/api/getUser', { email }).then(res => {
-      setUser(res.data);
-    }).catch(console.error);
-  }, []);
-
-  if (!user) return <div>Loading...</div>;
+  
+  if (!user) return <div>No user profile found.</div>;
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-4 border shadow rounded-lg">
-      <img src={user.profileImage} alt="Profile" className="w-32 h-32 rounded-full mx-auto mb-4 object-cover" />
-      <div className="text-center">
-        <h2 className="text-xl font-bold">{user.email}</h2>
-        <p><strong>Address:</strong> {user.address}</p>
-        <p><strong>Age:</strong> {user.age}</p>
-        <p><strong>Branch:</strong> {user.branch}</p>
-        <p><strong>College:</strong> {user.college}</p>
-        <button
-          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
-          onClick={() => navigate('/edit-profile', { state: { user } })}
-        >
-          Edit Profile
-        </button>
+    <div className="user-profile-container">
+      {/* Profile Card */}
+      <div className="profile-card">
+        <div className="profile-header">
+          <div className="profile-image-wrapper">
+            <img
+              src={user.profileImage || "/default.jpg"}
+              alt="Profile"
+              className="profile-view-image"
+            />
+          </div>
+
+          <div className="profile-view-info">
+            <h1 className="profile-view-name">{user.name || user.email}</h1>
+            <p className="profile-view-branch">{user.additionalDetails.branch}</p>
+            <div className="profile-details">
+              <span>🎓 {user.additionalDetails.college}</span>
+            </div>
+          </div>
+        </div>
+
+        {user.additionalDetails.bio && (
+          <div className="profile-bio">
+            <h3 className="bio-heading">Bio</h3>
+            <p>{user.additionalDetails.bio}</p>
+          </div>
+        )}
+
+        <div className="stats-grid">
+          <StatCard label="Posts" value={user.posts} color="blue" />
+          <StatCard label="Friends" value={user.friends} color="green" />
+          <StatCard label="Groups" value={user.groups} color="purple" />
+          <StatCard label="Awards" value={user.awards} color="yellow" />
+        </div>
+
+        <div className="edit-profile-button-wrapper">
+          <button
+            onClick={() => navigate('/edit-profile', { state: { edit } })}
+            className="edit-profile-button"
+          >
+            ✏️ Edit Profile
+          </button>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+const StatCard = ({ label, value = 0, color }) => (
+  <div className="stat-card">
+    <p className={`stat-value ${color}`}>{value}</p>
+    <p className="stat-label">{label}</p>
+  </div>
+);
+
+export default UserProfile;

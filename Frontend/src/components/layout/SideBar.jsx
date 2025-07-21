@@ -16,9 +16,7 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
-  // Retrieve user data from localStorage
-  const user = JSON.parse(localStorage.getItem("user"));
-  const profilePic = localStorage.getItem("profileImage");
+
 
   return (
     <div className="sidebar-container"> 
@@ -45,14 +43,6 @@ export default function Sidebar() {
         ))}
       </ul>
 
-      {/* User Info Section */}
-      <div className="sidebar-user">
-        {profilePic && <img src={profilePic} alt="Profile" className="sidebar-user-pic" />}
-        <div className="sidebar-user-info">
-         <Link to={"/home/profile"} style={{ textDecoration: 'none' }}> <span className="sidebar-user-name">{user ? user.name : "User"}</span> </Link>
-         <p>Online</p>
-        </div>
-      </div>
     </div>
   );
 }
