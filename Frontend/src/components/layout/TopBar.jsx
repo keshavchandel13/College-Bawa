@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import '../../styles/SideBar/topbar.css';
+import Logout from '../../features/auth/Logout';
 
 export function TopBar({ onViewChange }) {
   // Retrieve user data from localStorage
@@ -53,13 +54,13 @@ export function TopBar({ onViewChange }) {
           </button>
           <div className="dropdown-content">
             <div className="dropdown-item" onClick={() => onViewChange('profile')}>
-              <FiUser className="menu-icon" /> Profile
+               <Link to={"/home/profile"} style={{ textDecoration: 'none' }}> <FiUser className="menu-icon" /> Profile </Link>
             </div>
             <div className="dropdown-item">
               <FiSettings className="menu-icon" /> Settings
             </div>
             <div className="dropdown-separator"></div>
-            <div className="dropdown-item logout">Log out</div>
+            <div className="dropdown-item logout"><Logout/></div>
           </div>
         </div>
       </div>
