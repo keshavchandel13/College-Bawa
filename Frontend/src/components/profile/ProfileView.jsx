@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/profile/profileview.css";
 
-const UserProfile = ({ user }) => {
+const UserProfile = ({ user, setEdit }) => {
   const navigate = useNavigate();
   
   if (!user) return <div>No user profile found.</div>;
@@ -45,10 +45,10 @@ const UserProfile = ({ user }) => {
 
         <div className="edit-profile-button-wrapper">
           <button
-            onClick={() => navigate('/edit-profile', { state: { edit } })}
+            onClick={() => {setEdit(true)}}
             className="edit-profile-button"
           >
-            ✏️ Edit Profile
+             Edit Profile
           </button>
         </div>
       </div>
