@@ -3,7 +3,7 @@ import '../../styles/homepage/createpostbox.css';
 
 import { FaPhotoVideo, FaPoll, FaSmile, FaMapMarkerAlt, FaPlus } from 'react-icons/fa';
 
-export default function CreatePostBox({ openModal }) {
+export default function CreatePostBox({ openCreatePost }) {
   const profilePic = localStorage.getItem("profileImage");
 
   return (
@@ -13,7 +13,7 @@ export default function CreatePostBox({ openModal }) {
         <textarea
           className="post-input"
           placeholder="What's happening on campus today?"
-          onClick={openModal}
+          onClick={openCreatePost}
           readOnly
           rows={6}
         />
@@ -26,7 +26,7 @@ export default function CreatePostBox({ openModal }) {
           <button><FaSmile /> Feeling</button>
           <button><FaMapMarkerAlt /> Location</button>
         </div>
-        <button className="post-button-right" onClick={openModal}>
+        <button className="post-button-right" onClick={openCreatePost}>
           <FaPlus /> Post
         </button>
       </div>

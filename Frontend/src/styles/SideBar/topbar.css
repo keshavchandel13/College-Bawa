@@ -14,7 +14,7 @@
   width: 280px;
 }
 
-.search-icon {
+.search-icon-topbar {
   position: absolute;
   top: 50%;
   left: 12px;
@@ -24,7 +24,7 @@
   pointer-events: none;
 }
 
-.search-input {
+.search-input-topbar {
   width: 156%;
   padding: 10px 12px 10px 36px; 
   border: 1px solid #ccc;

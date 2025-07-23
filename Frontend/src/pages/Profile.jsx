@@ -5,7 +5,7 @@ import LoadingSpinner from '../components/globalComponent/LoadingSpinner';
 import UserProfile from '../components/profile/ProfileView';
 import { getUserProfile } from '../api/profile.js';
 
-export default function ProfilePage({ token , setEdit}) {
+export default function ProfilePage({ token , onEditClick}) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -29,5 +29,5 @@ export default function ProfilePage({ token , setEdit}) {
 
   if (loading) return <LoadingSpinner />;
 
-  return <UserProfile user={user} setEdit={setEdit} />;
+  return <UserProfile user={user} setEdit={onEditClick} />;
 }

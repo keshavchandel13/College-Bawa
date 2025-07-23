@@ -14,15 +14,14 @@ export function TopBar({ onViewChange }) {
   // Retrieve user data from localStorage
   const user = JSON.parse(localStorage.getItem("user"));
   const profilePic = localStorage.getItem("profileImage");
-  console.log(user)
   return (
     <div className="topbar">
       <div className="topbar-search">
-  <FiSearch className="search-icon" />
+  <FiSearch className="search-icon-topbar" />
   <input
     type="text"
     placeholder="Search posts, people, groups..."
-    className="search-input"
+    className="search-input-topbar"
   />
 </div>
 
