@@ -72,13 +72,13 @@ const ChatList = ({ token }) => {
   };
 
   return (
-    <div className="chat-list">
-      <h2 className="chat-list-title">Chats</h2>
+    <div className="chatlist-container">
+      <h2 className="chatlist-title">Chats</h2>
 
       {/* Search input for users */}
       <UserSearchList token={token} />
 
-      <div className="chat-items">
+      <div className="chatlist-items">
         {allChats.length > 0 ? (
           allChats.map((chat) => {
             const isActive =
@@ -91,36 +91,38 @@ const ChatList = ({ token }) => {
                 ? chat.profileImage || "/default.jpg"
                 : chat.groupImage || "/default.jpg";
 
-            const name = 
+            const name =
               chat.chatType === "user" ? chat.name : chat.chatName;
 
             const lastMessage =
               chat.latestMessage?.content
                 ? chat.latestMessage.content.slice(0, 40) + "..."
                 : chat.chatType === "group"
-                ? `Admin: ${chat.groupAdmin?.name}`
-                : "";
+                  ? `Admin: ${chat.groupAdmin?.name}`
+                  : "";
 
             return (
               <div
                 key={chat._id}
                 onClick={() => handleChatClick(chat)}
-                className={`chat-item ${isActive ? "chat-item-active" : ""}`}
+                className={`chatlist-item ${isActive ? "chatlist-item-active" : ""
+                  }`}
               >
-                <img src={profileImage} alt="Chat" className="chat-image" />
-                <div className="chat-info">
-                  <div className="chat-name">{name}</div>
-                  <div className="chat-message">{lastMessage}</div>
+                <img src={profileImage} alt="Chat" className="chatlist-image" />
+                <div className="chatlist-info">
+                  <div className="chatlist-name">{name}</div>
+                  <div className="chatlist-message">{lastMessage}</div>
                 </div>
               </div>
             );
           })
         ) : (
-          <div className="no-chats">No chats found.</div>
+          <div className="chatlist-no-chats">No chats found.</div>
         )}
       </div>
     </div>
   );
+
 };
 
 export default ChatList;
