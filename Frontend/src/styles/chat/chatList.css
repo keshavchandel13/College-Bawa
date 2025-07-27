@@ -26,10 +26,15 @@
 
 .chatlist-item:hover {
   background-color: #f0f0f0;
+  transform: scale(1.02); /* Slightly scale up on hover */
 }
 
 .chatlist-item-active {
   background-color: #e6f0ff;
+}
+
+.chatlist-image-container {
+  position: relative; /* Position relative for the status dot */
 }
 
 .chatlist-image {
@@ -38,6 +43,25 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 12px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+    bottom: 40px;
+    right: 17px;
+  transform: translate(50%, 50%); /* Center the dot */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.status-dot.online {
+  background-color: #00ff00;
+}
+
+.status-dot.offline {
+  background-color: #ccc;
 }
 
 .chatlist-info {

@@ -25,7 +25,6 @@ export default function HomeFeed({ token }) {
     const getPost = async () => {
       try {
         const data = await getposts(token);
-        console.log(data)
         if (data) {
           setPosts(data);
         }
