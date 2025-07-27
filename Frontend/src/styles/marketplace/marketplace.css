@@ -1,11 +1,9 @@
-
-.marketplace-container {
+.marketplace .marketplace-container {
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Header Title */
-.page-title {
+.marketplace .page-title {
   font-size: 46px;
   text-align: center;
   margin-bottom: 10px;
@@ -13,16 +11,14 @@
   text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
 }
 
-/* Header Subtitle */
-.page-subtitle {
+.marketplace .page-subtitle {
   text-align: center;
   margin-bottom: 40px;
   font-size: 20px;
   color: #009fff;
 }
 
-/* Search Bar */
-.search-bar {
+.marketplace .search-bar {
   width: 100%;
   max-width: 620px;
   padding: 16px 20px;
@@ -36,8 +32,7 @@
   box-shadow: 0 0 12px rgba(0, 123, 255, 0.25);
 }
 
-/* Button Group */
-.button-group {
+.marketplace .button-group {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -45,8 +40,8 @@
   margin-bottom: 50px;
 }
 
-.button-group button {
-  padding: 15px 160px;;
+.marketplace .button-group button {
+  padding: 15px 160px;
   font-size: 17px;
   font-weight: 600;
   cursor: pointer;
@@ -58,29 +53,26 @@
   box-shadow: 0 5px 14px rgba(0, 123, 255, 0.35);
 }
 
-.button-group button:hover {
+.marketplace .button-group button:hover {
   background: linear-gradient(45deg, #0056b3, #0096c7);
   transform: translateY(-2px);
 }
 
-.button-group .active {
+.marketplace .button-group .active {
   background: linear-gradient(45deg, #28a745, #43e97b);
 }
 
-/* Posts Section */
-.posts-container-marketplace {
+.marketplace .posts-container-marketplace {
   display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 28px;
   justify-content: center;
   align-items: start;
   margin: 0 auto;
-  max-width: 960px; /* Optional: limit max width for better alignment */
+  max-width: 960px;
 }
 
-
-/* Each Post Card */
-.post-card {
+.marketplace .post-card {
   background: #ffffff;
   border-radius: 16px;
   padding: 20px;
@@ -92,12 +84,12 @@
   text-align: center;
 }
 
-.post-card:hover {
+.marketplace .post-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
-.post-image {
+.marketplace .post-image {
   width: 100%;
   height: 180px;
   object-fit: cover;
@@ -105,25 +97,25 @@
   margin-bottom: 14px;
 }
 
-.post-content h3 {
+.marketplace .post-content h3 {
   font-size: 21px;
   margin-bottom: 8px;
   color: #0056b3;
 }
 
-.post-content p {
+.marketplace .post-content p {
   font-size: 15px;
   color: #333;
 }
 
-.post-content span {
+.marketplace .post-content span {
   font-weight: bold;
   color: #111;
   margin-top: 6px;
   display: block;
 }
 
-.category-label {
+.marketplace .category-label {
   margin-top: 10px;
   padding: 6px 12px;
   font-size: 13px;
@@ -133,8 +125,7 @@
   font-weight: 500;
 }
 
-/* Sell Form */
-.sell-form {
+.marketplace .sell-form {
   background-color: #ffffff;
   border-radius: 18px;
   padding: 40px;
@@ -142,22 +133,22 @@
   margin-top: 60px;
 }
 
-.sell-form h3 {
+.marketplace .sell-form h3 {
   text-align: center;
   font-size: 26px;
   color: #003c77;
   margin-bottom: 24px;
 }
 
-.sell-form label {
+.marketplace .sell-form label {
   font-size: 16px;
   font-weight: 600;
   color: #333;
 }
 
-.sell-form input,
-.sell-form select,
-.sell-form textarea {
+.marketplace .sell-form input,
+.marketplace .sell-form select,
+.marketplace .sell-form textarea {
   width: 100%;
   padding: 14px;
   font-size: 16px;
@@ -168,12 +159,12 @@
   outline: none;
 }
 
-.sell-form textarea {
+.marketplace .sell-form textarea {
   min-height: 150px;
   resize: vertical;
 }
 
-.sell-form button {
+.marketplace .sell-form button {
   width: 100%;
   padding: 16px;
   font-size: 17px;
@@ -187,7 +178,7 @@
   cursor: pointer;
 }
 
-.sell-form button:hover {
+.marketplace .sell-form button:hover {
   background: linear-gradient(45deg, #218838, #36d779);
   transform: translateY(-2px);
 }

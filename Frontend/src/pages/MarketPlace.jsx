@@ -4,7 +4,8 @@ import SearchBar from '../features/marketplace/SearchBar';
 import ToggleButtons from '../features/marketplace/ToggleButton';
 import SellForm from '../features/marketplace/SellForm';
 import PostList from '../features/marketplace/PostList';
-import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialPosts = [
   {
@@ -32,6 +33,7 @@ const initialPosts = [
     image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSW67LKE1m5sInWse4RKZxBB3ETzRWb3b7mr3xhXe6HXbUe0pMHQynoOAIzdHvyRVIdQFhJdg-IER8ka4ZgigUL5qQBcfpkAsFaGOIj9Atfy-ityu4Tu_IuFWm6AL0y5puIs2-0eA&usqp=CAc'
   },
 ];
+
 export default function Marketplace() {
   const [posts, setPosts] = useState(initialPosts);
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,8 +50,15 @@ export default function Marketplace() {
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSellClick = () => setShowForm(true);
-  const handleBuyClick = () => setShowForm(false);
+  const handleSellClick = () => {
+    setShowForm(true);
+    toast.info("Switched to Sell Mode");
+  };
+
+  const handleBuyClick = () => {
+    setShowForm(false);
+    toast.info("Switched to Buy Mode");
+  };
 
   const handleInputChange = (e) => {
     setNewPost({ ...newPost, [e.target.name]: e.target.value });
@@ -60,31 +69,41 @@ export default function Marketplace() {
     if (file) {
       setNewPost({ ...newPost, image: file });
       setImagePreview(URL.createObjectURL(file));
+      toast.success("Image selected successfully!");
+    } else {
+      toast.error("Image selection failed.");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!newPost.description || !newPost.price || !imagePreview) {
+      toast.error("Please fill all fields and select an image!");
+      return;
+    }
+
     const newId = posts.length + 1;
     const title = `${newPost.category} Item #${newId}`;
     const postToAdd = {
       id: newId,
       title,
       description: newPost.description,
-      price: `$${newPost.price}`,
+      price: `${newPost.price} Rs`,
       category: newPost.category,
       image: imagePreview
     };
+
     setPosts([postToAdd, ...posts]);
     setNewPost({ category: 'Books', description: '', price: '', image: '' });
     setImagePreview('');
     setShowForm(false);
+
+    toast.success("Post added successfully!");
   };
 
-  useEffect
-
   return (
-    <div className="marketplace-container">
+    <div className="marketplace marketplace-container">
       <h1 className="page-title">Student Marketplace</h1>
       <p className="page-subtitle">Buy & sell study materials, notes, and projects</p>
 
@@ -99,7 +118,11 @@ export default function Marketplace() {
             imagePreview={imagePreview}
             handleSubmit={handleSubmit}
           />
-        : <PostList posts={filteredPosts} />}
+        : <PostList posts={filteredPosts} />
+      }
+
+      {/* Toast notifications */}
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
     </div>
   );
 }
