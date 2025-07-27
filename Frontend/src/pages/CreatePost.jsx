@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import Feed from "../components/post/Feed";
 import "../styles/createpost/CreatePost.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreatePost = ({ token }) => {
   const [content, setContent] = useState("");
-  const [imageFile, setImageFile] = useState(null); // File to send to backend
-  const [previewUrl, setPreviewUrl] = useState(null); // URL for preview
+  const [imageFile, setImageFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const [refreshFeed, setRefreshFeed] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handlePost = async () => {
-    if (!content.trim()) return;
+    if (!content.trim()) {
+      toast.warn("Post content cannot be empty!");
+      return;
+    }
 
     setLoading(true);
 
     const formData = new FormData();
     formData.append("content", content);
     if (imageFile) {
-      console.log("🖼️ Image file:", imageFile);
       formData.append("image", imageFile);
     }
 
@@ -27,20 +31,21 @@ const CreatePost = ({ token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: formData, 
+        body: formData,
       });
 
       if (!response.ok) {
         throw new Error("Failed to post");
       }
 
-      // Reset state on success
+      // On success
+      toast.success("Post created successfully!");
       setContent("");
       setImageFile(null);
       setPreviewUrl(null);
       setRefreshFeed((prev) => !prev);
     } catch (err) {
-      alert("Something went wrong!");
+      toast.error("Something went wrong while posting.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -50,20 +55,19 @@ const CreatePost = ({ token }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log("📥 Selected file:", file);
-      setImageFile(file); // File for backend
-      setPreviewUrl(URL.createObjectURL(file)); // Blob for preview
+      setImageFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
     }
   };
 
   return (
     <div className="create-post-container">
+      <ToastContainer position="top-right" autoClose={3000} />
       <h1 className="create-post-heading"> Create a Post</h1>
 
       {token ? (
         <>
           <div className="post-box">
-            {/* Text Input */}
             <div className="post-text-area">
               <label htmlFor="postContent">Write something</label>
               <textarea
@@ -74,7 +78,6 @@ const CreatePost = ({ token }) => {
               />
             </div>
 
-            {/* Image Upload & Preview */}
             <div className="preview-section">
               <input
                 type="file"
@@ -90,7 +93,6 @@ const CreatePost = ({ token }) => {
               )}
             </div>
 
-            {/* Post Button */}
             <div className="post-btn-wrapper">
               <button
                 className="post-btn"
@@ -101,11 +103,12 @@ const CreatePost = ({ token }) => {
               </button>
             </div>
           </div>
-
         </>
       ) : (
         <div className="login-message">
-          <p>Please <strong>log in</strong> to create and view posts.</p>
+          <p>
+            Please <strong>log in</strong> to create and view posts.
+          </p>
         </div>
       )}
     </div>
