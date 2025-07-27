@@ -11,8 +11,7 @@ const ChatList = ({ token }) => {
     selectedUser,
     setSelectedUser,
     setActiveChat,
-    chats,
-    setChats,
+    onlineUsers,
   } = useChat();
 
   // Local state for all chats and loading indicator
@@ -91,6 +90,9 @@ const ChatList = ({ token }) => {
                 ? chat.profileImage || "/default.jpg"
                 : chat.groupImage || "/default.jpg";
 
+            const isOnline = onlineUsers.includes(chat._id);
+
+
             const name =
               chat.chatType === "user" ? chat.name : chat.chatName;
 
@@ -105,10 +107,14 @@ const ChatList = ({ token }) => {
               <div
                 key={chat._id}
                 onClick={() => handleChatClick(chat)}
-                className={`chatlist-item ${isActive ? "chatlist-item-active" : ""
-                  }`}
+                className={`chatlist-item ${isActive ? "chatlist-item-active" : ""}`}
               >
-                <img src={profileImage} alt="Chat" className="chatlist-image" />
+                <div className="chatlist-image-container">
+                  <img src={profileImage} alt="Chat" className="chatlist-image" />
+                  {chat.chatType === "user" && (
+                    <div className={`status-dot ${isOnline ? "online" : "offline"}`}></div>
+                  )}
+                </div>
                 <div className="chatlist-info">
                   <div className="chatlist-name">{name}</div>
                   <div className="chatlist-message">{lastMessage}</div>

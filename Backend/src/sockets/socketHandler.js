@@ -1,38 +1,35 @@
-let ioInstance;
 
-/**
- * Initializes the Socket.io instance and sets up event listeners for user connections.
- * @param {Object} io - The Socket.io server instance.
- */
+let ioInstance;
+const onlineUsers = new Map()
 function initSocket(io) {
-  ioInstance = io; // Store the Socket.io instance globally for use across the application.
+  ioInstance = io;
 
   io.on("connection", (socket) => {
     console.log(` User Connected: ${socket.id}`);
 
     try {
-      /**
-       * Handle user joining their personal room.
-       * @param {Object} data - Contains the user's unique ID.
-       */
+      // User joins their personal room
       socket.on("join", ({ userId }) => {
         if (!userId) return;
+
         socket.join(userId);
+        onlineUsers.set(userId, socket.id);
+
+        // Send current online list to the joining user
+        socket.emit("online-users", Array.from(onlineUsers.keys()));
+
+        // Notify all other users this user is now online
+        socket.broadcast.emit("user-online", { userId });
       });
 
-      /**
-       * Handle user joining a specific chat room.
-       * @param {string} chatId - The unique ID of the chat room.
-       */
+
+      // User joins a chat room
       socket.on("join-chat", (chatId) => {
         if (!chatId) return;
         socket.join(chatId);
       });
 
-      /**
-       * Handle sending messages within a chat room.
-       * @param {Object} data - Contains chatId, message content, and senderId.
-       */
+      // Send message in a chat room
       socket.on("send-message", ({ chatId, message, senderId }) => {
         try {
           if (!chatId || !message || !senderId) return;
@@ -43,10 +40,7 @@ function initSocket(io) {
         }
       });
 
-      /**
-       * Handle typing indicator broadcasting within a chat room.
-       * @param {Object} data - Contains the chatId where typing is occurring.
-       */
+      // Typing indicator in a chat room
       socket.on("typing", ({ chatId }) => {
         try {
           if (!chatId) return;
@@ -56,10 +50,7 @@ function initSocket(io) {
         }
       });
 
-      /**
-       * Handle read receipt broadcasting within a chat room.
-       * @param {Object} data - Contains the messageId and chatId for acknowledgment.
-       */
+      // Read receipt in a chat room
       socket.on("read-message", ({ messageId, chatId }) => {
         try {
           if (!messageId || !chatId) return;
@@ -69,12 +60,24 @@ function initSocket(io) {
         }
       });
 
-      /**
-       * Handle user disconnection from the server.
-       */
       socket.on("disconnect", () => {
-        console.log(` User Disconnected: ${socket.id}`);
+        let disconnectedUserId = null;
+
+        for (const [userId, sId] of onlineUsers.entries()) {
+          if (sId === socket.id) {
+            disconnectedUserId = userId;
+            onlineUsers.delete(userId);
+            break;
+          }
+        }
+
+        if (disconnectedUserId) {
+          io.emit("user-offline", { userId: disconnectedUserId });
+        }
+
+        console.log(`User Disconnected: ${socket.id}`);
       });
+
 
     } catch (error) {
       console.error(" Unexpected error in socket connection:", error.message);
@@ -82,11 +85,7 @@ function initSocket(io) {
   });
 }
 
-/**
- * Retrieves the initialized Socket.io instance.
- * @returns {Object} - The Socket.io instance.
- * @throws Will throw an error if Socket.io is not initialized.
- */
+// Get the Socket.io instance
 function getIo() {
   if (!ioInstance) {
     throw new Error("Socket.io has not been initialized!");
