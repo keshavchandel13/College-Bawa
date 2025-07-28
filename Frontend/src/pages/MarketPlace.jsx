@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import '../styles/marketplace/marketplace.css';
-import SearchBar from '../features/marketplace/SearchBar';
-import ToggleButtons from '../features/marketplace/ToggleButton';
-import SellForm from '../features/marketplace/SellForm';
-import PostList from '../features/marketplace/PostList';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,116 +8,136 @@ const initialPosts = [
     id: 1,
     category: 'Books',
     title: 'Data Structures & Algorithms',
-    price: '300 Rs',
+    price: '300',
+    originalPrice: '500',
     description: 'Clean, lightly used textbook for DSA.',
-    image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80'
+    seller: 'Ravi Kumar',
+    rating: 4.8,
+    location: 'Delhi University',
+    image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80',
+    views: 156,
+    label: 'Trending',
+    dateAdded: '2023-07-20'
   },
   {
     id: 2,
-    category: 'Handmade Notes',
+    category: 'Handwritten Notes',
     title: 'Physics Class 12 Notes',
-    price: '150 Rs',
-    description: 'Handwritten, well-organized and colored notes.',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq5g0JmbY-pJVbyOZTQp6k6lRmCmyUSwYotw&s'
+    price: '150',
+    description: 'Colored and detailed handwritten notes.',
+    seller: 'Aarti Sharma',
+    rating: 4.9,
+    location: 'IIT Campus',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq5g0JmbY-pJVbyOZTQp6k6lRmCmyUSwYotw&s',
+    views: 234,
+    label: 'Just Listed',
+    dateAdded: '2024-07-27'
   },
   {
     id: 3,
     category: 'Projects',
-    title: 'Arduino Uno',
-    price: '500 Rs',
-    description: 'Complete working project with code and hardware.',
-    image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSW67LKE1m5sInWse4RKZxBB3ETzRWb3b7mr3xhXe6HXbUe0pMHQynoOAIzdHvyRVIdQFhJdg-IER8ka4ZgigUL5qQBcfpkAsFaGOIj9Atfy-ityu4Tu_IuFWm6AL0y5puIs2-0eA&usqp=CAc'
-  },
+    title: 'Arduino Uno Project Kit',
+    price: '500',
+    originalPrice: '',
+    description: 'Fully working IoT project setup.',
+    seller: 'Neha Verma',
+    rating: 4.7,
+    location: 'Mumbai',
+    image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSW67LKE1m5sInWse4RKZxBB3ETzRWb3b7mr3xhXe6HXbUe0pMHQynoOAIzdHvyRVIdQFhJdg-IER8ka4ZgigUL5qQBcfpkAsFaGOIj9Atfy-ityu4Tu_IuFWm6AL0y5puIs2-0eA&usqp=CAc',
+    views: 89,
+    label: 'Best Deals',
+    dateAdded: '2024-06-18'
+  }
 ];
 
 export default function Marketplace() {
-  const [posts, setPosts] = useState(initialPosts);
+  const [posts] = useState(initialPosts);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showForm, setShowForm] = useState(false);
-  const [newPost, setNewPost] = useState({
-    category: 'Books',
-    description: '',
-    price: '',
-    image: ''
-  });
-  const [imagePreview, setImagePreview] = useState('');
+  const [selectedSort, setSelectedSort] = useState('');
 
-  const filteredPosts = posts.filter(post =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleSellClick = () => {
-    setShowForm(true);
-    toast.info("Switched to Sell Mode");
-  };
-
-  const handleBuyClick = () => {
-    setShowForm(false);
-    toast.info("Switched to Buy Mode");
-  };
-
-  const handleInputChange = (e) => {
-    setNewPost({ ...newPost, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setNewPost({ ...newPost, image: file });
-      setImagePreview(URL.createObjectURL(file));
-      toast.success("Image selected successfully!");
-    } else {
-      toast.error("Image selection failed.");
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!newPost.description || !newPost.price || !imagePreview) {
-      toast.error("Please fill all fields and select an image!");
-      return;
-    }
-
-    const newId = posts.length + 1;
-    const title = `${newPost.category} Item #${newId}`;
-    const postToAdd = {
-      id: newId,
-      title,
-      description: newPost.description,
-      price: `${newPost.price} Rs`,
-      category: newPost.category,
-      image: imagePreview
-    };
-
-    setPosts([postToAdd, ...posts]);
-    setNewPost({ category: 'Books', description: '', price: '', image: '' });
-    setImagePreview('');
-    setShowForm(false);
-
-    toast.success("Post added successfully!");
-  };
+  const filteredPosts = posts
+    .filter(post =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (selectedSort === 'priceLow') {
+        return parseFloat(a.price) - parseFloat(b.price);
+      } else if (selectedSort === 'priceHigh') {
+        return parseFloat(b.price) - parseFloat(a.price);
+      } else if (selectedSort === 'recent') {
+        return new Date(b.dateAdded) - new Date(a.dateAdded);
+      } else if (selectedSort === 'discount') {
+        const discountA = a.originalPrice ? parseFloat(a.originalPrice) - parseFloat(a.price) : 0;
+        const discountB = b.originalPrice ? parseFloat(b.originalPrice) - parseFloat(b.price) : 0;
+        return discountB - discountA;
+      } else {
+        return 0;
+      }
+    });
 
   return (
     <div className="marketplace marketplace-container">
-      <h1 className="page-title">Student Marketplace</h1>
-      <p className="page-subtitle">Buy & sell study materials, notes, and projects</p>
+      {/* 🔥 Promo Banner */}
+      <div className="promo-banner">
+        🎉 <strong>Abhi ye decide hoga</strong>
+      </div>
 
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <ToggleButtons showForm={showForm} handleBuyClick={handleBuyClick} handleSellClick={handleSellClick} />
+      {/* 🔍 Search + Sort + Filters */}
+      <input
+        type="text"
+        className="search-bar"
+        placeholder="Search for books, notes, or projects..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
 
-      {showForm
-        ? <SellForm
-            newPost={newPost}
-            handleInputChange={handleInputChange}
-            handleFileChange={handleFileChange}
-            imagePreview={imagePreview}
-            handleSubmit={handleSubmit}
-          />
-        : <PostList posts={filteredPosts} />
-      }
+      <div className="filter-bar">
+        <select
+          className="sort-dropdown"
+          value={selectedSort}
+          onChange={(e) => setSelectedSort(e.target.value)}
+        >
+          <option value="">Sort By</option>
+          <option value="priceLow">Price: Low to High</option>
+          <option value="priceHigh">Price: High to Low</option>
+          <option value="recent">Recently Added</option>
+          <option value="discount">Highest Discount</option>
+        </select>
 
-      {/* Toast notifications */}
+        <div className="filter-tabs">
+          <button className="active">🔥 Trending</button>
+          <button>🕒 Just Listed</button>
+          <button>💰 Best Deals</button>
+          <button>📍 Nearby</button>
+          <button>✅ Verified</button>
+        </div>
+      </div>
+
+      {/* 🧾 Post Cards */}
+      <div className="posts-container-marketplace">
+        {filteredPosts.map(post => (
+          <div className="post-card" key={post.id}>
+            <div className="tag-label">{post.label}</div>
+            <img className="post-image" src={post.image} alt={post.title} />
+            <div className="post-content">
+              <p className="category">{post.category}</p>
+              <h3>{post.title}</h3>
+              <p>{post.description}</p>
+              <div className="price">
+                ₹{post.price}
+                {post.originalPrice && <span className="original-price"> ₹{post.originalPrice}</span>}
+              </div>
+              <div className="meta">
+                <span className="seller">{post.seller} ⭐ {post.rating}</span>
+                <span className="location">{post.location}</span>
+              </div>
+              <button className="buy-now">⚡ Buy Now</button>
+              <div className="views">{post.views} people viewed this today!</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
     </div>
   );
