@@ -58,6 +58,7 @@ app.use("/api/notification", require("./routes/notificationRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/marketplace", require("./routes/marketPlaceRoute"));
+app.use("/api/search", require("./routes/search"));
 
 // Root route
 app.get("/", (req, res) => {

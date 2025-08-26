@@ -4,8 +4,9 @@ import "../../styles/profile/profileview.css";
 
 const UserProfile = ({ user, setEdit }) => {
   const navigate = useNavigate();
-  
+
   if (!user) return <div>No user profile found.</div>;
+  console.log(user)
 
   return (
     <div className="user-profile-container">
@@ -35,6 +36,21 @@ const UserProfile = ({ user, setEdit }) => {
             <p>{user.additionalDetails.bio}</p>
           </div>
         )}
+        {user.additionalDetails.skills && (
+          <div className="profile-skills">
+            <h3 className="skills-heading">Skills</h3>
+            <ul className="skills-list">
+              {Array.isArray(user.additionalDetails.skills)
+                ? user.additionalDetails.skills.map((skill, index) => (
+                  <li key={index} className="skill-item">{skill}</li>
+                ))
+                : <li className="skill-item">{user.additionalDetails.skills}</li>
+              }
+            </ul>
+          </div>
+        )}
+
+
 
         <div className="stats-grid">
           <StatCard label="Posts" value={user.posts} color="blue" />
@@ -45,10 +61,10 @@ const UserProfile = ({ user, setEdit }) => {
 
         <div className="edit-profile-button-wrapper">
           <button
-            onClick={() => {setEdit(true)}}
+            onClick={() => { setEdit(true) }}
             className="edit-profile-button"
           >
-             Edit Profile
+            Edit Profile
           </button>
         </div>
       </div>
