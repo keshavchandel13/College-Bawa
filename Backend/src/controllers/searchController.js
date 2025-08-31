@@ -10,4 +10,4 @@ const search = async(req,res) =>{
 }
 
 
-module.exports = {}
+module.exports = {search}

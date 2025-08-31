@@ -29,4 +29,23 @@
     border: none;
     cursor: pointer;
   }
-  
+/* 🌑 Dark Theme for Modal */
+[data-theme="dark"] .modal-overlay {
+  background-color: rgba(0, 0, 0, 0.8); /* darker overlay */
+}
+
+[data-theme="dark"] .modal-content {
+  background: #1e1e1e;
+  color: #e5e5e5;
+  border: 1px solid #333;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .close-btn {
+  color: #9ca3af;
+  transition: color 0.2s ease;
+}
+
+[data-theme="dark"] .close-btn:hover {
+  color: #f87171; /* soft red on hover */
+}

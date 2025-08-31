@@ -66,3 +66,35 @@
   margin-right: 8px;
   font-size: 16px;
 }
+/* 🌑 Dark Theme for Suggestion Container */
+[data-theme="dark"] .suggestion-container {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .section-title {
+  color: #ccc;
+}
+
+[data-theme="dark"] .suggestion-name {
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .follow-btn {
+  color: #3b82f6; /* bright blue accent */
+}
+
+[data-theme="dark"] .follow-btn:hover {
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .community-item {
+  color: #bbb;
+}
+
+[data-theme="dark"] .community-icon {
+  color: #9ca3af;
+}
+

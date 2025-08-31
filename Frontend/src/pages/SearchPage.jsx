@@ -3,67 +3,73 @@ import SearchBar from '../features/search/SearchBar';
 import SearchCard from '../features/search/SearchCard';
 import TopSection from '../features/search/TopSection';
 import '../styles/search/search.css';
-
-const dummyUsers = [
-  { id: 1, name: 'Aman Sharma', description: 'CSE Student, JUIT Solan', avatar: '/default.jpg' },
-  { id: 2, name: 'Priya Verma', description: 'ECE, NIT Trichy', avatar: '/default.jpg' },
-  { id: 3, name: 'Shivam Chambyal', description: 'CSE, IIT Mandi', avatar: '/default.jpg' },
-];
-
-const dummyColleges = [
-  { id: 1, name: 'IIT Bombay', description: 'Top Engineering College in India', logo: '/iitb.png' },
-  { id: 2, name: 'NIT Surathkal', description: 'Leading technical institute', logo: '/nits.png' },
-];
-
-const dummyGroups = [
-  { id: 1, name: 'Coding Club', description: 'Competitive programming group' },
-];
-
-const dummyEvents = [
-  { id: 1, name: 'HackFest 2025', description: 'National-level Hackathon' },
-];
-
-const dummyPosts = [
-  { id: 1, name: '10 Best Colleges for AI', description: 'Detailed comparison of top colleges' },
-];
-
-const topSearches = ['#Hackathon', '#IIT', '#PhotographyClub', '#CSE', '#Delhi'];
-const topUniversities = ['IIT Bombay', 'IIT Delhi', 'BITS Pilani', 'NIT Trichy'];
+import { fetchUsersByQuery } from '../features/user/userService';
+import { useChat } from '../context/chatContext';
 
 const SearchPage = () => {
   const [searchMode, setSearchMode] = useState('users');
   const [searchTerm, setSearchTerm] = useState('');
   const [theme, setTheme] = useState('light');
   const [searchHistory, setSearchHistory] = useState([]);
+  const [userResults, setUserResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { currentUser } = useChat();
 
+  const token = localStorage.getItem('token');
+
+
+  // keep search history (last 5)
   useEffect(() => {
     if (searchTerm && !searchHistory.includes(searchTerm)) {
-      setSearchHistory(prev => [...prev.slice(-4), searchTerm]); // Keep last 5
+      setSearchHistory(prev => [...prev.slice(-4), searchTerm]);
     }
   }, [searchTerm]);
 
+  // fetch users when in "users" mode
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (searchMode !== 'users' || !searchTerm) {
+        setUserResults([]);
+        return;
+      }
+      setLoading(true);
+      setError(null);
+      try {
+        const users = await fetchUsersByQuery(token, searchTerm, currentUser._id);
+        console.log(users)
+        setUserResults(users || []);
+      } catch (err) {
+        setError('Failed to fetch users');
+        setUserResults([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUsers();
+  }, [searchTerm, searchMode, token, currentUser]);
+
+  // data handling for different search modes
   const getDataByMode = () => {
     switch (searchMode) {
       case 'users':
-        return dummyUsers;
+        return userResults;
       case 'colleges':
-        return dummyColleges;
       case 'groups':
-        return dummyGroups;
       case 'events':
-        return dummyEvents;
       case 'posts':
-        return dummyPosts;
+        return []; // TODO: hook up APIs for these modes
       default:
         return [];
     }
   };
 
-  const filteredResults = getDataByMode().filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-
+  const filteredResults =
+    searchMode === 'users'
+      ? userResults
+      : getDataByMode().filter(item =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
   return (
     <div className={`container ${theme}`}>
@@ -71,6 +77,7 @@ const SearchPage = () => {
         <h1 className="title">Search College Bawa</h1>
       </div>
 
+      {/* Mode switch buttons */}
       <div className="button-group scroll-x">
         {['users', 'colleges', 'groups', 'events', 'posts'].map(mode => (
           <button
@@ -83,36 +90,47 @@ const SearchPage = () => {
         ))}
       </div>
 
+      {/* Search bar */}
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
+      {/* Search history */}
       {searchHistory.length > 0 && (
         <div className="search-history">
           <strong>Recent:</strong>{' '}
           {searchHistory.map((term, i) => (
-            <span key={i} onClick={() => setSearchTerm(term)}>{term}</span>
+            <span key={i} onClick={() => setSearchTerm(term)}>
+              {term}
+            </span>
           ))}
         </div>
       )}
 
+      {/* Search results */}
       <div className="grid">
-        {filteredResults.length > 0 ? (
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="no-results">{error}</p>
+        ) : filteredResults.length > 0 ? (
           filteredResults.map(result => (
             <SearchCard
-              key={result.id}
-              title={result.name}
-              description={result.description}
-              image={result.avatar || result.logo}
+              key={result.id || result._id}
+              title={result.name || result.fullName || result.username}
+              description={result.description || result.email || ''}
+              image={result.avatar || result.logo || '/default.jpg'}
               hasAction={true}
             />
           ))
         ) : (
-          <p className="no-results">No results found. Try a different keyword or check trending searches.</p>
+          <p className="no-results">
+            No results found. Try a different keyword or check trending searches.
+          </p>
         )}
       </div>
 
+      {/* Footer (currently no top searches/universities since dummy removed) */}
       <div className="search-footer">
-        <TopSection title="Top Searches" items={topSearches} />
-        <TopSection title="Top Universities" items={topUniversities} />
+        {/* You can add <TopSection /> back once real data is available */}
       </div>
     </div>
   );

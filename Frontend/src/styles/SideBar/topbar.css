@@ -143,3 +143,54 @@
 .topbar-logout {
   color: red;
 }
+/* 🌙 Dark Theme */
+body[data-theme="dark"] .topbar-container {
+  background: #1e1e1e;
+  border-bottom: 1px solid #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+body[data-theme="dark"] .topbar-search-input {
+  background: #2c2c2c;
+  border: 1px solid #444;
+  color: #f5f5f5;
+}
+
+body[data-theme="dark"] .topbar-search-input::placeholder {
+  color: #aaa;
+}
+
+body[data-theme="dark"] .topbar-search-icon {
+  color: #aaa;
+}
+
+body[data-theme="dark"] .topbar-icon {
+  color: #ddd;
+}
+
+body[data-theme="dark"] .topbar-badge {
+  background: #e63946; 
+  color: #fff;
+}
+
+body[data-theme="dark"] .topbar-user-name {
+  color: #f5f5f5;
+}
+
+body[data-theme="dark"] .topbar-user-role {
+  color: #bbb;
+}
+
+body[data-theme="dark"] .topbar-dropdown-content {
+  background: #2c2c2c;
+  color: #f5f5f5;
+  border: 1px solid #444;
+}
+
+body[data-theme="dark"] .topbar-dropdown-item:hover {
+  background-color: #3a3a3a;
+}
+
+body[data-theme="dark"] .topbar-dropdown-separator {
+  border-top: 1px solid #444;
+}

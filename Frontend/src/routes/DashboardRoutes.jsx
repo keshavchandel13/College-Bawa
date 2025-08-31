@@ -1,6 +1,7 @@
 import React, { lazy, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import HomeFeed from '../pages/HomeFeed'
+import Notification from "../pages/Notification";
 
 // Applying lazy loading
 const Home = lazy(() => import("../pages/Home"));
@@ -44,6 +45,7 @@ const DashboardRoutes = () => {
         <Route path="search" element={<SearchPage token={token} />} />
         <Route path="MarketPlace" element={<MarketPlace token={token} />} />
         <Route path="community" element={<Community token={token} />} />
+        <Route path="notification" element={<Notification token={token} />} />
       </Route>
     </Routes>
   );

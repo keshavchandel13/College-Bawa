@@ -96,3 +96,38 @@
   background: #003af8;
   transform: translateY(-1px);
 }
+/* 🌑 Dark Theme for Post Box */
+[data-theme="dark"] .post-box {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .post-input {
+  background: #2a2a2a;
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .post-input::placeholder {
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .post-options-left button {
+  background: #2a2a2a;
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .post-options-left button:hover {
+  background: #3a3a3a;
+}
+
+[data-theme="dark"] .post-button-right {
+  background: #5387f5;
+  color: white;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .post-button-right:hover {
+  background: #003af8;
+}

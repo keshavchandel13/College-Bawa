@@ -67,3 +67,30 @@
   font-size: 14px;
   color: #262626;
 }
+/* 🌑 Dark Theme for Instagram-style Posts */
+[data-theme="dark"] .ig-post {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .ig-post-header {
+  border-bottom: 1px solid #333;
+}
+
+[data-theme="dark"] .ig-username {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .ig-post-actions button {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .ig-like-button.liked {
+  color: #ff5252; /* brighter red for visibility in dark mode */
+}
+
+[data-theme="dark"] .ig-caption {
+  color: #ccc;
+}
+
