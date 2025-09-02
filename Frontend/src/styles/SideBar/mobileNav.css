@@ -3,6 +3,11 @@
 }
 
 @media screen and (max-width: 768px) {
+    .mobile-nav-container{
+        margin-top:2px ;
+        display: block;
+
+    }
   .mobile-nav {
     display: flex;
     justify-content: space-around;

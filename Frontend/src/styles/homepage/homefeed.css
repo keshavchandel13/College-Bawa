@@ -168,11 +168,13 @@
     min-height: 100vh;
     box-shadow: none;
     border-radius: 0;
+    padding-bottom: 3rem;
   }
 
   .home-feed-title {
-    font-size: 1.5rem;
+    font-size: 1.9rem;
     margin-bottom: 1rem;
+    margin-left: 1rem;
   }
   .home-feed-post-container{
     display: flex;
@@ -224,7 +226,8 @@
 }
 .home-feed-header{
   display: flex;
-  gap: 59%;
+  gap: 37%;
+  margin-top: .5rem;
 }
   .home-feed-header .hamburger {
     display: block;
@@ -236,7 +239,7 @@
 /* ✅ Extra small devices */
 @media screen and (max-width: 480px) {
   .home-feed-title {
-    font-size: 1.2rem;
+    font-size: 1.9rem;
   }
 
   .story {

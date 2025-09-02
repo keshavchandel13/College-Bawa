@@ -12,6 +12,7 @@ import {
   MoreHorizontal,
   X
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import "../../styles/SideBar/mobileSidebar.css";
 
 const menuItems = [
@@ -26,24 +27,76 @@ const menuItems = [
   { icon: <MoreHorizontal />, label: "More", path: "/home/more" },
 ];
 
+const sidebarVariants = {
+  hidden: { x: "100%", opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 300, damping: 30 } },
+  exit: { x: "100%", opacity: 0, transition: { ease: "easeInOut" } },
+};
+
+const overlayVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 0.5, transition: { duration: 0.3 } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.05, type: "spring", stiffness: 300, damping: 20 },
+  }),
+};
+
 export default function MobileSidebar({ isOpen, onClose }) {
   return (
-    <div className={`mobile-sidebar-overlay ${isOpen ? "open" : ""}`}>
-      <div className="mobile-sidebar">
-        <button className="close-btn" onClick={onClose}>
-          <X size={24} />
-        </button>
-        <ul className="mobile-sidebar-menu">
-          {menuItems.map((item, index) => (
-            <li key={index} className="mobile-sidebar-item">
-              <Link to={item.path} className="mobile-sidebar-link" onClick={onClose}>
-                <span className="mobile-sidebar-icon">{item.icon}</span>
-                <span className="mobile-sidebar-label">{item.label}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Overlay */}
+          <motion.div
+            className="mobile-sidebar-overlay"
+            onClick={onClose}
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          />
+
+          {/* Sidebar */}
+          <motion.div
+            className="mobile-sidebar"
+            variants={sidebarVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <button className="close-btn" onClick={onClose} aria-label="Close sidebar">
+              <X size={24} />
+            </button>
+            <ul className="mobile-sidebar-menu">
+              {menuItems.map((item, index) => (
+                <motion.li
+                  key={index}
+                  className="mobile-sidebar-item"
+                  custom={index}
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link to={item.path} className="mobile-sidebar-link" onClick={onClose}>
+                    <span className="mobile-sidebar-icon">{item.icon}</span>
+                    <span className="mobile-sidebar-label">{item.label}</span>
+                  </Link>
+                  <hr/>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }
