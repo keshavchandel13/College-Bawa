@@ -98,3 +98,11 @@
   color: #9ca3af;
 }
 
+@media screen and (max-width:768px) {
+  .suggestion-container{
+    display: none;
+  }
+
+  
+}
+

@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../components/layout/SideBar";
-import TopBar from "../components/layout/TopBar"; // import the TopBar
+import TopBar from "../components/layout/TopBar"; 
 import "../styles/homepage/home.css";
 import { Outlet } from "react-router-dom";
 
@@ -11,22 +11,16 @@ function Home() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        backgroundColor: "#f4f4f4",
-        position: "relative",
-      }}
-    >
+    <div className="home-wrapper">
       <Sidebar />
-      <div style={{ flex: 1, overflowY: "auto", height: "100vh", backgroundColor: "#f4f4f4" }}>
+      <div className="home-content">
         {/* TopBar stays fixed at the top */}
         <TopBar onViewChange={handleViewChange} />
 
-        {/* This div adds padding-top to prevent content under TopBar */}
-        <div style={{ paddingTop: "0", paddingLeft: "60px" }}>
+        {/* Content wrapper with spacing for Sidebar & TopBar */}
+        <div className="home-outlet">
           <Outlet />
-        </div>
+        </div> 
       </div>
     </div>
   );

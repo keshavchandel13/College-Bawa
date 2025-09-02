@@ -1,4 +1,22 @@
-/* Default (light theme) stays same */
+/* Wrapper for sidebar + main content */
+.home-wrapper {
+  display: flex;
+  background-color: #f4f4f4;
+  position: relative;
+}
+
+/* Content area (right side of sidebar) */
+.home-content {
+  flex: 1;
+  overflow-y: auto;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+.home-outlet {
+  padding-top: 0;
+  padding-left: 60px; 
+}
+
 .home-container {
   display: flex;
   height: 100vh;
@@ -40,11 +58,15 @@
   line-height: 1.6;
 }
 
-/* 🌙 Dark theme overrides */
 body[data-theme="dark"] .home-container {
-  background: linear-gradient(to bottom right, #1a1a1a, #2b2b2b);
+  background: black;
 }
-
+body[data-theme="dark"] .home-content{
+  background: #121212;
+}
+body[data-theme="dark"] .home-wrapper {
+  background-color: black;
+}
 body[data-theme="dark"] .main-content {
   background: rgba(30, 30, 30, 0.7);
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
@@ -61,4 +83,78 @@ body[data-theme="dark"] .welcome-text span {
 
 body[data-theme="dark"] .intro-text {
   color: #cccccc;
+}
+/* ✅ Tablet breakpoint */
+@media screen and (max-width: 1024px) {
+  .home-wrapper {
+    flex-direction: column; /* stack sidebar and content */
+  }
+
+  .home-outlet {
+    padding-left: 0; /* remove sidebar padding */
+  }
+
+  .main-content {
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .welcome-text {
+    font-size: 2.5rem;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+}
+
+/* ✅ Mobile breakpoint */
+@media screen and (max-width: 768px) {
+  .home-wrapper {
+    flex-direction: column;
+  }
+
+  .home-container {
+    flex-direction: column;
+    padding: 1rem;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    padding: 1rem;
+    border-radius: 16px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .welcome-text {
+    font-size: 2rem;
+  }
+
+  .intro-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+}
+
+/* ✅ Extra small devices */
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+
+  .welcome-text {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .intro-text {
+    font-size: 0.85rem;
+    max-width: 100%;
+  }
 }

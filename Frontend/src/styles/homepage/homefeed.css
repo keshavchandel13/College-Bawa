@@ -1,4 +1,3 @@
-/* 🌞 Light Theme (default styles you already wrote) */
 .home-feed-container {
   padding: 1.5rem;
   background: #fafafa;
@@ -139,4 +138,108 @@
 
 [data-theme="dark"] .create-post-box button:hover {
   background-color: #64b5f6;
+}
+/* ✅ Tablet breakpoint */
+@media screen and (max-width: 1024px) {
+  .post-suggestion-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .posts-container {
+    width: 100%;
+  }
+
+  .suggestion-container {
+    position: relative;
+    top: auto;
+    width: 100%;
+  }
+}
+
+/* ✅ Mobile breakpoint */
+@media screen and (max-width: 768px) {
+  .home-feed-container {
+    padding: 1rem;
+    height: auto;
+    min-height: 100vh;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .home-feed-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  /* Stories row becomes scrollable */
+  .stories-container {
+    gap: 0.75rem;
+  }
+
+  .story {
+    min-width: 60px;
+    font-size: 0.7rem;
+  }
+
+  .story img {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Create post compact */
+  .create-post-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .create-post-box img {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+  }
+
+  .create-post-box input {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .create-post-box button {
+    align-self: flex-end;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ✅ Extra small devices */
+@media screen and (max-width: 480px) {
+  .home-feed-title {
+    font-size: 1.2rem;
+  }
+
+  .story {
+    min-width: 50px;
+    font-size: 0.65rem;
+  }
+
+  .story img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .create-post-box {
+    gap: 0.5rem;
+  }
+
+  .create-post-box input {
+    font-size: 0.85rem;
+  }
+
+  .create-post-box button {
+    width: 100%;
+    text-align: center;
+  }
 }

@@ -324,3 +324,101 @@
 [data-theme="dark"] .multi-step-form__close-icon:hover {
   color: #f87171;
 }
+/* 🔹 Tablet breakpoint */
+@media screen and (max-width: 1024px) {
+  .multi-step-form__container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .step,
+  .profile-preview {
+    max-width: 100%;
+  }
+}
+
+/* 🔹 Mobile breakpoint */
+@media screen and (max-width: 768px) {
+  .multi-step-form__container {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .step {
+    padding: 1rem;
+    min-width: 100%;
+  }
+
+  .step h2 {
+    font-size: 1.25rem;
+  }
+
+  .step input,
+  .step textarea {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.9rem;
+  }
+
+  .step-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .step-buttons button {
+    width: 100%;
+  }
+
+  .profile-preview {
+    min-width: 100%;
+    padding: 0.75rem;
+  }
+
+  .preview-card h4 {
+    font-size: 1rem;
+  }
+
+  .preview-card p {
+    font-size: 0.9rem;
+  }
+
+  .multi-step-form__close-icon {
+    top: 16px;
+    right: 16px;
+    font-size: 1.5rem;
+  }
+}
+
+/* 🔹 Extra small devices */
+@media screen and (max-width: 480px) {
+  .multi-step-form__container {
+    padding: 0.75rem;
+  }
+
+  .step {
+    padding: 0.75rem;
+  }
+
+  .step h2 {
+    font-size: 1.1rem;
+  }
+
+  .tag-input input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-input .tag-suggestions span {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  .skill-tag {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  .preview-image {
+    max-height: 150px;
+  }
+}
