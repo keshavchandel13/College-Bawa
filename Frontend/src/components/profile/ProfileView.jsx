@@ -6,7 +6,6 @@ const UserProfile = ({ user, setEdit }) => {
   const navigate = useNavigate();
 
   if (!user) return <div>No user profile found.</div>;
-  console.log(user)
 
   return (
     <div className="user-profile-container">
