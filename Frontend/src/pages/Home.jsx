@@ -3,6 +3,7 @@ import Sidebar from "../components/layout/SideBar";
 import TopBar from "../components/layout/TopBar"; 
 import "../styles/homepage/home.css";
 import { Outlet } from "react-router-dom";
+import MobileNav from "../components/layout/MobileNav";
 
 function Home() {
   // Dummy function for profile view change (required by TopBar)
@@ -21,6 +22,9 @@ function Home() {
         <div className="home-outlet">
           <Outlet />
         </div> 
+        <div>
+          <MobileNav/>
+        </div>
       </div>
     </div>
   );

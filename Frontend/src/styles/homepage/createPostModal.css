@@ -49,3 +49,65 @@
 [data-theme="dark"] .close-btn:hover {
   color: #f87171; /* soft red on hover */
 }
+/* ✅ Tablet breakpoint */
+@media screen and (max-width: 1024px) {
+  .modal-content {
+    width: 95%;
+    max-width: 500px;
+    padding: 18px;
+  }
+
+  .close-btn {
+    font-size: 22px;
+    top: 8px;
+    right: 12px;
+  }
+}
+
+/* ✅ Mobile breakpoint */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-width: 420px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .close-btn {
+    font-size: 20px;
+    top: 6px;
+    right: 10px;
+  }
+}
+
+/* ✅ Extra small devices */
+@media screen and (max-width: 480px) {
+  .modal-overlay {
+    align-items: flex-end; /* modal slides from bottom like mobile apps */
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px 12px 0 0;
+    padding: 14px;
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .close-btn {
+    font-size: 18px;
+    top: 8px;
+    right: 12px;
+  }
+}
+
+/* 📲 Slide-up animation for mobile modal */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
