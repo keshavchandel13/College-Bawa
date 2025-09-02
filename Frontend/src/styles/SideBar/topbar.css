@@ -195,8 +195,15 @@ body[data-theme="dark"] .topbar-dropdown-separator {
   border-top: 1px solid #444;
 }
 
+@media screen and (max-width:768px) {
+  .topbar-container{
+    display: none;
+  }
+  
+}
+
 /* Media query for mobile view */
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .topbar-container {
     position: fixed;
     bottom: 0;
@@ -211,47 +218,47 @@ body[data-theme="dark"] .topbar-dropdown-separator {
     border-bottom: none;
 
     display: flex;
-    justify-content: space-around; /* distribute icons evenly */
+    justify-content: space-around;
     align-items: center;
     z-index: 9999;
-  }
+  } */
 
   /* hide search bar (too big for bottom bar) */
-  .topbar-search {
+  /* .topbar-search {
     display: none;
-  }
+  } */
 
   /* icons should be bigger / centered */
-  .topbar-actions {
+  /* .topbar-actions {
     width: 100%;
     justify-content: space-around;
     gap: 0;
-  }
+  } */
 
-  .topbar-icon-button {
+  /* .topbar-icon-button {
     flex: 1;
     display: flex;
     justify-content: center;
-  }
+  } */
 
   /* user avatar smaller in bottom nav */
-  .topbar-user-button {
+  /* .topbar-user-button {
     flex-direction: column;
     gap: 2px;
-  }
+  } */
 
-  .topbar-avatar {
+  /* .topbar-avatar {
     width: 28px;
     height: 28px;
-  }
+  } */
 
-  .topbar-user-info {
-    display: none; /* hide text to save space */
-  }
+  /* .topbar-user-info {
+    display: none; 
+  } */
 
   /* dropdown should still work */
-  .topbar-dropdown-content {
-    bottom: 60px; /* open upwards instead of downwards */
+  /* .topbar-dropdown-content {
+    bottom: 60px;
     top: auto;
   }
-}
+} */

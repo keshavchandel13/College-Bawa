@@ -2,32 +2,32 @@
   background: white;
   border-radius: 16px;
   padding: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.993); /* strong shadow like image */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* balanced shadow */
   width: 100%;
   max-width: 900px;
   font-family: sans-serif;
-  margin-bottom: 20px;
+  margin: 10px  20px ; 
   border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .top-section {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  align-items: start;
 }
 
 .post-input {
   flex: 1;
-  width: 100%;
   border: none;
   border-radius: 20px;
   padding: 10px 16px;
@@ -47,8 +47,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .post-options-left {
@@ -88,7 +88,7 @@
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2); /* subtle deep shadow */
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
   transition: background 0.2s, transform 0.2s;
 }
 
@@ -96,7 +96,8 @@
   background: #003af8;
   transform: translateY(-1px);
 }
-/* 🌑 Dark Theme for Post Box */
+
+/* 🌑 Dark Theme */
 [data-theme="dark"] .post-box {
   background: #1e1e1e;
   border: 1px solid #333;
@@ -130,4 +131,97 @@
 
 [data-theme="dark"] .post-button-right:hover {
   background: #003af8;
+}
+
+/* ✅ Tablet */
+@media screen and (max-width: 1024px) {
+  .post-box {
+    padding: 14px;
+    max-width: 100%;
+  }
+
+  .avatar {
+    width: 45px;
+    height: 45px;
+  }
+
+  .post-input {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .post-options-left button,
+  .post-button-right {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
+
+/* ✅ Mobile */
+@media screen and (max-width: 768px) {
+  .post-box {
+    width: 95%;
+    max-width: 400px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .top-section {
+    gap: 8px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .post-input {
+    font-size: 13px;
+    padding: 8px 12px;
+    min-height: 40px;
+  }
+
+  .bottom-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .post-options-left button {
+    flex: 1 1 45%; /* 2 per row */
+    justify-content: center;
+  }
+
+  .post-button-right {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ✅ Extra small */
+@media screen and (max-width: 480px) {
+  .post-box {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .post-input {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .post-options-left button {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .post-button-right {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
 }
