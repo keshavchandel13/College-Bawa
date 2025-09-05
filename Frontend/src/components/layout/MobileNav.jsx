@@ -5,6 +5,9 @@ import "../../styles/SideBar/mobileNav.css";
 
 export default function MobileNav() {
   return (
+    <div className="mobile-nav-container">
+
+    
     <div className="mobile-nav">
       <Link to="/home" className="mobile-nav-item">
         <FiHome />
@@ -22,6 +25,7 @@ export default function MobileNav() {
         <FiUser />
         <span>Profile</span>
       </Link>
+    </div>
     </div>
   );
 }
