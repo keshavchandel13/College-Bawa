@@ -244,3 +244,61 @@ body[data-theme="dark"] .skill-item {
   background-color: #374151;
   color: #f9fafb;
 }
+
+/* ---------------- Responsive Tweaks for Mobile ---------------- */
+@media (max-width: 640px) {
+  .user-profile-container {
+    padding: 1rem; /* Less side padding on mobile */
+  }
+
+  .profile-card {
+    padding: 1.25rem; /* Smaller padding inside box */
+    border-radius: 0.75rem; /* Slightly smaller corners */
+    margin-top: 0.5rem; /* Reduced margin */
+  }
+
+  .profile-view-image {
+    width: 6rem;
+    height: 6rem; /* Smaller profile image */
+  }
+
+  .profile-view-name {
+    font-size: 1.5rem; /* Slightly smaller name */
+  }
+
+  .profile-details {
+    font-size: 0.8rem;
+  }
+
+  .profile-bio {
+    font-size: 0.85rem;
+  }
+
+  .stats-grid {
+    gap: 0.75rem;
+  }
+
+  .stat-card {
+    padding: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .edit-profile-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ---------------- Extra Small Screens (<400px) ---------------- */
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr; /* 2 columns instead of 4 */
+  }
+
+  .profile-card {
+    margin-top: -0.5rem; /* Push slightly upwards on very small devices */
+  }
+}

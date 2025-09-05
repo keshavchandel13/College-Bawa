@@ -26,7 +26,7 @@ const CreatePost = ({ token }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/posts", {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/posts`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

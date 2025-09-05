@@ -8,7 +8,7 @@ const PostItem = ({ post, onLike, onShare, onComment }) => {
         <h4>{post.user.name}</h4>
       </div>
       <p>{post.content}</p>
-      {post.image && <img src={`http://localhost:5000${post.image}`} alt="Post" />}
+      {post.image && <img src={`${import.meta.env.VITE_APP_BACKEND_URL}${post.image}`} alt="Post" />}
       
       <div className="post-actions">
         <button onClick={() => onLike(post._id)}>👍 {post.likes.length}</button>
