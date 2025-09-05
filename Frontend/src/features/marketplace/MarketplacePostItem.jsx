@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import '../styles/marketplace/marketplace.css'; 
+import '../../styles/marketplace/marketplacepost.css'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
-export default function MarketplacePostItem({ token }) {
+export default function MarketplacePostItem({ token, onPostSuccess }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -77,7 +77,7 @@ export default function MarketplacePostItem({ token }) {
     formData.append('price', price);
     formData.append('category', category);
     formData.append('location', location);
-    images.forEach((img, idx) => {
+    images.forEach((img) => {
       formData.append('images', img);
     });
 
@@ -92,6 +92,12 @@ export default function MarketplacePostItem({ token }) {
       setLocation('');
       setImages([]);
       setPreviewImages([]);
+
+      // Notify parent about the new item
+      if (onPostSuccess) {
+        // Adjust this if your API returns the new item differently
+        onPostSuccess(result.item || result);
+      }
     }
   };
 
