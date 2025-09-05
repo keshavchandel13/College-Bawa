@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/posts"; 
+const API_URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/posts`; 
 
 // Create a new post
 export const createPost = async (content, image, token) => {

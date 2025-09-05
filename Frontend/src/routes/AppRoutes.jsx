@@ -8,7 +8,7 @@ import DashboardRoutes from "./DashboardRoutes";
 const Login = lazy(() => import("../features/auth/Login"));
 const AdminDashboard = lazy(() => import("../admin/AdminDashboard"));
 const Signup = lazy(() => import("../features/auth/Signup"));
-const ForgetPassword = lazy(() => import("../features/auth/ForgetPassword"));
+const ForgetPassword = lazy(() => import("../features/auth/forgetpassword"));
 const ResetPassword = lazy(() => import("../features/auth/ResetPassword"));
 const LoginWithGoogle = lazy(() => import("../features/auth/LoginWithGoogle"));
 const NotFound = lazy(() => import("../pages/NotFound"));

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/user";
+const BASE_URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/user`;
 
 // Submit user profile
 export const submitUserProfile = async (formData) => {
@@ -9,7 +9,7 @@ export const submitUserProfile = async (formData) => {
     Object.entries(formData).forEach(([key, value]) => {
         data.append(key, value);
     });
-    const res = await axios.post(`http://localhost:5000/api/user/addUserDetails`, data, {
+    const res = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/api/user/addUserDetails`, data, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 

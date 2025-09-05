@@ -17,7 +17,7 @@ export const fetchUsers = async (userId) => {
       },
     };
     // Make the GET request to the server with token in headers
-    const res = await axios.get(`http://localhost:5000/api/chats/getuser?userId=${userId}`, config); 
+    const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/chats/getuser?userId=${userId}`, config); 
     // Return the data
     return res.data;
   } catch (error) {
@@ -44,7 +44,7 @@ export const createGroupChat = async (name, users) => {
 
 export const searchUsers = async (query) => {
   const token = localStorage.getItem("token");
-  const res = await axios.get(` http://localhost:5000/api/user?search=${query}`, {
+  const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/user?search=${query}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   console.log(res.data)
@@ -54,7 +54,7 @@ export const searchUsers = async (query) => {
 export const accessOrCreateChat = async (body, token) => {
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/chats",
+      `${import.meta.env.VITE_APP_BACKEND_URL}/api/chats`,
       body,
       {
         headers: {
@@ -86,7 +86,7 @@ export const getUserChats = async (token,userId,selectedUserId, page = 1, limit 
     };
 
     const res = await axios.get(
-      `http://localhost:5000/api/chats?userId=${userId}&selectedUserId=${selectedUserId}&page=${page}&limit=${limit}`,
+      `${import.meta.env.VITE_APP_BACKEND_URL}/api/chats?userId=${userId}&selectedUserId=${selectedUserId}&page=${page}&limit=${limit}`,
       config
     );
     console.log(res.data)
