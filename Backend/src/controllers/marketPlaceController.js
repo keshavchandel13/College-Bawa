@@ -1,53 +1,64 @@
 const MarketplaceItem = require('../models/MarketPlaceModel');
+const uploadToCloudinary = require('../utils/uploadToCloudinary');
 
 // Get marketplace items with pagination
 const getItems = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
     const skip = (page - 1) * limit;
 
     const totalItems = await MarketplaceItem.countDocuments();
 
     const items = await MarketplaceItem.find()
-      .populate({
-        path: 'user',
-        select: 'name email profileImage'
-      })
+      .populate("user", "name email profileImage")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
 
     res.status(200).json({
+      success: true,
       currentPage: page,
       totalPages: Math.ceil(totalItems / limit),
       totalItems,
-      items
+      items,
     });
   } catch (err) {
     console.error("Error in getItems:", err);
-    res.status(500).json({ message: "Server Error", error: err.message });
+    res.status(500).json({ success: false, message: "Server Error", error: err.message });
   }
 };
 
-// Post a new item to marketplace
+// Post a new item (with Cloudinary image upload)
 const postItems = async (req, res) => {
   try {
-    const { title, description, price, category, location, images } = req.body;
-    const user = req.user._id; // Assuming authMiddleware sets req.user
+ 
+    const { userId ,title, description, price, category, location } = req.body;
+
+
 
     if (!title || !price || !category) {
       return res.status(400).json({ message: "Title, price and category are required" });
     }
 
+    // Upload all images to Cloudinary
+    let imageUrls = [];
+    if (req.files && req.files.length > 0) {
+      const uploads = req.files.map(file =>
+        uploadToCloudinary(file.buffer, "marketplace")
+      );
+      imageUrls = await Promise.all(uploads);
+    }
+
+
     const newItem = new MarketplaceItem({
-      user,
+       user:userId,
       title,
       description,
       price,
       category,
       location,
-      images
+      images: imageUrls
     });
 
     const savedItem = await newItem.save();
