@@ -1,196 +1,106 @@
-import React, { useState } from 'react';
-import '../styles/marketplace/marketplace.css'; 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import SearchBar from "../features/marketplace/SearchBar";
+import ToggleButtons from "../features/marketplace/ToggleButton";
+import MarketplacePostItem from "../features/marketplace/MarketplacePostItem";
+import PostList from "../features/marketplace/PostList";
+import { getMarketplaceItems } from "../api/marketplace/marketplace";
+import "../styles/marketplace/marketplacepage.css"; 
 
-export default function MarketplacePostItem({ token }) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
-  const [location, setLocation] = useState('');
-  const [images, setImages] = useState([]); // Array of File objects
-  const [previewImages, setPreviewImages] = useState([]); // Array of preview URLs
+export default function MarketplacePage({ token }) {
+  const [posts, setPosts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showForm, setShowForm] = useState(false);
+
+  // Pagination state
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // Handle image selection and preview
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImages(files);
-
-    // Generate preview URLs
-    const previews = files.map(file => URL.createObjectURL(file));
-    setPreviewImages(previews);
-  };
-
-  // Clear previews URLs on unmount to avoid memory leaks
-  React.useEffect(() => {
-    return () => {
-      previewImages.forEach(url => URL.revokeObjectURL(url));
-    };
-  }, [previewImages]);
-
-  // API call to post item
-  const postItem = async (formData) => {
+  // Fetch posts from API with pagination
+  const fetchPosts = async (pageNumber = 1) => {
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: token,
-        },
-      };
-      const res = await axios.post(
-        `${import.meta.env.VITE_APP_BACKEND_URL}/api/marketplace/postItem`,
-        formData,
-        config
-      );
-      setLoading(false);
-      return res.data;
+      const data = await getMarketplaceItems(token, pageNumber);
+
+      setPosts(data.items || []);
+      setPage(data.currentPage);
+      setTotalPages(data.totalPages);
     } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
       setLoading(false);
-      console.error('Error posting item:', error);
-      toast.error(error.response?.data?.message || 'Failed to post item');
-      return null;
     }
   };
 
-  // Handle form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Initial load
+  useEffect(() => {
+    fetchPosts(1);
+  }, []);
 
-    if (!title.trim() || !price || !category) {
-      toast.error('Please fill in all required fields: Title, Price, Category');
-      return;
-    }
+  // Handle Buy/Sell toggle
+  const handleBuyClick = () => setShowForm(false);
+  const handleSellClick = () => setShowForm(true);
 
-    if (images.length === 0) {
-      toast.error('Please upload at least one image');
-      return;
-    }
+  // Filter posts based on search term
+  const filteredPosts = posts.filter((post) =>
+    [post.title, post.description, post.category]
+      .join(" ")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
-    // Prepare form data for multipart/form-data
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('price', price);
-    formData.append('category', category);
-    formData.append('location', location);
-    images.forEach((img, idx) => {
-      formData.append('images', img);
-    });
-
-    const result = await postItem(formData);
-    if (result) {
-      toast.success('Item posted successfully!');
-      // Reset form
-      setTitle('');
-      setDescription('');
-      setPrice('');
-      setCategory('');
-      setLocation('');
-      setImages([]);
-      setPreviewImages([]);
-    }
+  // Handle successful post (refresh list to first page)
+  const handlePostSuccess = () => {
+    fetchPosts(1); 
+    setShowForm(false); 
   };
 
   return (
-    <div className="post-item-container">
-      <h2 className="heading">Post an Item for Sale</h2>
-      <form className="post-item-form" onSubmit={handleSubmit}>
+    <div className="marketplace-page">
+      <h1 className="page-heading">College Marketplace</h1>
 
-        <label>
-          Title <span className="required">*</span>
-          <input
-            type="text"
-            placeholder="Enter item title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            maxLength={100}
-          />
-        </label>
+      {/* Toggle Buy/Sell */}
+      <ToggleButtons
+        showForm={showForm}
+        handleBuyClick={handleBuyClick}
+        handleSellClick={handleSellClick}
+      />
 
-        <label>
-          Description
-          <textarea
-            placeholder="Describe your item"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={4}
-            maxLength={500}
-          />
-        </label>
+      {/* Show Form or List */}
+      {showForm ? (
+        <MarketplacePostItem token={token} onPostSuccess={handlePostSuccess} />
+      ) : (
+        <>
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          
+          {loading ? (
+            <p>Loading posts...</p>
+          ) : (
+            <PostList posts={filteredPosts} />
+          )}
 
-        <label>
-          Price (₹) <span className="required">*</span>
-          <input
-            type="number"
-            placeholder="Enter price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-            min="0"
-            step="0.01"
-          />
-        </label>
-
-        <label>
-          Category <span className="required">*</span>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          >
-            <option value="">Select category</option>
-            <option value="project">Project</option>
-            <option value="books">Books</option>
-            <option value="gadget">Gadget</option>
-          </select>
-        </label>
-
-        <label>
-          Location
-          <input
-            type="text"
-            placeholder="Enter location (optional)"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Upload Images <span className="required">*</span>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-            required
-          />
-        </label>
-
-        {/* Image Preview */}
-        {previewImages.length > 0 && (
-          <div className="image-preview-container">
-            {previewImages.map((src, idx) => (
-              <img
-                key={idx}
-                src={src}
-                alt={`Preview ${idx + 1}`}
-                className="image-preview"
-              />
-            ))}
-          </div>
-        )}
-
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? 'Posting...' : 'Post Item'}
-        </button>
-      </form>
-
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button
+                disabled={page <= 1}
+                onClick={() => fetchPosts(page - 1)}
+              >
+                Prev
+              </button>
+              <span>
+                Page {page} of {totalPages}
+              </span>
+              <button
+                disabled={page >= totalPages}
+                onClick={() => fetchPosts(page + 1)}
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

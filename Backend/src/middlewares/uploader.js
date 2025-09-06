@@ -1,29 +1,21 @@
 const multer = require("multer");
-const path = require("path")
 
-//Storage configuration
-const storage = multer.diskStorage({
-    destination: (req, file ,cb) =>{
-        cb(null, "uploads/");
-    },
-    filename:(req,res,cb)=>{
-        cb(null, `${Date.now()}${path.extname(file.orignalname)}`);
-    }
-});
+// Use memory storage for Cloudinary
+const storage = multer.memoryStorage();
 
-//File filter
-const fileFilter = (req,res,cb)=>{
-    if(file.mimetype.startsWith("image/")){
-        cb(null, true);
-    } else{
-        cb(new Error("Only images are allowed!"), false);
-    }
+// File filter (only allow images)
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only images are allowed!"), false);
+  }
 };
 
 const upload = multer({
-    storage,
-    fileFilter,
-    limits: {fileSize: 5*1024*1024},
-})
+  storage,
+  fileFilter,
+  limits: { fileSize: 12 * 1024 * 1024 } 
+});
 
-module.exports = upload
+module.exports = upload;

@@ -36,3 +36,26 @@ export const getUserProfile = async (token) => {
   return res.data;
 };
 
+
+const API = axios.create({
+  baseURL: "http://localhost:5000/api", 
+});
+
+// Add token from localStorage 
+API.interceptors.request.use((req) => {
+  const token = localStorage.getItem("token");
+  if (token) req.headers.Authorization = `Bearer ${token}`;
+  return req;
+});
+
+export const getUserPosts = async (userId) => {
+  const res = await API.get(`/posts/userpost/${userId}`);
+  return res.data.userPost;
+};
+
+export const deletePost = async (id) => {
+  const res = await API.delete(`/posts/${id}`);
+  return res.data;
+};
+
+
