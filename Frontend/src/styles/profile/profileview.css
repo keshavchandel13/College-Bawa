@@ -1,9 +1,24 @@
+/* ---------------- Body Background Fix ---------------- */
+body {
+  background-color: #ffffff; /* Light theme default */
+}
+
+body[data-theme="dark"] {
+  background-color: #111827; /* Dark theme background fix */
+}
+
 /* ---------------- Container and Cover ---------------- */
 .user-profile-container {
   max-width: 768px;
   margin: 0 auto;
   padding: 1.5rem 1.5rem; /* Increased top padding */
-      padding-bottom: 3rem;
+  padding-bottom: 3rem;
+
+  /* Force full screen height */
+  min-height: 100vh; /* always stretch to viewport */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 /* ---------------- Profile Card ---------------- */
@@ -16,6 +31,11 @@
   border: 1px solid #e5e7eb;
   position: relative;
   z-index: 10;
+
+  /* ✅ Allow stretching */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 body[data-theme="dark"] .profile-card {
@@ -248,22 +268,28 @@ body[data-theme="dark"] .skill-item {
 /* ---------------- Responsive Tweaks for Mobile ---------------- */
 @media (max-width: 640px) {
   .user-profile-container {
-    padding: 1rem; /* Less side padding on mobile */
+    padding: 1rem;
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+    background-color: #ffffff;
+  }
+
+  body[data-theme="dark"] .user-profile-container {
+    background-color: #111827;
   }
 
   .profile-card {
-    padding: 1.25rem; /* Smaller padding inside box */
-    border-radius: 0.75rem; /* Slightly smaller corners */
-    margin-top: 0.5rem; /* Reduced margin */
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    margin-top: 0.5rem;
   }
 
   .profile-view-image {
     width: 6rem;
-    height: 6rem; /* Smaller profile image */
+    height: 6rem;
   }
 
   .profile-view-name {
-    font-size: 1.5rem; /* Slightly smaller name */
+    font-size: 1.5rem;
   }
 
   .profile-details {
@@ -290,15 +316,132 @@ body[data-theme="dark"] .skill-item {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
   }
+
+  .edit-profile-button-wrapper {
+    margin-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+
+  /* ✅ Sidebar hidden like mobile */
+  .sidebar {
+    display: none !important;
+  }
+}
+
+/* ---------------- Tablet Screens (iPads, Surface Pro etc) ---------------- */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .user-profile-container {
+    max-width: 100%; /* stretch full width */
+    min-height: 100vh; /* stretch full height */
+    padding: 2rem 2rem 4rem 2rem;
+    margin: 0;
+  }
+
+  .profile-card {
+    padding: 2rem;
+    margin-top: 1rem;
+    border-radius: 0; /* ✅ flush with screen edges */
+    height: 100%;     /* ✅ stretch full height */
+  }
+
+  .profile-view-image {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .profile-view-name {
+    font-size: 1.75rem;
+  }
+
+  .profile-details {
+    font-size: 0.9rem;
+  }
+
+  .profile-bio {
+    font-size: 0.95rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr); /* balance for tablets */
+    gap: 1.25rem;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.4rem;
+  }
+
+  .edit-profile-button {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  /* ✅ Sidebar hidden like on mobile */
+  .sidebar {
+    display: none !important;
+  }
 }
 
 /* ---------------- Extra Small Screens (<400px) ---------------- */
 @media (max-width: 400px) {
   .stats-grid {
-    grid-template-columns: 1fr 1fr; /* 2 columns instead of 4 */
+    grid-template-columns: 1fr 1fr;
   }
 
   .profile-card {
-    margin-top: -0.5rem; /* Push slightly upwards on very small devices */
+    margin-top: -0.5rem;
+  }
+}
+
+/* ---------------- iPad & iPad Mini Portrait Fix ---------------- */
+@media (min-width: 768px) and (max-width: 834px) {
+  .user-profile-container {
+    max-width: 100%; /* take full width */
+    min-height: 100vh; /* always full height */
+    padding: 2rem 1.5rem 4rem 1.5rem;
+    margin: 0;
+  }
+
+  .profile-card {
+    padding: 1.75rem;
+    border-radius: 0; /* ✅ flush edges */
+    height: 100%;     /* ✅ full height */
+  }
+
+  .profile-view-image {
+    width: 6.5rem;
+    height: 6.5rem;
+  }
+
+  .profile-view-name {
+    font-size: 1.6rem;
+  }
+
+  .profile-details {
+    font-size: 0.85rem;
+  }
+
+  .profile-bio {
+    font-size: 0.9rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr); /* ✅ only 2 columns for balance */
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.3rem;
+  }
+
+  /* ✅ Sidebar hidden */
+  .sidebar {
+    display: none !important;
   }
 }
