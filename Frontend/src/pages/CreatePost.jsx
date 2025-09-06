@@ -38,7 +38,6 @@ const CreatePost = ({ token }) => {
         throw new Error("Failed to post");
       }
 
-      // On success
       toast.success("Post created successfully!");
       setContent("");
       setImageFile(null);
@@ -66,44 +65,44 @@ const CreatePost = ({ token }) => {
       <h1 className="create-post-heading"> Create a Post</h1>
 
       {token ? (
-        <>
-          <div className="post-box">
-            <div className="post-text-area">
-              <label htmlFor="postContent">Write something</label>
-              <textarea
-                id="postContent"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="What's on your mind?"
-              />
-            </div>
-
-            <div className="preview-section">
-              <input
-                type="file"
-                id="imageInput"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="file-input"
-              />
-              {previewUrl && (
-                <div className="image-preview">
-                  <img src={previewUrl} alt="Preview" className="preview-img" />
-                </div>
-              )}
-            </div>
-
-            <div className="post-btn-wrapper">
-              <button
-                className="post-btn"
-                onClick={handlePost}
-                disabled={loading}
-              >
-                {loading ? "Posting..." : "Post"}
-              </button>
-            </div>
+        <div className="post-box">
+          <div className="post-text-area">
+            <label htmlFor="postContent">Write something</label>
+            <textarea
+              id="postContent"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="What's on your mind?"
+            />
           </div>
-        </>
+
+          <div className="preview-section">
+            {/* Hidden file input */}
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="file-input"
+            />
+            {/* Custom styled button */}
+            <label htmlFor="imageInput" className="custom-file-btn">
+              {imageFile ? imageFile.name : "Choose File"}
+            </label>
+
+            {previewUrl && (
+              <div className="image-preview">
+                <img src={previewUrl} alt="Preview" className="preview-img" />
+              </div>
+            )}
+          </div>
+
+          <div className="post-btn-wrapper">
+            <button className="post-btn" onClick={handlePost} disabled={loading}>
+              {loading ? "Posting..." : "Post"}
+            </button>
+          </div>
+        </div>
       ) : (
         <div className="login-message">
           <p>
