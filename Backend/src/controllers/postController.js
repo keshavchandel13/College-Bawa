@@ -108,3 +108,49 @@ exports.sharePost = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
+
+exports.getUserPost = async (req, res) => {
+  try {
+    const { userId } = req.params;
+ 
+    const userPost = await Post.find({ user: userId })
+      .populate("user", "name profileImage")
+      .sort({ createdAt: -1 });
+    res.status(200).json({ message: "User posts", userPost });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+exports.deletePost = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Check ownership 
+    if (post.user.toString() !== req.user.userId) {
+      return res.status(403).json({ message: "Not authorized to delete this post" });
+    }
+
+
+    if (post.image && post.image.public_id) {
+      const cloudinary = require("cloudinary").v2;
+      try {
+        await cloudinary.uploader.destroy(post.image.public_id);
+      } catch (err) {
+        console.warn("Cloudinary image delete failed:", err.message);
+      }
+    }
+
+    // Delete post from DB
+    await Post.findByIdAndDelete(id);
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
