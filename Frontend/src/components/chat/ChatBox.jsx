@@ -100,8 +100,6 @@ const fetchMessages = async (page = 1) => {
         currentUser._id,
         token
       );
-      setMessages((prev) => [...prev, response]);
-
       socket.emit("send-message", {
         chatId: chatId,
         message: response,
