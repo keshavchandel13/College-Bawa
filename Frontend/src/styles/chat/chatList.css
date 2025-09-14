@@ -1,73 +1,84 @@
 .chatlist-container {
   padding: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
 }
 
 .chatlist-title {
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1rem;
 }
 
 .chatlist-items {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .chatlist-item {
+  margin-top: 13px;
   display: flex;
   align-items: center;
-  padding: 10px 12px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 10px;
   cursor: pointer;
   background-color: transparent;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 .chatlist-item:hover {
-  background-color: #f0f0f0;
-  transform: scale(1.02); /* Slightly scale up on hover */
+  background-color: #f5f7fa;
+  transform: scale(1.01);
 }
 
 .chatlist-item-active {
   background-color: #e6f0ff;
+  box-shadow: 0 2px 6px rgba(0, 102, 255, 0.2);
 }
 
 .chatlist-image-container {
-  position: relative; /* Position relative for the status dot */
-}
-
-.chatlist-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+  position: relative;
   margin-right: 12px;
 }
 
+.chatlist-image {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
 .status-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   position: absolute;
-    bottom: 40px;
-    right: 17px;
-  transform: translate(50%, 50%); /* Center the dot */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  bottom: 3px;
+  right: 3px;
+  border: 2px solid #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .status-dot.online {
-  background-color: #00ff00;
+  background-color: #4caf50; /* green */
 }
 
 .status-dot.offline {
-  background-color: #ccc;
+  background-color: #bbb;
 }
 
 .chatlist-info {
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   overflow: hidden;
 }
 
@@ -83,13 +94,14 @@
 .chatlist-message {
   font-size: 13px;
   color: #666;
+  margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .chatlist-no-chats {
-  padding: 10px;
+  padding: 15px;
   text-align: center;
   color: #999;
   font-size: 14px;
@@ -99,4 +111,31 @@
   text-align: center;
   font-size: 14px;
   padding: 20px;
+  color: #555;
+}
+
+/* Dark Mode */
+body[data-theme='dark'] .chatlist-container {
+  background-color: black;
+  border-right: 1px solid #2c2c2c;
+}
+
+body[data-theme='dark'] .chatlist-title {
+  color: #f1f1f1;
+}
+
+body[data-theme='dark'] .chatlist-item:hover {
+  background-color: #1e1e1e;
+}
+
+body[data-theme='dark'] .chatlist-item-active {
+  background-color: #2b3a55;
+}
+
+body[data-theme='dark'] .chatlist-name {
+  color: #fff;
+}
+
+body[data-theme='dark'] .chatlist-message {
+  color: #aaa;
 }

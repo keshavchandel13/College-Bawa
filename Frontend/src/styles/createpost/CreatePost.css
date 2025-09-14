@@ -164,7 +164,6 @@
 
 /* ---------------- Dark Theme ---------------- */
 body[data-theme="dark"] .create-post-container {
-  background: #0f172a;
   color: #e5e7eb;
 }
 
@@ -187,6 +186,7 @@ body[data-theme="dark"] .post-text-area label {
 }
 
 body[data-theme="dark"] .post-text-area textarea {
+  margin-top: 3px;
   background: #111827;
   color: #f9fafb;
   box-shadow: inset 4px 4px 8px #111827, inset -4px -4px 8px #374151;
