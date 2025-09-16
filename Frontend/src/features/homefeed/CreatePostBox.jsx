@@ -7,7 +7,7 @@ export default function CreatePostBox({ openCreatePost }) {
   const profilePic = localStorage.getItem("profileImage");
 
   return (
-    <div className="post-box">
+    <div className="homefeed-post-box">
       <div className="top-section">
         <img src={profilePic || '/default.jpg'} alt="Avatar" className="avatar" />
         <textarea

@@ -1,3 +1,15 @@
+@media (max-width: 600px) {
+  .user-search-list {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    font-size: 15px;
+    padding: 0 2px;
+  }
+  .user-search-list-item {
+    padding: 8px 4px;
+  }
+}
 /* 🔍 Search Container */
 .search-container {
   width: 100%;
