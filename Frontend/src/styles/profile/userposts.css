@@ -137,3 +137,49 @@
 .delete-btn:hover {
   background: rgba(220, 20, 60, 0.1);
 }
+/* 🌙 Dark Theme for User Posts */
+body[data-theme='dark'] .user-posts-container {
+  /* background-color: #1f2937; */
+  color: #f5f5f5;
+}
+
+body[data-theme='dark'] .user-posts-heading {
+  color: #f5f5f5;
+}
+
+body[data-theme='dark'] .no-posts {
+  color: #aaa;
+}
+
+body[data-theme='dark'] .post-card {
+  background: #2a2a2a;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+body[data-theme='dark'] .post-card:hover {
+  box-shadow: 0 6px 15px rgba(0,0,0,0.7);
+}
+
+body[data-theme='dark'] .no-image {
+  background: #444;
+  color: #bbb;
+}
+
+body[data-theme='dark'] .post-description {
+  background: #333;
+  color: #ddd;
+  border-top: 1px solid #444;
+}
+
+/* Menu */
+body[data-theme='dark'] .menu-dropdown {
+  background: #2b2b2b;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+}
+
+body[data-theme='dark'] .delete-btn {
+  color: #ff6b6b;
+}
+body[data-theme='dark'] .delete-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+}

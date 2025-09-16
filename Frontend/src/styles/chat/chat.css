@@ -145,6 +145,7 @@ body[data-theme='dark'] .chat-box-main {
 }
 
 body[data-theme='dark'] .chat-placeholder {
+  background: black;
   color: #e5e7eb;
 }
 

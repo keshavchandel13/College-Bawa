@@ -21,13 +21,13 @@ export default function CreatePostBox({ openCreatePost }) {
 
       <div className="bottom-section">
         <div className="post-options-left">
-          <button><FaPhotoVideo /> Photo</button>
-          <button><FaPoll /> Poll</button>
-          <button><FaSmile /> Feeling</button>
-          <button><FaMapMarkerAlt /> Location</button>
+          <button className="photo-btn"><FaPhotoVideo className="icon" /> Photo</button>
+          <button className="poll-btn"><FaPoll className="icon" /> Poll</button>
+          <button className="feeling-btn"><FaSmile className="icon" /> Feeling</button>
+          <button className="location-btn"><FaMapMarkerAlt className="icon" /> Location</button>
         </div>
         <button className="post-button-right" onClick={openCreatePost}>
-          <FaPlus /> Post
+          <FaPlus className="icon" /> Post
         </button>
       </div>
     </div>
