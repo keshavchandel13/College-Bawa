@@ -9,7 +9,7 @@ const menuItems = [
   { icon: <Star />, label: "Market Place",path:"/home/MarketPlace" },
   { icon: <Users />, label: "Communities", path:"/home/community" },
   { icon: <MessageSquare />, label: "Messages", path:"/home/chat" },
-  { icon: <Bell />, label: "Notification", path:"/home/notification" },
+  { icon: <Bell />, label: "Event Zone", path:"/home/notification" },
   { icon: <PlusCircle />, label: "Post", path: "/home/createpost" },
   { icon: <User />, label: "Profile", path: "/home/profile" },
   { icon: <MoreHorizontal />, label: "More", path:"/home/more"},
