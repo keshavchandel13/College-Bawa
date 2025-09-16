@@ -11,8 +11,9 @@ import {
   PlusCircle, 
   User, 
   MoreHorizontal, 
-  UserSecret   // 👈 added hacker-style icon
+ 
 } from "lucide-react";
+import { FaUserSecret } from "react-icons/fa";
 
 const menuItems = [
   { icon: <Home />, label: "Home", path: "/home/homefeed" },
@@ -23,7 +24,7 @@ const menuItems = [
   { icon: <Bell />, label: "Notification", path:"/home/notification" },
   { icon: <PlusCircle />, label: "Post", path: "/home/createpost" },
   { icon: <User />, label: "Profile", path: "/home/profile" },
-  { icon: <UserSecret />, label: "Anonymous Posts", path:"/home/anonymous"},  // 👈 hacker icon used here
+  { icon: <FaUserSecret />, label: "Anonymous Posts", path:"/home/anonymous"},  // 👈 hacker icon used here
   { icon: <MoreHorizontal />, label: "More", path:"/home/more"},
 ];
 
