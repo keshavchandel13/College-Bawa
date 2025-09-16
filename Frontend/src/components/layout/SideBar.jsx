@@ -1,7 +1,18 @@
 import '../../styles/SideBar/sidebar.css';
 import { Link } from "react-router-dom";
 import React from 'react';
-import { Home, Search, Star, Users, MessageSquare, Bell, PlusCircle, User, MoreHorizontal } from "lucide-react";
+import { 
+  Home, 
+  Search, 
+  Star, 
+  Users, 
+  MessageSquare, 
+  Bell, 
+  PlusCircle, 
+  User, 
+  MoreHorizontal, 
+  UserSecret   // 👈 added hacker-style icon
+} from "lucide-react";
 
 const menuItems = [
   { icon: <Home />, label: "Home", path: "/home/homefeed" },
@@ -12,19 +23,18 @@ const menuItems = [
   { icon: <Bell />, label: "Notification", path:"/home/notification" },
   { icon: <PlusCircle />, label: "Post", path: "/home/createpost" },
   { icon: <User />, label: "Profile", path: "/home/profile" },
+  { icon: <UserSecret />, label: "Anonymous Posts", path:"/home/anonymous"},  // 👈 hacker icon used here
   { icon: <MoreHorizontal />, label: "More", path:"/home/more"},
 ];
 
 export default function Sidebar() {
-
-
   return (
-    <div className="sidebar-container"> 
+    <div className="sidebar-container">
       <div className="sidebar-header">
         <img src="/logo2.png" alt="College Bawa Logo" className="sidebar-logo" />
         <h1 className="sidebar-title">College Bawa</h1>
       </div>
-      
+
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
           <li key={index} className="sidebar-item">
@@ -42,7 +52,6 @@ export default function Sidebar() {
           </li>
         ))}
       </ul>
-
     </div>
   );
 }
