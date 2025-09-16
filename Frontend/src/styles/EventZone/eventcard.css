@@ -133,4 +133,67 @@
     grid-template-columns: 1fr; /* stack in 1 column on mobile */
   }
 }
+/* 🌙 Dark Theme for Event Cards */
+body[data-theme='dark'] .ez-event-card {
+  background: #1f2937; /* dark background */
+  border: 1px solid #374151;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  color: #f3f4f6;
+}
+
+body[data-theme='dark'] .ez-event-card.ez-featured {
+  border: 2px solid #5387f5;
+}
+
+/* Image Section */
+body[data-theme='dark'] .ez-event-image {
+  filter: brightness(0.85); /* slightly darken images */
+}
+
+body[data-theme='dark'] .ez-event-badge {
+  color: #fff;
+}
+
+body[data-theme='dark'] .ez-featured-badge {
+  background-color: #f1c40f !important;
+  color: #222;
+}
+
+/* Content */
+body[data-theme='dark'] .ez-event-title {
+  color: #f3f4f6;
+}
+
+body[data-theme='dark'] .ez-event-details {
+  color: #d1d5db;
+}
+
+body[data-theme='dark'] .ez-event-detail svg {
+  color: #5387f5;
+}
+
+body[data-theme='dark'] .ez-event-footer {
+  border-top: 1px solid #374151;
+}
+
+body[data-theme='dark'] .ez-event-organizer {
+  color: #9ca3af;
+}
+
+body[data-theme='dark'] .ez-event-button {
+  background-color: #5387f5;
+  color: #fff;
+}
+
+body[data-theme='dark'] .ez-event-button:hover {
+  background-color: #003af8;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+/* Grid Layout */
+body[data-theme='dark'] .ez-event-grid {
+  gap: 24px;
+}
+
+
 
