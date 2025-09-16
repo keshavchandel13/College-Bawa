@@ -1,0 +1,268 @@
+.carousel-section {
+  padding: 48px 16px;
+}
+
+.carousel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.carousel-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #5387f5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.star-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.carousel-subtitle {
+  color: #4b5563;
+  font-size: 1.125rem;
+}
+
+/* Desktop nav */
+.carousel-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  border: 2px solid #5387f5;
+  color: #5387f5;
+  background: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background-color: #f0f2f5;
+}
+
+/* Carousel */
+.carousel-viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 0 8px;
+}
+
+/* Event card */
+.event-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 1024px) {
+  .event-card {
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+  }
+}
+
+.event-tags {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tag {
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+}
+
+.tag.featured {
+  background-color: #f1c40f;
+}
+
+.tag.category {
+  background-color: #e74c3c;
+}
+
+.event-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 1024px) {
+  .event-title {
+    font-size: 2rem;
+  }
+}
+
+.event-info {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  color: #4b5563;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 640px) {
+  .event-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.event-organizer {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+
+/* Register button */
+.register-btn {
+  background-color: #5387f5;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.register-btn:hover {
+  background-color: #003af8;
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Event image */
+.event-image-wrapper {
+  position: relative;
+}
+
+.event-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 1024px) {
+  .event-image {
+    height: 320px;
+  }
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
+  border-radius: 12px;
+}
+
+/* Dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #5387f5;
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+
+.dot.active {
+  transform: scale(1.25);
+  opacity: 1;
+}
+
+/* Mobile nav */
+.carousel-mobile-nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.mobile-btn {
+  border: 2px solid #5387f5;
+  color: #5387f5;
+  background: white;
+  border-radius: 9999px;
+  padding: 8px 24px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.mobile-btn:hover {
+  background-color: #f0f2f5;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive helpers */
+.desktop-only {
+  display: none;
+}
+
+.mobile-only {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: flex;
+  }
+  .mobile-only {
+    display: none;
+  }
+}

@@ -225,3 +225,28 @@
     padding: 6px 10px;
   }
 }
+/* Generic icon styling */
+.icon {
+  font-size: 16px;
+}
+
+/* 🎨 Themed button icon colors */
+.photo-btn .icon {
+  color: #4a90e2; /* Blue for photo/video */
+}
+
+.poll-btn .icon {
+  color: #9b59b6; /* Purple for polls */
+}
+
+.feeling-btn .icon {
+  color: #f1c40f; /* Yellow for feeling/emotions */
+}
+
+.location-btn .icon {
+  color: #e74c3c; /* Red for location */
+}
+
+.post-button-right .icon {
+  color: #fff; /* White icon on blue post button */
+}
