@@ -78,7 +78,11 @@ function Eventzone() {
             date: "Sep 20, 2025",
             time: "6:00 PM",
             venue: "Main Auditorium",
+<<<<<<< HEAD
             organizer: "Cultural Committee",
+=======
+            organizer: "College Bawa Cultural Committee",
+>>>>>>> 0a913a18854d67eaad13addb5c19e636fb8f905d
             category: "Cultural",
             image: "https://images.unsplash.com/photo-1509395176047-4a66953fd231",
             attendees: 500,
@@ -104,7 +108,7 @@ function Eventzone() {
             venue: "JUIT Sports Ground",
             organizer: "Sports Club",
             category: "Sports",
-            image: "https://images.unsplash.com/photo-1609337463519-4264c022cf2c",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-ysWDcM1PN8w1ZSErYFhQY0BHsZherUi33g&s",
             attendees: 300,
             isFeatured: false,
         },
