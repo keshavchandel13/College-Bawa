@@ -1,86 +1,87 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { HeroSection } from './HeroSection'
 import { HighlightsCarousel } from './HighlightsCarousel'
 import { FiltersSection } from './FiltersSection';
-import { useState } from 'react';
 import { EventCard } from './Eventcard';
+
 function Eventzone() {
     const dummyEvents = [
         {
             id: 1,
-            title: "Tech Fest 2025",
-            date: "Sep 25, 2025",
-            time: "10:00 AM - 5:00 PM",
-            venue: "Main Auditorium",
-            attendees: 450,
-            organizer: "Computer Science Club",
+            title: "Smart India Hackathon (SIH) 2025",
+            date: "Sep 28, 2025",
+            time: "9:00 AM - 9:00 PM",
+            venue: "Innovation Hub, JUIT",
+            attendees: 300,
+            organizer: "Department of CSE & ECE",
             category: "Technical",
             isFeatured: true,
-            image: "https://picsum.photos/800/400?random=1"
+            image: "https://picsum.photos/800/400?random=11"
         },
         {
             id: 2,
-            title: "Cultural Night",
-            date: "Oct 3, 2025",
+            title: "Le Fiestus - Cultural Fest",
+            date: "Oct 10, 2025",
             time: "6:00 PM - 11:00 PM",
-            venue: "Open Air Theatre",
-            attendees: 700,
-            organizer: "Cultural Committee",
+            venue: "Open Air Theatre, JUIT",
+            attendees: 1500,
+            organizer: "Cultural Council, JYC",
             category: "Cultural",
             isFeatured: true,
-            image: "https://picsum.photos/800/400?random=2"
+            image: "https://picsum.photos/800/400?random=12"
         },
         {
             id: 3,
-            title: "Sports Meet",
-            date: "Oct 12, 2025",
-            time: "9:00 AM - 6:00 PM",
-            venue: "Sports Ground",
-            attendees: 1200,
-            organizer: "Sports Club",
+            title: "Parakram - Annual Sports Meet",
+            date: "Oct 18, 2025",
+            time: "8:00 AM - 6:00 PM",
+            venue: "Sports Ground, JUIT",
+            attendees: 1000,
+            organizer: "Sports Council",
             category: "Sports",
             isFeatured: true,
-            image: "https://picsum.photos/800/400?random=3"
+            image: "https://picsum.photos/800/400?random=13"
         },
         {
             id: 4,
-            title: "Startup Pitch Day",
-            date: "Oct 20, 2025",
-            time: "2:00 PM - 6:00 PM",
+            title: "Startup Expo & Pitch Day",
+            date: "Nov 2, 2025",
+            time: "2:00 PM - 7:00 PM",
             venue: "Innovation Lab",
             attendees: 250,
-            organizer: "Entrepreneurship Cell",
+            organizer: "E-Cell JUIT",
             category: "Entrepreneurship",
             isFeatured: true,
-            image: "https://picsum.photos/800/400?random=4"
+            image: "https://picsum.photos/800/400?random=14"
         },
         {
             id: 5,
-            title: "Music Fest",
-            date: "Nov 1, 2025",
-            time: "5:00 PM - 11:00 PM",
-            venue: "Central Lawn",
-            attendees: 950,
-            organizer: "Music Club",
+            title: "Rhythm Night - Music & Dance Show",
+            date: "Nov 8, 2025",
+            time: "7:00 PM - 11:00 PM",
+            venue: "Central Lawn, JUIT",
+            attendees: 900,
+            organizer: "Music & Dance Club",
             category: "Entertainment",
             isFeatured: true,
-            image: "https://picsum.photos/800/400?random=5"
+            image: "https://picsum.photos/800/400?random=15"
         }
     ];
+
     const [activeCategory, setActiveCategory] = useState("All");
     const [searchTerm, setSearchTerm] = useState("");
 
     const events = [
         {
             id: "1",
-            title: "Cultural Night 2025",
-            date: "Sep 25, 2025",
+            title: "Cultural Night - Fresher’s Welcome",
+            date: "Sep 20, 2025",
             time: "6:00 PM",
             venue: "Main Auditorium",
-            organizer: "Bawa College Cultural Committee",
+            organizer: "Cultural Committee",
             category: "Cultural",
-            image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
-            attendees: 120,
+            image: "https://images.unsplash.com/photo-1509395176047-4a66953fd231",
+            attendees: 500,
             isFeatured: true,
         },
         {
@@ -92,15 +93,15 @@ function Eventzone() {
             organizer: "Department of Computer Science",
             category: "Workshops",
             image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb",
-            attendees: 85,
+            attendees: 120,
             isFeatured: true,
         },
         {
             id: "3",
-            title: "Inter-College Football Tournament",
+            title: "Inter-Department Football Tournament",
             date: "Oct 2, 2025",
             time: "3:00 PM",
-            venue: "College Sports Ground",
+            venue: "JUIT Sports Ground",
             organizer: "Sports Club",
             category: "Sports",
             image: "https://images.unsplash.com/photo-1609337463519-4264c022cf2c",
@@ -113,7 +114,7 @@ function Eventzone() {
             date: "Oct 5, 2025",
             time: "9:30 AM",
             venue: "Seminar Hall A",
-            organizer: "Tech Club",
+            organizer: "Tech Club, JYC",
             category: "Fests",
             image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
             attendees: 450,
@@ -137,14 +138,13 @@ function Eventzone() {
             date: "Oct 12, 2025",
             time: "8:00 AM",
             venue: "Innovation Hub",
-            organizer: "Code Warriors",
+            organizer: "Code Warriors, JUIT",
             category: "Technical",
             image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
             attendees: 200,
             isFeatured: true,
         }
     ];
-
 
     const filteredEvents = events.filter((event) => {
         const matchesCategory =
@@ -177,7 +177,6 @@ function Eventzone() {
                     )}
                 </div>
             </div>
-
         </div>
     )
 }
