@@ -1,0 +1,27 @@
+.anon-post-feed {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 column by default */
+  gap: 24px;
+  margin-top: 12px;
+  justify-content: center; /* centers the grid horizontally */
+  align-items: start;      /* aligns items at the top */
+  width: 100%;
+}
+
+/* Switch to 2 columns on medium+ screens */
+@media (min-width: 768px) {
+  .anon-post-feed {
+    grid-template-columns: repeat(2, minmax(0, 400px)); /* two columns max 400px each */
+    gap: 32px;
+    justify-content: center; /* keeps grid centered */
+  }
+}
+
+/* Extra spacing on large screens */
+@media (min-width: 1200px) {
+  .anon-post-feed {
+    grid-template-columns: repeat(2, minmax(0, 450px)); /* slightly wider cards */
+    gap: 40px;
+    justify-content: center;
+  }
+}

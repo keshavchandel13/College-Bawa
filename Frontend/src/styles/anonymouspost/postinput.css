@@ -1,0 +1,119 @@
+/* ---------------- Post Input Card ---------------- */
+.pi-post-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin: 12px auto;
+  max-width: 480px;
+  width: 100%;
+  transition: box-shadow 0.3s ease, transform 0.25s ease;
+}
+
+.pi-post-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+/* ---------------- Content ---------------- */
+.pi-post-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Textarea */
+.pi-post-textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 14px;
+  background: #f9f9f9;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.pi-post-textarea:focus {
+  background: #fff;
+  outline: none;
+  border-color: #888;
+}
+
+/* Actions */
+.pi-post-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Post Button */
+.pi-post-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(to right, #3b82f6, #9333ea);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pi-post-button:hover:not(:disabled) {
+  background: linear-gradient(to right, #2563eb, #7e22ce);
+}
+
+.pi-post-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Icon */
+.pi-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------------- Dark Theme ---------------- */
+body[data-theme="dark"] .pi-post-card {
+  background: rgba(31, 41, 55, 0.95);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+
+body[data-theme="dark"] .pi-post-textarea {
+  background: rgba(55, 65, 81, 0.8);
+  color: #f3f4f6;
+  border-color: #6b7280;
+}
+
+body[data-theme="dark"] .pi-post-textarea:focus {
+  background: rgba(55, 65, 81, 0.95);
+  border-color: #2563eb;
+  color: #f3f4f6;
+}
+
+body[data-theme="dark"] .pi-post-button {
+  background: linear-gradient(to right, #2563eb, #7e22ce);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 600px) {
+  .pi-post-card {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .pi-post-button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .pi-post-textarea {
+    font-size: 13px;
+  }
+}
