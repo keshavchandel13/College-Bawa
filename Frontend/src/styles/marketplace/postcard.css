@@ -1,0 +1,159 @@
+/* Theme variables */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111827;
+  --desc-color: #6b7280;
+  --price-color: #10b981;
+  --category-bg: #f3f4f6;
+  --category-text: #374151;
+  --card-shadow: rgba(0,0,0,0.08);
+  --card-shadow-hover: rgba(0,0,0,0.15);
+  --button-buy-bg: #10b981;
+  --button-buy-hover: #059669;
+  --button-sell-bg: #3b82f6;
+  --button-sell-hover: #2563eb;
+  --heading-color: #111827;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1f2937; /* gray-800 */
+  --text-color: #f9fafb; /* gray-50 */
+  --desc-color: #d1d5db; /* gray-300 */
+  --price-color: #34d399; /* green-400 */
+  --category-bg: #374151; /* gray-700 */
+  --category-text: #f9fafb; /* gray-50 */
+  --card-shadow: rgba(0,0,0,0.4);
+  --card-shadow-hover: rgba(0,0,0,0.6);
+  --button-buy-bg: #34d399;
+  --button-buy-hover: #059669;
+  --button-sell-bg: #60a5fa;
+  --button-sell-hover: #2563eb;
+  --heading-color: #f9fafb;
+}
+
+/* Marketplace heading */
+.marketplace-heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin: 20px 10px;
+}
+
+/* Card styling */
+.post-card {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  background-color: var(--bg-color);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 10px;
+  box-shadow: 0 4px 12px var(--card-shadow);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--card-shadow-hover);
+}
+
+.post-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.post-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.post-content p {
+  font-size: 0.9rem;
+  color: var(--desc-color);
+  height: 45px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-content span {
+  font-weight: 700;
+  color: var(--price-color);
+  font-size: 1rem;
+}
+
+/* Category label */
+.category-label {
+  background-color: var(--category-bg);
+  color: var(--category-text);
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: auto;
+  text-align: center;
+  width: fit-content;
+}
+
+/* Buy & Sell buttons */
+.button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 0.95rem;
+}
+
+.button-buy {
+  background-color: var(--button-buy-bg);
+  color: #ffffff;
+}
+
+.button-buy:hover {
+  background-color: var(--button-buy-hover);
+  transform: translateY(-2px);
+}
+
+.button-sell {
+  background-color: var(--button-sell-bg);
+  color: #ffffff;
+}
+
+.button-sell:hover {
+  background-color: var(--button-sell-hover);
+  transform: translateY(-2px);
+}
+
+/* Parent container */
+.posts-container-marketplace {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .post-card {
+    width: 48%;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-card {
+    width: 100%;
+  }
+}

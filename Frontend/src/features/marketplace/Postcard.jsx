@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../../styles/marketplace/postcard.css"
 export default function PostCard({ post }) {
   return (
     <div className="post-card">

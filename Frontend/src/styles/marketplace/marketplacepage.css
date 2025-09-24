@@ -1,6 +1,7 @@
+/* 📦 Marketplace Page Layout */
 .marketplace-page {
   padding: 20px;
-  max-width: 900px;
+  max-width: 1080px; /* ✅ unified max width */
   margin: 0 auto;
 }
 
@@ -9,6 +10,7 @@
   margin-bottom: 20px;
 }
 
+/* 🎛️ Button Group */
 .button-group {
   display: flex;
   justify-content: center;
@@ -23,6 +25,7 @@
   background: #eee;
   border-radius: 6px;
   font-weight: bold;
+  transition: background 0.2s ease;
 }
 
 .button-group button.active {
@@ -30,6 +33,7 @@
   color: white;
 }
 
+/* 🔎 Search Bar */
 .search-bar {
   width: 100%;
   padding: 10px;
@@ -38,8 +42,38 @@
   border: 1px solid #ddd;
 }
 
-.posts-container-marketplace {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 15px;
+/* 🖼️ Post Image */
+/* 🔧 Force all images same size */
+.marketplace .post-image {
+  width: 100%;
+  height: 200px;        /* ✅ consistent height */
+  object-fit: cover;    /* ✅ crop instead of stretch */
+  border-radius: 12px;
+  display: block;
 }
+
+/* 🔧 Make cards align neatly */
+.marketplace .post-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* ✅ pushes button/text to bottom */
+  min-height: 360px;              /* ✅ consistent height */
+  box-sizing: border-box;
+}
+
+
+.marketplace .post-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* 🛍️ Posts Grid */
+/* 📦 Fix for Posted Items Layout */
+.posts-container-marketplace {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  align-items: start;
+  justify-content: center;
+}
+
