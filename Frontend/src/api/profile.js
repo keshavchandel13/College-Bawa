@@ -7,11 +7,16 @@ export const submitUserProfile = async (formData) => {
   try {
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-        data.append(key, value);
+      data.append(key, value);
     });
-    const res = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/api/user/addUserDetails`, data, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+
+    const res = await axios.post(
+      `${import.meta.env.VITE_APP_BACKEND_URL}/api/user/addUserDetails`,
+      data,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
 
     return res.data;
   } catch (err) {
@@ -19,6 +24,7 @@ export const submitUserProfile = async (formData) => {
     throw err;
   }
 };
+
 // Get User Profile
 export const getUserProfile = async (token) => {
   const userString = localStorage.getItem("user");
@@ -36,12 +42,12 @@ export const getUserProfile = async (token) => {
   return res.data;
 };
 
-
+// ✅ Create axios instance using env variable
 const API = axios.create({
-  baseURL: import.meta.env.VITE_APP_BACKEND_URL, 
+  baseURL: `${import.meta.env.VITE_APP_BACKEND_URL}/api`,
 });
 
-// Add token from localStorage 
+// ✅ Add token from localStorage
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
   if (token) req.headers.Authorization = `Bearer ${token}`;
@@ -57,5 +63,3 @@ export const deletePost = async (id) => {
   const res = await API.delete(`/posts/${id}`);
   return res.data;
 };
-
-
