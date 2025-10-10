@@ -25,7 +25,7 @@ function ForgetPassword({ setOtpRequested }) {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/forget-password`, {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}api/auth/forget-password`, {
         method: "POST",
         mode: "cors",
         headers: {

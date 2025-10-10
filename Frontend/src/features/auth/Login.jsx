@@ -24,7 +24,7 @@ function Login() {
     }
     setError(null);
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/login`, { 
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}api/auth/login`, { 
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
