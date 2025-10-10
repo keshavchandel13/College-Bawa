@@ -49,6 +49,7 @@ const SearchPage = () => {
     fetchUsers();
   }, [searchTerm, searchMode, token, currentUser]);
 
+
   // data handling for different search modes
   const getDataByMode = () => {
     switch (searchMode) {
@@ -117,7 +118,7 @@ const SearchPage = () => {
               key={result.id || result._id}
               title={result.name || result.fullName || result.username}
               description={result.description || result.email || ''}
-              image={result.avatar || result.logo || '/default.jpg'}
+              image={result.profileImage || result.logo || '/default.jpg'}
               hasAction={true}
             />
           ))

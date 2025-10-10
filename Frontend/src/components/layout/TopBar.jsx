@@ -60,7 +60,7 @@ export function TopBar({ onViewChange }) {
               <Link to={"/home/profile"} style={{ textDecoration: 'none' }}>
                 <p className="topbar-user-name">{user.name}</p>
               </Link>
-              <p className="topbar-user-role">{user.additionalDetails.branch}</p>
+              {/* <p className="topbar-user-role">{user.additionalDetails.branch || " "}</p> */}
             </div>
           </button>
           <div className="topbar-dropdown-content">
