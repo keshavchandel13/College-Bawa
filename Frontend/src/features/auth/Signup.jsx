@@ -34,7 +34,7 @@ function Signup() {
     setError(null);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}api/auth/signup`, {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/signup`, {
         method: "POST",
         mode: "cors",
         headers: {

@@ -22,7 +22,7 @@ function ResetPassword() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}api/auth/reset-password`, {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/reset-password`, {
         method: 'POST',
         mode: 'cors',
         headers: {
