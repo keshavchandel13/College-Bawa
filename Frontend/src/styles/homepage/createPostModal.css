@@ -1,113 +1,92 @@
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  }
-  
-  .modal-content {
-    background: #fff;
-    padding: 20px;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 10px;
-    position: relative;
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-/* 🌑 Dark Theme for Modal */
-[data-theme="dark"] .modal-overlay {
-  background-color: rgba(0, 0, 0, 0.8); /* darker overlay */
+/* --- MODAL OVERLAY --- */
+.cb-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.7); /* Deep Slate Overlay */
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
 }
 
-[data-theme="dark"] .modal-content {
-  background: #1e1e1e;
-  color: #e5e5e5;
-  border: 1px solid #333;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+/* --- MODAL CONTAINER --- */
+.cb-modal-container {
+  background-color: #FFFFFF;
+  width: 100%;
+  max-width: 580px;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: cbFadeIn 0.25s ease-out;
 }
 
-[data-theme="dark"] .close-btn {
-  color: #9ca3af;
-  transition: color 0.2s ease;
+.cb-modal-header {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #F1F5F9;
 }
 
-[data-theme="dark"] .close-btn:hover {
-  color: #f87171; /* soft red on hover */
-}
-/* ✅ Tablet breakpoint */
-@media screen and (max-width: 1024px) {
-  .modal-content {
-    width: 95%;
-    max-width: 500px;
-    padding: 18px;
-  }
-
-  .close-btn {
-    font-size: 22px;
-    top: 8px;
-    right: 12px;
-  }
+.cb-modal-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0F172A;
+  margin: 0;
 }
 
-/* ✅ Mobile breakpoint */
-@media screen and (max-width: 768px) {
-  .modal-content {
-    width: 95%;
-    max-width: 420px;
-    padding: 16px;
-    border-radius: 8px;
-  }
-
-  .close-btn {
-    font-size: 20px;
-    top: 6px;
-    right: 10px;
-  }
+.cb-close-btn {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  transition: all 0.2s ease;
 }
 
-/* ✅ Extra small devices */
-@media screen and (max-width: 480px) {
-  .modal-overlay {
-    align-items: flex-end; /* modal slides from bottom like mobile apps */
+.cb-close-btn:hover {
+  background-color: #F1F5F9;
+  color: #0F172A;
+}
+
+/* --- RESPONSIVE & ANIMATIONS --- */
+@keyframes cbFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+  .cb-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
   }
 
-  .modal-content {
-    width: 100%;
+  .cb-modal-container {
     max-width: 100%;
-    height: auto;
-    border-radius: 12px 12px 0 0;
-    padding: 14px;
-    animation: slideUp 0.3s ease-out;
-  }
-
-  .close-btn {
-    font-size: 18px;
-    top: 8px;
-    right: 12px;
+    border-radius: 1.5rem 1.5rem 0 0;
+    animation: cbSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
-/* 📲 Slide-up animation for mobile modal */
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
+@keyframes cbSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* --- DARK MODE --- */
+[data-theme="dark"] .cb-modal-container {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .cb-modal-header {
+  border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .cb-modal-title {
+  color: #F8FAFC;
 }

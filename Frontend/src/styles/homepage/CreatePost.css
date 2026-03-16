@@ -1,0 +1,131 @@
+/* --- COMPOSER BODY --- */
+.cb-post-composer {
+  padding: 1.25rem;
+}
+
+.cb-composer-body {
+  margin-bottom: 1rem;
+}
+
+.cb-textarea {
+  width: 100%;
+  min-height: 150px;
+  border: none;
+  background: transparent;
+  font-size: 1.125rem;
+  color: #0F172A;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+}
+
+.cb-textarea::placeholder {
+  color: #94A3B8;
+}
+
+/* --- MEDIA PREVIEW --- */
+.cb-image-preview-wrapper {
+  position: relative;
+  margin-top: 1rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #E2E8F0;
+  background-color: #F8FAFC;
+}
+
+.cb-preview-img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  display: block;
+}
+
+.cb-clear-image {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(15, 23, 42, 0.8);
+  color: #FFFFFF;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.25rem;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.cb-clear-image:hover {
+  transform: scale(1.1);
+  background: #000000;
+}
+
+/* --- ACTION BAR --- */
+.cb-composer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #F1F5F9;
+}
+
+.cb-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 1rem;
+  color: #6366F1; /* Primary Color */
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 2rem;
+  transition: background 0.2s;
+}
+
+.cb-tool-btn:hover {
+  background-color: #EEF2FF;
+}
+
+.cb-primary-btn {
+  background-color: #6366F1;
+  color: #FFFFFF;
+  padding: 0.625rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cb-primary-btn:hover:not(:disabled) {
+  background-color: #4F46E5;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.cb-primary-btn:disabled {
+  background-color: #CBD5E1;
+  cursor: not-allowed;
+}
+
+/* --- DARK MODE --- */
+[data-theme="dark"] .cb-textarea {
+  color: #F1F5F9;
+}
+
+[data-theme="dark"] .cb-composer-footer {
+  border-top-color: #334155;
+}
+
+[data-theme="dark"] .cb-image-preview-wrapper {
+  background-color: #0F172A;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .cb-tool-btn:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}

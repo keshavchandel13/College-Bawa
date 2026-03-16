@@ -18,6 +18,7 @@ const AddUserProfile = lazy(()=> import('../pages/AddUserProfile'))
 
 const DashboardRoutes = () => {
   const token = localStorage.getItem("token");
+  
   const [edit, setEdit] = useState(false);
   return (
     <Routes>

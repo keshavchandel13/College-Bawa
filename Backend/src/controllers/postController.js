@@ -60,23 +60,41 @@ exports.getPosts = async (req, res) => {
 };
 
 // Like or unlike a post
+
+
 exports.likePost = async (req, res) => {
   try {
+
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    if (post.likes.includes(req.user.id)) {
-      post.likes = post.likes.filter(userId => userId.toString() !== req.user.id);
+    const userId = req.user.userId;
+
+    const alreadyLiked = post.likes.some(
+      id => id.toString() === userId
+    );
+
+    if (alreadyLiked) {
+      post.likes = post.likes.filter(
+        id => id.toString() !== userId
+      );
     } else {
-      post.likes.push(req.user.id);
+      post.likes.push(userId);
     }
 
     await post.save();
-    res.json({ message: "Like updated", likes: post.likes.length });
+
+    res.json({
+      message: "Like updated",
+      likes: post.likes.length
+    });
+
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Comment on a post
 exports.commentOnPost = async (req, res) => {
