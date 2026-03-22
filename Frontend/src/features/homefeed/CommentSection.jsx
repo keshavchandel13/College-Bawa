@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getComment, commentOnPost } from "../../api/post";
 import Comment from "./Comment";
 
@@ -12,13 +11,10 @@ export default function CommentSection({ postId, token }) {
     setComments(data);
   };
 
-  useEffect(() => {
-    fetchComments();
-  }, []);
+  useEffect(() => { fetchComments(); }, []);
 
   const handleComment = async () => {
     if (!text.trim()) return;
-
     await commentOnPost(postId, text, token);
     setText("");
     fetchComments();
@@ -31,32 +27,26 @@ export default function CommentSection({ postId, token }) {
 
   return (
     <div className="w-full">
-
-    <div className="bg-black text-white p-4 rounded-lg mt-3">
-      
-      {/* Input */}
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2 mb-6">
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="flex-1 px-3 py-2 rounded bg-gray-800"
-          placeholder="Add a comment..."
+          className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-none outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-medium"
+          placeholder="Type a spicy comment..."
         />
         <button
           onClick={handleComment}
-          className="bg-blue-500 px-4 rounded"
+          className="bg-indigo-500 text-white px-5 rounded-xl font-bold text-sm shadow-lg shadow-indigo-500/20 hover:brightness-110 active:scale-95 transition-all"
         >
-          Post
+          Send
         </button>
       </div>
 
-      {/* Comments */}
-      <div className="max-h-60 overflow-y-auto">
+      <div className="max-h-80 overflow-y-auto pr-2 space-y-4 scrollbar-thin scrollbar-thumb-indigo-500">
         {comments.map((c) => (
           <Comment key={c._id} comment={c} onReply={handleReply} />
         ))}
       </div>
-    </div>
     </div>
   );
 }

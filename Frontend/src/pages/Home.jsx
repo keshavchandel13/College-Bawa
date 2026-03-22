@@ -10,24 +10,26 @@ function Home() {
   };
 
   return (
-    <div className="flex bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark">
-
-      {/* Sidebar */}
+    <div className="flex min-h-screen bg-[#F8FAFC] dark:bg-[#020617] text-slate-900 dark:text-slate-100 overflow-hidden">
+      
+      {/* Sidebar - Positioned as a floating unit */}
       <Sidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 h-screen overflow-y-auto">
-
-        {/* TopBar */}
+      {/* Main Content Area */}
+      <div className="flex-1 h-screen overflow-y-auto custom-scrollbar transition-all duration-300">
+        
+        {/* TopBar - Sticky with blur */}
         <TopBar onViewChange={handleViewChange} />
 
-        {/* Page Content */}
-        <div className="pl-[60px] md:pl-[80px] lg:pl-[250px] pt-4 px-4">
+        {/* Page Content - Dynamic Padding to respect Sidebar hover state */}
+        <div className="pl-[70px] md:pl-[90px] lg:pl-[270px] transition-all duration-500 pt-6 pb-24 md:pb-8 px-4 max-w-[1600px] mx-auto">
           <Outlet />
         </div>
 
-        {/* Mobile Nav */}
-        <MobileNav />
+        {/* Mobile Navigation - Only visible on small screens */}
+        <div className="md:hidden">
+          <MobileNav />
+        </div>
       </div>
     </div>
   );
