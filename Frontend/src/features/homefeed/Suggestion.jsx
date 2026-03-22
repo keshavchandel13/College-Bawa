@@ -1,5 +1,4 @@
-import React from 'react';
-import '../../styles/homepage/suggestion.css';
+import React from "react";
 
 function Suggestion() {
   const suggestedUsers = [
@@ -15,23 +14,35 @@ function Suggestion() {
   ];
 
   return (
-    <div className="suggestion-container">
-      <h4 className="section-title">Suggested for you</h4>
-      {suggestedUsers.map((user, index) => (
-        <div className="suggestion-item" key={index}>
-          <img src={user.avatar} alt={user.name} className="suggestion-avatar" />
-          <span className="suggestion-name">{user.name}</span>
-          <button className="follow-btn">Follow</button>
-        </div>
-      ))}
+    <div className="card space-y-5">
 
-      <h4 className="section-title community-title">Trending Communities</h4>
-      {trendingCommunities.map((community, index) => (
-        <div className="community-item" key={index}>
-          <span className="community-icon">📈</span>
-          <span className="community-name">{community.name}</span>
-        </div>
-      ))}
+      <div>
+        <h3 className="text-sm font-semibold mb-3">Suggested for you</h3>
+
+        {suggestedUsers.map((user, i) => (
+          <div key={i} className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <img src={user.avatar} className="w-9 h-9 rounded-full" />
+              <span className="text-sm">{user.name}</span>
+            </div>
+            <button className="text-primary text-sm font-medium">
+              Follow
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <h3 className="text-sm font-semibold mb-3">
+          Trending Communities
+        </h3>
+
+        {trendingCommunities.map((c, i) => (
+          <div key={i} className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+            📈 {c.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

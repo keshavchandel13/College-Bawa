@@ -1,37 +1,43 @@
-import React from 'react'
-import {useGoogleLogin} from '@react-oauth/google'
+import React from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 import { googleAuth } from '../../api/auth';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export default function LoginWithGoogle() {
   const navigate = useNavigate();
-  const {login} =useAuth()
-  const responseGoogle = async(authResult)=>{
-    try{
-      if(authResult['code']){
+  const { login } = useAuth();
+
+  const responseGoogle = async (authResult) => {
+    try {
+      if (authResult['code']) {
         const result = await googleAuth(authResult['code']);
-        const {email, name} = result.data.user;
+        const { email, name } = result.data.user;
         const token = result.data.token;
-        const obj = {email, name, token};
+        const obj = { email, name, token };
         localStorage.setItem('user', JSON.stringify(obj));
-        login (obj);
-        navigate('/home')
+        login(obj);
+        navigate('/home');
       }
-
-    } catch(err){
+    } catch (err) {
       console.error('Error while requesting google code: ', err);
-
     }
-  }
+  };
+
   const googleLogin = useGoogleLogin({
-    onSuccess:responseGoogle,
-    onError:responseGoogle,
-    flow:'auth-code'
-  })
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: 'auth-code',
+  });
+
   return (
     <div>
-      <button onClick={googleLogin}>login</button>
+      <button
+        onClick={googleLogin}
+        className="px-4 py-2 rounded-md bg-white text-gray-800 font-medium border border-gray-300 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+      >
+        Login with Google
+      </button>
     </div>
-  )
+  );
 }

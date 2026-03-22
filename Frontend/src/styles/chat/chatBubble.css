@@ -1,7 +1,0 @@
-@media (max-width: 600px) {
-	.chat-bubble {
-		max-width: 85vw;
-		font-size: 15px;
-		padding: 7px 10px;
-	}
-}

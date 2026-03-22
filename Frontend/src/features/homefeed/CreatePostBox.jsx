@@ -1,33 +1,59 @@
-import React from 'react';
-import '../../styles/homepage/createpostbox.css';
-
-import { FaPhotoVideo, FaPoll, FaSmile, FaMapMarkerAlt, FaPlus } from 'react-icons/fa';
+import React from "react";
+import {
+  FaPhotoVideo,
+  FaPoll,
+  FaSmile,
+  FaMapMarkerAlt,
+  FaPlus,
+} from "react-icons/fa";
 
 export default function CreatePostBox({ openCreatePost }) {
   const profilePic = localStorage.getItem("profileImage");
 
   return (
-    <div className="homefeed-post-box">
-      <div className="top-section">
-        <img src={profilePic || '/default.jpg'} alt="Avatar" className="avatar" />
-        <textarea
-          className="post-input"
-          placeholder="What's happening on campus today?"
-          onClick={openCreatePost}
-          readOnly
-          rows={6}
+    <div className="card">
+
+      {/* Top */}
+      <div className="flex items-center gap-3">
+        <img
+          src={profilePic || "/default.jpg"}
+          className="w-11 h-11 rounded-full object-cover"
         />
+
+        <div
+          onClick={openCreatePost}
+          className="flex-1 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full cursor-pointer text-sm text-gray-500 dark:text-gray-400"
+        >
+          What's happening on campus today?
+        </div>
       </div>
 
-      <div className="bottom-section">
-        <div className="post-options-left">
-          <button className="photo-btn"><FaPhotoVideo className="icon" /> Photo</button>
-          <button className="poll-btn"><FaPoll className="icon" /> Poll</button>
-          <button className="feeling-btn"><FaSmile className="icon" /> Feeling</button>
-          <button className="location-btn"><FaMapMarkerAlt className="icon" /> Location</button>
+      {/* Bottom */}
+      <div className="flex flex-wrap justify-between mt-4 gap-2">
+
+        <div className="flex flex-wrap gap-2">
+          <button className="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-sm flex items-center gap-1 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <FaPhotoVideo /> Photo
+          </button>
+
+          <button className="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-sm flex items-center gap-1">
+            <FaPoll /> Poll
+          </button>
+
+          <button className="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-sm flex items-center gap-1">
+            <FaSmile /> Feeling
+          </button>
+
+          <button className="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-sm flex items-center gap-1">
+            <FaMapMarkerAlt /> Location
+          </button>
         </div>
-        <button className="post-button-right" onClick={openCreatePost}>
-          <FaPlus className="icon" /> Post
+
+        <button
+          onClick={openCreatePost}
+          className="btn-primary flex items-center gap-2"
+        >
+          <FaPlus /> Post
         </button>
       </div>
     </div>

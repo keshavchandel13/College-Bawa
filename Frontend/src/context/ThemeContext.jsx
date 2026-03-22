@@ -5,20 +5,38 @@ const ThemeContext = createContext();
 export const useTheme = () => useContext(ThemeContext);
 
 export default function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("light");
 
-  // Load saved theme from localStorage
+  // 🔥 initialize directly (prevents flicker)
+  const getInitialTheme = () => {
+    if (typeof window === "undefined") return "light";
+
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+
+    // optional: system preference
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  // apply theme whenever it changes
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.body.setAttribute("data-theme", savedTheme);
-  }, []);
+    const root = document.documentElement;
 
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // toggle
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.body.setAttribute("data-theme", newTheme);
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (

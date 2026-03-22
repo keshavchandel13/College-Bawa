@@ -4,19 +4,16 @@ import ToggleButtons from "../features/marketplace/ToggleButton";
 import MarketplacePostItem from "../features/marketplace/MarketplacePostItem";
 import PostList from "../features/marketplace/PostList";
 import { getMarketplaceItems } from "../api/marketplace/marketplace";
-import "../styles/marketplace/marketplacepage.css"; 
 
 export default function MarketplacePage({ token }) {
   const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
 
-  // Pagination state
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // Fetch posts from API with pagination
   const fetchPosts = async (pageNumber = 1) => {
     try {
       setLoading(true);
@@ -25,23 +22,17 @@ export default function MarketplacePage({ token }) {
       setPosts(data.items || []);
       setPage(data.currentPage);
       setTotalPages(data.totalPages);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  // Initial load
   useEffect(() => {
     fetchPosts(1);
   }, []);
 
-  // Handle Buy/Sell toggle
-  const handleBuyClick = () => setShowForm(false);
-  const handleSellClick = () => setShowForm(true);
-
-  // Filter posts based on search term
   const filteredPosts = posts.filter((post) =>
     [post.title, post.description, post.category]
       .join(" ")
@@ -49,51 +40,53 @@ export default function MarketplacePage({ token }) {
       .includes(searchTerm.toLowerCase())
   );
 
-  // Handle successful post (refresh list to first page)
-  const handlePostSuccess = () => {
-    fetchPosts(1); 
-    setShowForm(false); 
-  };
-
   return (
-    <div className="marketplace-page">
-      <h1 className="page-heading">College Marketplace</h1>
+    <div className="max-w-6xl mx-auto px-4 py-6">
 
-      {/* Toggle Buy/Sell */}
+      {/* Header */}
+      <h1 className="text-2xl font-semibold text-center mb-6">
+        Marketplace
+      </h1>
+
       <ToggleButtons
         showForm={showForm}
-        handleBuyClick={handleBuyClick}
-        handleSellClick={handleSellClick}
+        handleBuyClick={() => setShowForm(false)}
+        handleSellClick={() => setShowForm(true)}
       />
 
-      {/* Show Form or List */}
       {showForm ? (
-        <MarketplacePostItem token={token} onPostSuccess={handlePostSuccess} />
+        <MarketplacePostItem token={token} onPostSuccess={() => {
+          fetchPosts(1);
+          setShowForm(false);
+        }} />
       ) : (
         <>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          
+
           {loading ? (
-            <p>Loading posts...</p>
+            <p className="text-center mt-6">Loading...</p>
           ) : (
             <PostList posts={filteredPosts} />
           )}
 
-          {/* Pagination Controls */}
           {totalPages > 1 && (
-            <div className="pagination">
+            <div className="flex justify-center items-center gap-4 mt-6">
               <button
                 disabled={page <= 1}
                 onClick={() => fetchPosts(page - 1)}
+                className="px-4 py-2 rounded-lg border disabled:opacity-50"
               >
                 Prev
               </button>
-              <span>
-                Page {page} of {totalPages}
+
+              <span className="text-sm">
+                {page} / {totalPages}
               </span>
+
               <button
                 disabled={page >= totalPages}
                 onClick={() => fetchPosts(page + 1)}
+                className="px-4 py-2 rounded-lg border disabled:opacity-50"
               >
                 Next
               </button>

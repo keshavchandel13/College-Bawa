@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { createPost, getPosts, likePost, commentOnPost, sharePost, getUserPost, deletePost } = require("../controllers/postController");
+const { createPost, getPosts, likePost, commentOnPost, sharePost, getUserPost, deletePost, getComments } = require("../controllers/postController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
@@ -42,6 +42,7 @@ router.post("/:id/comment", authMiddleware, commentOnPost);
 router.post("/:id/share", authMiddleware, sharePost);
 // Get User post
 router.get("/userpost/:userId", authMiddleware, getUserPost);
+router.get("/:id/comment", authMiddleware, getComments);
 // Delete post
 
 router.delete("/posts/:id", authMiddleware, deletePost)

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Home,
@@ -10,87 +10,89 @@ import {
   PlusCircle,
   User,
   MoreHorizontal,
-  X
+  X,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import "../../styles/SideBar/mobileSidebar.css";
 
 const menuItems = [
-  { icon: <Home />, label: "Home", path: "/home/homefeed" },
-  { icon: <Search />, label: "Search", path: "/home/search" },
-  { icon: <Star />, label: "Market Place", path: "/home/MarketPlace" },
-  { icon: <Users />, label: "Communities", path: "/home/community" },
-  { icon: <MessageSquare />, label: "Messages", path: "/home/chat" },
-  { icon: <Bell />, label: "Notification", path: "/home/notification" },
-  { icon: <PlusCircle />, label: "Post", path: "/home/createpost" },
-  { icon: <User />, label: "Profile", path: "/home/profile" },
-  { icon: <MoreHorizontal />, label: "More", path: "/home/more" },
+  { icon: <Home size={20} />, label: "Home", path: "/home/homefeed" },
+  { icon: <Search size={20} />, label: "Search", path: "/home/search" },
+  { icon: <Star size={20} />, label: "Market Place", path: "/home/MarketPlace" },
+  { icon: <Users size={20} />, label: "Communities", path: "/home/community" },
+  { icon: <MessageSquare size={20} />, label: "Messages", path: "/home/chat" },
+  { icon: <Bell size={20} />, label: "Notification", path: "/home/notification" },
+  { icon: <PlusCircle size={20} />, label: "Post", path: "/home/createpost" },
+  { icon: <User size={20} />, label: "Profile", path: "/home/profile" },
+  { icon: <MoreHorizontal size={20} />, label: "More", path: "/home/more" },
 ];
 
-const sidebarVariants = {
-  hidden: { x: "100%", opacity: 0 },
-  visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 300, damping: 30 } },
-  exit: { x: "100%", opacity: 0, transition: { ease: "easeInOut" } },
-};
-
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 0.5, transition: { duration: 0.3 } },
-  exit: { opacity: 0, transition: { duration: 0.3 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, x: 20 },
-  visible: (i) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.05, type: "spring", stiffness: 300, damping: 20 },
-  }),
-};
-
 export default function MobileSidebar({ isOpen, onClose }) {
+
+  // 🔥 prevent background scroll
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => (document.body.style.overflow = "auto");
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           {/* Overlay */}
           <motion.div
-            className="mobile-sidebar-overlay"
             onClick={onClose}
-            variants={overlayVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black z-40"
           />
 
           {/* Sidebar */}
           <motion.div
-            className="mobile-sidebar"
-            variants={sidebarVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed top-0 right-0 h-full w-[280px] z-50 
+                       bg-cardLight dark:bg-cardDark 
+                       border-l border-borderLight dark:border-borderDark
+                       shadow-xl p-5 flex flex-col"
           >
-            <button className="close-btn" onClick={onClose} aria-label="Close sidebar">
-              <X size={24} />
+            {/* Close */}
+            <button
+              onClick={onClose}
+              className="self-end mb-6 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <X />
             </button>
-            <ul className="mobile-sidebar-menu">
+
+            {/* Menu */}
+            <ul className="flex flex-col gap-3">
               {menuItems.map((item, index) => (
                 <motion.li
                   key={index}
-                  className="mobile-sidebar-item"
-                  custom={index}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
                 >
-                  <Link to={item.path} className="mobile-sidebar-link" onClick={onClose}>
-                    <span className="mobile-sidebar-icon">{item.icon}</span>
-                    <span className="mobile-sidebar-label">{item.label}</span>
+                  <Link
+                    to={item.path}
+                    onClick={onClose}
+                    className="flex items-center gap-3 p-3 rounded-lg 
+                               hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                  >
+                    <span className="text-lg text-gray-600 dark:text-gray-300">
+                      {item.icon}
+                    </span>
+                    <span className="text-sm font-medium">
+                      {item.label}
+                    </span>
                   </Link>
-                  <hr/>
                 </motion.li>
               ))}
             </ul>

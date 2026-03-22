@@ -1,6 +1,6 @@
 const Post = require("../models/Post");
 const uploadToCloudinary = require("../utils/uploadToCloudinary");
-
+const Comment = require('../models/Comment')
 // Create a new post
 exports.createPost = async (req, res) => {
   try {
@@ -60,8 +60,6 @@ exports.getPosts = async (req, res) => {
 };
 
 // Like or unlike a post
-
-
 exports.likePost = async (req, res) => {
   try {
 
@@ -99,16 +97,19 @@ exports.likePost = async (req, res) => {
 // Comment on a post
 exports.commentOnPost = async (req, res) => {
   try {
-    const { text } = req.body;
-    const post = await Post.findById(req.params.id);
-    if (!post) return res.status(404).json({ message: "Post not found" });
+    const { text, parentComment } = req.body;
+    const comment = new Comment({
+      post: req.params.id,
+      user: req.user.userId,
+      text,
+      parentComment: parentComment || null,
+    })
 
-    post.comments.push({ user: req.user.id, text });
-    await post.save();
+    await comment.save()
 
-    res.json({ message: "Comment added", comments: post.comments });
+    res.json({ message: "Comment added", comments: comment });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ message: "Server error: Adding Comment", error });
   }
 };
 
@@ -172,3 +173,18 @@ exports.deletePost = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+exports.getComments = async(req, res)=>{
+    try{
+        const comments = await Comment.find({
+          post: req.params.id,
+          parentComment:null
+        })
+        .populate("user", "name profileImage")
+        .sort({createdAt:-1})
+        res.json(comments)
+    }
+    catch(err){
+      res.status(500).json({message:"There is server error"})
+    }
+}

@@ -1,30 +1,33 @@
 import React from "react";
 import Sidebar from "../components/layout/SideBar";
-import TopBar from "../components/layout/TopBar"; 
-import "../styles/homepage/home.css";
+import TopBar from "../components/layout/TopBar";
 import { Outlet } from "react-router-dom";
 import MobileNav from "../components/layout/MobileNav";
 
 function Home() {
-  // Dummy function for profile view change (required by TopBar)
   const handleViewChange = (view) => {
     console.log("Change to view:", view);
   };
 
   return (
-    <div className="home-wrapper">
+    <div className="flex bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark">
+
+      {/* Sidebar */}
       <Sidebar />
-      <div className="home-content">
-        {/* TopBar stays fixed at the top */}
+
+      {/* Main Content */}
+      <div className="flex-1 h-screen overflow-y-auto">
+
+        {/* TopBar */}
         <TopBar onViewChange={handleViewChange} />
 
-        {/* Content wrapper with spacing for Sidebar & TopBar */}
-        <div className="home-outlet">
+        {/* Page Content */}
+        <div className="pl-[60px] md:pl-[80px] lg:pl-[250px] pt-4 px-4">
           <Outlet />
-        </div> 
-        <div>
-          <MobileNav/>
         </div>
+
+        {/* Mobile Nav */}
+        <MobileNav />
       </div>
     </div>
   );

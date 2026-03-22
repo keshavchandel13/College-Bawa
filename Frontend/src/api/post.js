@@ -37,15 +37,19 @@ export const likePost = async (postId, token) => {
 };
 
 // Comment on a post
-export const commentOnPost = async (postId, text, token) => {
+export const commentOnPost = async (postId, text, token, parentComment = null) => {
   try {
-    const response = await axios.post(`${API_URL}/${postId}/comment`, { text }, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.post(
+      `${API_URL}/${postId}/comment`,
+      { text, parentComment },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    console.error("Error commenting on post:", error?.response?.data || error.message);
+    console.error("Error commenting:", error?.response?.data || error.message);
   }
 };
 
@@ -61,3 +65,17 @@ export const sharePost = async (postId, token) => {
     console.error("Error sharing post:", error?.response?.data || error.message);
   }
 };
+
+// get comment
+export const getComment=async(postId, token)=>{
+  try{
+    const res = await axios.get(`${API_URL}/${postId}/comment`,{
+      headers: {Authorization: `Bearer ${token}`}
+    })
+    console.log(res.data);
+    return res.data
+  }
+  catch(err){
+    console.log(err);
+  }
+}

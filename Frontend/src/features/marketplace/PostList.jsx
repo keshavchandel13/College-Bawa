@@ -1,15 +1,17 @@
-import React from 'react';
-import PostCard from '../marketplace/Postcard';
+import React from "react";
+import PostCard from "./Postcard";
 
 export default function PostList({ posts }) {
   return (
-    <div className="posts-container-marketplace">
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
       {posts.length > 0 ? (
-        posts.map(post => (
-          <PostCard key={post._id || post.id} post={post} />
+        posts.map((post) => (
+          <PostCard key={post._id} post={post} />
         ))
       ) : (
-        <p>No items found.</p>
+        <p className="col-span-full text-center text-gray-500">
+          No items found
+        </p>
       )}
     </div>
   );

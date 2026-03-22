@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/marketplace/marketplacepost.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { postMarketplaceItem } from "../../api/marketplace/marketplace"; 
+import { postMarketplaceItem } from "../../api/marketplace/marketplace";
 
 export default function MarketplacePostItem({ token, onPostSuccess }) {
   const [title, setTitle] = useState("");
@@ -13,10 +12,10 @@ export default function MarketplacePostItem({ token, onPostSuccess }) {
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const [loading, setLoading] = useState(false);
-   const userString = localStorage.getItem("user");
-   const user = JSON.parse(userString);
 
-  // Handle image selection and preview
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // Image preview
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
@@ -24,24 +23,23 @@ export default function MarketplacePostItem({ token, onPostSuccess }) {
     setPreviewImages(previews);
   };
 
-  // Cleanup preview URLs
   useEffect(() => {
     return () => {
       previewImages.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [previewImages]);
 
-  // Handle form submit
+  // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title.trim() || !price || !category) {
-      toast.error("Please fill in all required fields: Title, Price, Category");
+      toast.error("Fill required fields");
       return;
     }
 
     if (images.length === 0) {
-      toast.error("Please upload at least one image");
+      toast.error("Upload at least one image");
       return;
     }
 
@@ -53,7 +51,6 @@ export default function MarketplacePostItem({ token, onPostSuccess }) {
     formData.append("location", location);
     formData.append("userId", user._id);
 
-    //  match multer field name "images"
     images.forEach((img) => formData.append("images", img));
 
     setLoading(true);
@@ -61,7 +58,8 @@ export default function MarketplacePostItem({ token, onPostSuccess }) {
     setLoading(false);
 
     if (result) {
-      toast.success("Item posted successfully!");
+      toast.success("Posted successfully");
+
       setTitle("");
       setDescription("");
       setPrice("");
@@ -70,7 +68,6 @@ export default function MarketplacePostItem({ token, onPostSuccess }) {
       setImages([]);
       setPreviewImages([]);
 
-      // clear file input
       const fileInput = document.getElementById("images-input");
       if (fileInput) fileInput.value = "";
 
@@ -81,101 +78,133 @@ export default function MarketplacePostItem({ token, onPostSuccess }) {
   };
 
   return (
-    <div className="post-item-container">
-      <h2 className="heading">Post an Item for Sale</h2>
-      <form className="post-item-form" onSubmit={handleSubmit}>
-        <label>
-          Title <span className="required">*</span>
-          <input
-            type="text"
-            placeholder="Enter item title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            maxLength={100}
-          />
-        </label>
+    <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-gray-100 dark:bg-gray-900 transition">
+      
+      <div className="w-full max-w-xl bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg">
 
-        <label>
-          Description
-          <textarea
-            placeholder="Describe your item"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={4}
-            maxLength={500}
-          />
-        </label>
+        {/* Heading */}
+        <h2 className="text-center text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+          Post an Item
+        </h2>
 
-        <label>
-          Price (₹) <span className="required">*</span>
-          <input
-            type="number"
-            placeholder="Enter price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-            min="0"
-            step="0.01"
-          />
-        </label>
+        <form onSubmit={handleSubmit} className="space-y-5">
 
-        <label>
-          Category <span className="required">*</span>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          >
-            <option value="">Select category</option>
-            <option value="project">Project</option>
-            <option value="books">Books</option>
-            <option value="gadget">Gadget</option>
-          </select>
-        </label>
-
-        <label>
-          Location
-          <input
-            type="text"
-            placeholder="Enter location (optional)"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Upload Images <span className="required">*</span>
-          <input
-            id="images-input"
-            name="images" 
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-            required
-          />
-        </label>
-
-        {previewImages.length > 0 && (
-          <div className="image-preview-container">
-            {previewImages.map((src, idx) => (
-              <img
-                key={idx}
-                src={src}
-                alt={`Preview ${idx + 1}`}
-                className="image-preview"
-              />
-            ))}
+          {/* Title */}
+          <div>
+            <label className="block font-medium text-gray-700 dark:text-gray-300">
+              Title <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              className="w-full mt-1 px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter title"
+            />
           </div>
-        )}
 
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? "Posting..." : "Post Item"}
-        </button>
-      </form>
+          {/* Description */}
+          <div>
+            <label className="block font-medium text-gray-700 dark:text-gray-300">
+              Description
+            </label>
+            <textarea
+              className="w-full mt-1 px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              rows={4}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
 
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+          {/* Price */}
+          <div>
+            <label className="block font-medium text-gray-700 dark:text-gray-300">
+              Price ₹ <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="number"
+              className="w-full mt-1 px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="block font-medium text-gray-700 dark:text-gray-300">
+              Category <span className="text-red-500">*</span>
+            </label>
+            <select
+              className="w-full mt-1 px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">Select</option>
+              <option value="project">Project</option>
+              <option value="books">Books</option>
+              <option value="gadget">Gadget</option>
+            </select>
+          </div>
+
+          {/* Location */}
+          <div>
+            <label className="block font-medium text-gray-700 dark:text-gray-300">
+              Location
+            </label>
+            <input
+              type="text"
+              className="w-full mt-1 px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Optional"
+            />
+          </div>
+
+          {/* Image Upload */}
+          <div>
+            <label className="block font-medium text-gray-700 dark:text-gray-300">
+              Images <span className="text-red-500">*</span>
+            </label>
+            <input
+              id="images-input"
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mt-2 w-full text-sm text-gray-600 dark:text-gray-300"
+            />
+          </div>
+
+          {/* Preview */}
+          {previewImages.length > 0 && (
+            <div className="flex flex-wrap gap-3">
+              {previewImages.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt=""
+                  className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg border dark:border-gray-600 hover:scale-105 transition"
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg font-semibold text-white transition 
+            ${loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 active:scale-[0.98]"
+              }`}
+          >
+            {loading ? "Posting..." : "Post Item"}
+          </button>
+        </form>
+      </div>
+
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }

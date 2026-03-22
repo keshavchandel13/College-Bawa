@@ -1,23 +1,33 @@
 import React from "react";
 import CreatePost from "./CreatePost";
-import "../../styles/homepage/createPostModal.css";
 
 const CreatePostModal = ({ show, onClose, token }) => {
   if (!show) return null;
 
   return (
-    <div className="cb-modal-overlay" onClick={onClose}>
-      <div className="cb-modal-container" onClick={(e) => e.stopPropagation()}>
-        <div className="cb-modal-header">
-          <h2 className="cb-modal-title">Create Post</h2>
-          <button className="cb-close-btn" onClick={onClose} aria-label="Close">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-xl rounded-2xl bg-cardLight dark:bg-cardDark border border-borderLight dark:border-borderDark shadow-xl"
+      >
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-borderLight dark:border-borderDark">
+          <h2 className="text-lg font-semibold">Create Post</h2>
+
+          <button
+            onClick={onClose}
+            className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            ✕
           </button>
         </div>
-        <div className="cb-modal-body">
+
+        {/* Body */}
+        <div className="p-5">
           <CreatePost token={token} onPostSuccess={onClose} />
         </div>
       </div>

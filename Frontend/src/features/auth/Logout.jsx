@@ -17,19 +17,12 @@ const Logout = () => {
   return (
     <button
       onClick={handleLogout}
-      style={{
-        padding: "6px 12px",
-        backgroundColor: "#1565c0",
-        color: "#fff",
-        border: "none",
-        borderRadius: "6px",
-        fontSize: "10px",
-        fontWeight: "500",
-        cursor: "pointer",
-        transition: "background-color 0.2s ease",
-      }}
-      onMouseOver={(e) => (e.target.style.backgroundColor = "#0d47a1")}
-      onMouseOut={(e) => (e.target.style.backgroundColor = "#1565c0")}
+      className="
+        px-3 py-1.5 rounded-md border-none cursor-pointer
+        bg-[#1565c0] hover:bg-[#0d47a1]
+        text-white text-[10px] font-medium
+        transition-colors duration-200
+      "
     >
       Logout
     </button>

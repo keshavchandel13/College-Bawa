@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/community/community.css";
 import CommunityCard from "../features/community/CommunityCard";
 import TopCommunities from "../features/community/TopCommunity";
 import CreateCommunity from "../features/community/CreateCommunity";
@@ -35,11 +34,14 @@ const trending = ["IIT Mandi", "Juit Startup", "Robot Technology", "Apple Resear
 
 const Community = () => {
   return (
-    <div className="container">
+    <div className="max-w-[1100px] mx-auto px-5 py-10 font-sans">
       <CreateCommunity />
 
-      <h1>Explore Communities</h1>
-      <div className="community-grid">
+      <h1 className="text-center text-[#003366] dark:text-gray-200 mb-5 text-2xl font-bold">
+        Explore Communities
+      </h1>
+
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5 mt-5">
         {dummyCommunities.map((community, index) => (
           <CommunityCard
             key={index}
@@ -49,10 +51,11 @@ const Community = () => {
           />
         ))}
       </div>
-      <div className="footer-community">
+
+      <div className="flex gap-[20%] mt-10 flex-wrap">
         <TopCommunities items={topList} />
-        <TopSearch items={topSearch}/>
-        <TrendingCommunity items={trending}/>
+        <TopSearch items={topSearch} />
+        <TrendingCommunity items={trending} />
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ function Eventzone() {
             organizer: "Department of CSE & ECE",
             category: "Technical",
             isFeatured: true,
-            image: "https://imgs.search.brave.com/j88sKPB14xTYSVa-MKmr4NyWUXaOO42DkwxW9SQOs3Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2xpZGVzaGFyZWNk/bi5jb20vc3NfdGh1/bWJuYWlscy9zbWFy/dHBlc3RpY2lkZXNp/aDIwMjUtMjUwOTEw/MTUzOTQ0LTFmNzdi/N2U0LXRodW1ibmFp/bC5qcGc_d2lkdGg9/NTYwJmZpdD1ib3Vu/ZHM" // your updated SIH image
+            image: "https://imgs.search.brave.com/j88sKPB14xTYSVa-MKmr4NyWUXaOO42DkwxW9SQOs3Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u"
         },
         {
             id: 2,
@@ -28,7 +28,7 @@ function Eventzone() {
             organizer: "Cultural Council, JYC",
             category: "Cultural",
             isFeatured: true,
-            image: "https://imgs.search.brave.com/90HJC7Obs494rfvlLvF1CIEy_kli9Caz7n2V3eMPEXQ/rs:fit:860:0:0:0/g:ce/aHR0cDovL2FzYXJu/ZXd6LmNvbS93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyNS8wNC9J/TUdfMTE2MS0yODB4/MzAwLmpwZWc"
+            image: "https://imgs.search.brave.com/90HJC7Obs494rfvlLvF1CIEy_kli9Caz7n2V3eMPEXQ/rs:fit:860:0:0:0/g:ce/aHR0cDovL2FzYXJu"
         },
         {
             id: 3,
@@ -40,7 +40,7 @@ function Eventzone() {
             organizer: "Sports Council",
             category: "Sports",
             isFeatured: true,
-            image: "https://imgs.search.brave.com/0cgpudbybL6J0lUWxJ3I6cAcQXG1WAVPgN2LqIJgEPM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/anVpdC5hYy5pbi9m/cm9udC9pbWFnZXMv/cGFyYWtyYW0tMi53/ZWJw"
+            image: "https://imgs.search.brave.com/0cgpudbybL6J0lUWxJ3I6cAcQXG1WAVPgN2LqIJgEPM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu"
         },
         {
             id: 4,
@@ -64,7 +64,7 @@ function Eventzone() {
             organizer: "Music & Dance Club",
             category: "Entertainment",
             isFeatured: true,
-            image: "https://imgs.search.brave.com/9ditq5vbvzfRrd8crVgfEJHkI1tkemYIwLXVBVNmzu4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTE2/OTI5OTM1MS9waG90/by93b21hbi1pbi1k/YW5jaW5nLWVsZWdh/bnQtZmxhbWVuY28t/cG9zaXRpb24taW4t/YS12aXJ0dWFsLWFu/ZC1jb25uZWN0ZWQt/ZW52aXJvbm1lbnQu/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PUNVTmMzbm5CNDln/ZUxyblRQWDBDYjJr/aDgwRVI4U1QzdEhP/TDFiWDctUTQ9"
+            image: "https://imgs.search.brave.com/9ditq5vbvzfRrd8crVgfEJHkI1tkemYIwLXVBVNmzu4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp"
         }
     ];
 
@@ -74,13 +74,13 @@ function Eventzone() {
     const events = [
         {
             id: "1",
-            title: "Cultural Night - Fresher’s Welcome",
+            title: "Cultural Night - Fresher's Welcome",
             date: "Sep 20, 2025",
             time: "6:00 PM",
             venue: "Main Auditorium",
             organizer: "College Bawa Cultural Committee",
             category: "Cultural",
-            image: "https://imgs.search.brave.com/b1ZihO1xQmRG3uJRsj8wRVDruinTMvMbo6PaLR3bPzE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/anVpdC5hYy5pbi9p/bWFnZXMvZGlrc2hh/NS5qcGc",
+            image: "https://imgs.search.brave.com/b1ZihO1xQmRG3uJRsj8wRVDruinTMvMbo6PaLR3bPzE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu",
             attendees: 500,
             isFeatured: true,
         },
@@ -92,7 +92,7 @@ function Eventzone() {
             venue: "Tech Block, Lab 4",
             organizer: "Department of Computer Science",
             category: "Workshops",
-            image: "https://imgs.search.brave.com/DhHe2rOYZ0gGLR1Z64ZjemQKlCyxrSiKhreymNUN2Ws/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuY3RmYXNzZXRz/Lm5ldC8wdnZhbG1t/OThzbHcvMVpOVXc2/OUhHRDF1OURQUXlv/eGdkLzZjOTZlMzhm/OTA1ODdjYmM3ZWU3/OGVmMGJkOWVkNDY4/L0FJLURXRlQucG5n/P3c9MTM3NCZoPTEy/ODMmcT0xMDAmZm09/cG5n",
+            image: "https://imgs.search.brave.com/DhHe2rOYZ0gGLR1Z64ZjemQKlCyxrSiKhreymNUN2Ws/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn",
             attendees: 120,
             isFeatured: true,
         },
@@ -104,7 +104,7 @@ function Eventzone() {
             venue: "JUIT Sports Ground",
             organizer: "Sports Club",
             category: "Sports",
-            image: "https://imgs.search.brave.com/xW48DE5vUODi_OoYIeN91Ub6eLZVe5BHB46WNvCU0mI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZS1zdGF0aWMuY29s/bGVnZWR1bmlhLmNv/bS9wdWJsaWMvcmV2/aWV3UGhvdG9zLzk3/ODE3Ny9TY3JlZW5z/aG90JTIwMjAyMy0w/OS0wNCUyMDE4MjQw/OC5wbmc",
+            image: "https://imgs.search.brave.com/xW48DE5vUODi_OoYIeN91Ub6eLZVe5BHB46WNvCU0mI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn",
             attendees: 300,
             isFeatured: false,
         },
@@ -128,7 +128,7 @@ function Eventzone() {
             venue: "Dance Studio",
             organizer: "Fine Arts Club",
             category: "Cultural",
-            image: "https://imgs.search.brave.com/17dZ110VJc0sJ47MTPrDhmvaVdV4icano2Q0pJ1BYcE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzkzLzc5/LzBkLzkzNzkwZGYz/MTNmOGJkZDNjZTBm/NTgxNzFmNmZhYzll/LmpwZw",
+            image: "https://imgs.search.brave.com/17dZ110VJc0sJ47MTPrDhmvaVdV4icano2Q0pJ1BYcE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp",
             attendees: 60,
             isFeatured: false,
         },
@@ -167,13 +167,16 @@ function Eventzone() {
                     onSearchChange={setSearchTerm}
                 />
 
-                <div className="ez-event-grid">
+                {/* Event Grid */}
+                <div className="grid grid-cols-2 gap-6 mt-6 max-sm:grid-cols-1">
                     {filteredEvents.length > 0 ? (
                         filteredEvents.map((event) => (
                             <EventCard key={event.id} event={event} />
                         ))
                     ) : (
-                        <div className="no-results">No events found.</div>
+                        <div className="col-span-2 text-center text-gray-500 dark:text-gray-400 py-10">
+                            No events found.
+                        </div>
                     )}
                 </div>
             </div>

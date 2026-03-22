@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../styles/homepage/homefeed.css";
 import CreatePostModal from "../features/homefeed/CreatePostModal";
 import Post from "../features/homefeed/Post";
 import CreatePostBox from "../features/homefeed/CreatePostBox";
@@ -10,7 +9,6 @@ import MobileSidebar from "../components/layout/MobileSideBar";
 import { useAuth } from "../context/AuthContext";
 
 export default function HomeFeed({ token }) {
-
   const { user } = useAuth();
   const userId = user?._id;
 
@@ -40,82 +38,80 @@ export default function HomeFeed({ token }) {
   };
 
   useEffect(() => {
-
     const fetchPosts = async () => {
       try {
-
         const data = await getposts(token);
-
-        if (data) {
-          setPosts(data);
-        }
-
+        if (data) setPosts(data);
       } catch (err) {
-        console.error("Error fetching posts:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchPosts();
-
   }, [token]);
 
   if (loading) {
-    return <div className="home-feed-container">Loading feed...</div>;
+    return (
+      <div className="p-6 text-center text-gray-700 dark:text-gray-300">
+        Loading feed...
+      </div>
+    );
   }
 
-  return (
-    <div className="home-feed-container">
+return (
+  <div className="min-h-screen bg-bgLight dark:bg-bgDark">
 
-      <div className="home-feed-header">
-        <div className="home-feed-title">College Bawa</div>
+    {/* Header */}
+    <div className="flex items-center justify-between px-4 md:px-6 py-4">
+      <h1 className="text-xl md:text-2xl font-semibold text-primary">
+        College Bawa
+      </h1>
 
-        <div
-          className="hamburger"
-          onClick={() => setIsSidebarOpen(true)}
-        >
-          <GiHamburgerMenu />
-        </div>
-      </div>
-
-      <MobileSidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-      />
-
-      <div className="home-feed-post-container">
-        <CreatePostBox openCreatePost={openCreatePost} />
-      </div>
-
-      <CreatePostModal
-        show={showModal}
-        onClose={closeCreatePost}
-        token={token}
-      />
-
-      <div className="post-suggestion-container">
-
-        <div className="posts-container">
-
-          {posts.map((post) => (
-            <Post
-              key={post._id}
-              post={post}
-              isLiked={post.likes.includes(userId)}
-              toggleLike={toggleLike}
-              token={token}
-            />
-          ))}
-
-        </div>
-
-        <div className="suggestion-container">
-          <Suggestion />
-        </div>
-
-      </div>
-
+      <button
+        onClick={() => setIsSidebarOpen(true)}
+        className="text-2xl md:hidden"
+      >
+        <GiHamburgerMenu />
+      </button>
     </div>
-  );
+
+    <MobileSidebar
+      isOpen={isSidebarOpen}
+      onClose={() => setIsSidebarOpen(false)}
+    />
+
+    {/* Layout */}
+    <div className="flex justify-center gap-8 px-2 md:px-6">
+
+      {/* Feed */}
+      <div className="w-full max-w-2xl space-y-5">
+
+        <CreatePostBox openCreatePost={openCreatePost} />
+
+        {posts.map((post) => (
+          <Post
+            key={post._id}
+            post={post}
+            isLiked={post.likes.includes(userId)}
+            toggleLike={toggleLike}
+            token={token}
+          />
+        ))}
+      </div>
+
+      {/* Suggestions */}
+      <div className="hidden lg:block w-[320px] sticky top-20 h-fit">
+        <Suggestion />
+      </div>
+    </div>
+
+    <CreatePostModal
+      show={showModal}
+      onClose={closeCreatePost}
+      token={token}
+    />
+  </div>
+);
 }

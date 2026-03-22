@@ -1,25 +1,20 @@
 import React, { useState } from "react";
-import "../../styles/homepage/post.css";
 import { likePost } from "../../api/post";
+import CommentSection from "./CommentSection";
 
 export default function Post({ post, isLiked, toggleLike, token }) {
-
   const [loadingLike, setLoadingLike] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(false);
 
   const likepost = async (postId) => {
     if (loadingLike) return;
 
     setLoadingLike(true);
-
-    // Optimistic UI
     toggleLike(postId);
 
     try {
       await likePost(postId, token);
-    } catch (err) {
-      console.error("Like failed:", err);
-
-      // rollback if API fails
+    } catch {
       toggleLike(postId);
     }
 
@@ -27,44 +22,58 @@ export default function Post({ post, isLiked, toggleLike, token }) {
   };
 
   return (
-    <div className="ig-post">
+    <div className="card">
 
-      <div className="ig-post-header">
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-3">
         <img
           src={post.user.profileImage}
-          alt={`${post.user.name} avatar`}
-          className="ig-avatar"
+          className="w-10 h-10 rounded-full object-cover"
         />
-        <span className="ig-username">{post.user.name}</span>
+        <p className="font-medium text-sm">{post.user.name}</p>
       </div>
 
+      {/* Content */}
+      {post.content && (
+        <p className="text-sm mb-3 text-gray-700 dark:text-gray-300">
+          {post.content}
+        </p>
+      )}
+
+      {/* Image */}
       {post.image && (
         <img
           src={post.image}
-          alt="Post visual"
-          className="ig-post-image"
+          className="w-full rounded-lg mb-3"
         />
       )}
 
-      <div className="ig-post-actions">
+      {/* Actions */}
+      <div className="flex items-center gap-4 text-sm">
 
         <button
-          className={`ig-like-button ${isLiked ? "liked" : ""}`}
           onClick={() => likepost(post._id)}
+          className={`transition ${
+            isLiked ? "text-red-500" : "text-gray-500"
+          }`}
         >
-          {isLiked ? "♥" : "♡"}
+          ♥ {post.likes.length}
         </button>
 
-        <p>{post.likes.length}</p>
-
-        <button className="ig-comment-button">💬</button>
-
+        <button
+          onClick={() => setCommentsOpen(!commentsOpen)}
+          className="text-gray-500"
+        >
+          💬 Comment
+        </button>
       </div>
 
-      <p className="ig-caption">
-        <span className="ig-username">{post.user.name}</span> {post.content}
-      </p>
-
+      {/* Comments */}
+      {commentsOpen && (
+        <div className="mt-3">
+          <CommentSection postId={post._id} token={token} />
+        </div>
+      )}
     </div>
   );
 }
