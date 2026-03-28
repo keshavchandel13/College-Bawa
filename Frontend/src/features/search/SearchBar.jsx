@@ -1,17 +1,18 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi";
-
+import { motion, AnimatePresence } from "framer-motion";
 const SearchBar = ({ searchTerm, setSearchTerm }) => {
   return (
-    <div className="relative mb-4">
-      <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-
+    <div className="relative group">
+      <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+        <FiSearch className="text-xl text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+      </div>
       <input
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search users, groups..."
-        className="w-full pl-10 pr-4 py-2 rounded-full border border-borderLight dark:border-borderDark bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+        placeholder="Search for a name, stack, or interest..."
+        className="w-full pl-14 pr-6 py-5 bg-gray-50 dark:bg-gray-900 border-none rounded-3xl text-lg focus:ring-4 focus:ring-purple-500/20 shadow-xl transition-all placeholder:text-gray-400"
       />
     </div>
   );

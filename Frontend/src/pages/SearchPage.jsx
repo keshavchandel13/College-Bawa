@@ -3,6 +3,7 @@ import SearchBar from "../features/search/SearchBar";
 import SearchCard from "../features/search/SearchCard";
 import { fetchUsersByQuery } from "../features/user/userService";
 import { useChat } from "../context/chatContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SearchPage = () => {
   const [searchMode, setSearchMode] = useState("users");
@@ -14,6 +15,12 @@ const SearchPage = () => {
 
   const { currentUser } = useChat();
   const token = localStorage.getItem("token");
+  const categories = [
+    { id: "users", label: "Students", icon: "🎓" },
+    { id: "colleges", label: "Campuses", icon: "🏛️" },
+    { id: "groups", label: "Squads", icon: "🔥" },
+    { id: "events", label: "Events", icon: "🎸" },
+  ];
 
   useEffect(() => {
     if (searchTerm && !searchHistory.includes(searchTerm)) {
@@ -48,74 +55,49 @@ const SearchPage = () => {
     fetchUsers();
   }, [searchTerm, searchMode]);
 
-  return (
-    <div className="max-w-5xl mx-auto px-4 py-6">
+return (
+    <div className="max-w-6xl mx-auto px-6 py-10 min-h-screen">
+      {/* Header with Gen Z Slang/Vibe */}
+      <header className="mb-10">
+        <h1 className="text-4xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+          Find Your Tribe
+        </h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-2">Search for students, squads, and the next big thing.</p>
+      </header>
 
-      {/* Title */}
-      <h1 className="text-2xl font-semibold text-center mb-6">
-        Search College Bawa
-      </h1>
-
-      {/* Mode Switch */}
-      <div className="flex gap-2 overflow-x-auto mb-5">
-        {["users", "colleges", "groups", "events", "posts"].map((mode) => (
+      {/* Modern Mode Switcher */}
+      <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar">
+        {categories.map((cat) => (
           <button
-            key={mode}
-            onClick={() => setSearchMode(mode)}
-            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition 
-              ${
-                searchMode === mode
-                  ? "bg-primary text-white"
-                  : "bg-gray-100 dark:bg-gray-800"
-              }`}
+            key={cat.id}
+            onClick={() => setSearchMode(cat.id)}
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-2xl border-2 transition-all duration-300 font-bold ${
+              searchMode === cat.id
+                ? "bg-black text-white border-black dark:bg-white dark:text-black"
+                : "border-gray-200 dark:border-gray-800 hover:border-purple-400"
+            }`}
           >
-            {mode}
+            <span>{cat.icon}</span>
+            {cat.label}
           </button>
         ))}
       </div>
 
-      {/* Search Input */}
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
-      {/* History */}
-      {searchHistory.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-3 mb-4 text-sm">
-          {searchHistory.map((term, i) => (
-            <span
-              key={i}
-              onClick={() => setSearchTerm(term)}
-              className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 cursor-pointer"
-            >
-              {term}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Results */}
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-
-        {loading ? (
-          <p className="col-span-full text-center">Loading...</p>
-        ) : error ? (
-          <p className="col-span-full text-center text-red-500">
-            {error}
-          </p>
-        ) : userResults.length > 0 ? (
-          userResults.map((user) => (
-            <SearchCard
-              key={user._id}
-              title={user.name}
-              description={user.email}
-              image={user.profileImage}
-            />
-          ))
-        ) : (
-          <p className="col-span-full text-center text-gray-500">
-            No results found
-          </p>
-        )}
+      <div className="mt-6">
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
+
+      {/* Results Grid - Using Masonry-style or standard Bento */}
+      <motion.div 
+        layout
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
+      >
+        <AnimatePresence>
+          {userResults.map((user) => (
+            <SearchCard key={user._id} user={user} />
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 };

@@ -11,6 +11,7 @@ export default function UserPosts({ userId }) {
   const fetchPosts = async () => {
     try {
       const data = await getUserPosts(userId);
+      console.log(data)
       setPosts(data);
     } catch (error) {
       console.error("Error fetching user posts:", error);
@@ -116,6 +117,10 @@ export default function UserPosts({ userId }) {
               {/* Post content */}
               <div className="px-3.5 py-3 text-sm text-[#333] dark:text-[#ddd] text-left bg-[#fafafa] dark:bg-[#333] border-t border-[#eee] dark:border-[#444]">
                 <p>{post.content}</p>
+              </div>
+              <div className="px-3.5 py-3 text-sm text-[#333] dark:text-[#ddd] text-left bg-[#fafafa] dark:bg-[#333] border-t border-[#eee] dark:border-[#444]">
+               <span className="">❤️</span>
+                <span>{post.likes.length}</span>
               </div>
             </div>
           ))}

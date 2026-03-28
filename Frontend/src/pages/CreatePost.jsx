@@ -153,13 +153,6 @@ const CreatePost = ({ token }) => {
           </div>
         )}
 
-        {/* Feed section */}
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold mb-2.5 text-gray-700 dark:text-[#d1d5db]">
-            Recent Posts
-          </h2>
-          <Feed token={token} refresh={refreshFeed} />
-        </div>
       </div>
     </div>
   );

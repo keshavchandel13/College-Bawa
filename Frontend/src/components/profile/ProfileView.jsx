@@ -9,7 +9,7 @@ const UserProfile = ({ user, setEdit }) => {
   return (
     /* ── Outer container ── */
     <div className="
-      max-w-[768px] mx-auto px-6 pt-6 pb-12 min-h-screen flex flex-col box-border
+      max-w-[768px] mx-auto px-6  pb-12 min-h-screen flex flex-col box-border
       bg-white dark:bg-[#111827]
       max-sm:px-4 max-sm:pt-4 max-sm:pb-[calc(5rem+env(safe-area-inset-bottom))] max-sm:bg-white dark:max-sm:bg-[#111827]
       md:max-w-full md:m-0 md:px-8 md:pb-16

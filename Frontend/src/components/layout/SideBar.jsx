@@ -12,10 +12,10 @@ const menuItems = [
   { icon: <Star size={22}/>, label: "Market Place", path: "/home/MarketPlace" },
   { icon: <Users size={22}/>, label: "Communities", path: "/home/community" },
   { icon: <MessageSquare size={22}/>, label: "Messages", path: "/home/chat" },
-  { icon: <Bell size={22}/>, label: "Event Zone", path: "/home/notification" },
+  // { icon: <Bell size={22}/>, label: "Event Zone", path: "/home/notification" },
   { icon: <PlusCircle size={22}/>, label: "Post", path: "/home/createpost" },
   { icon: <User size={22}/>, label: "Profile", path: "/home/profile" },
-  { icon: <FaUserSecret size={22}/>, label: "Anonymous", path: "/home/anonymous" },
+  // { icon: <FaUserSecret size={22}/>, label: "Anonymous", path: "/home/anonymous" },
   { icon: <MoreHorizontal size={22}/>, label: "More", path: "/home/more" },
 ];
 
@@ -26,7 +26,7 @@ export default function Sidebar() {
     <div className="group fixed h-[96vh] m-[2vh] w-[70px] hover:w-[260px] transition-all duration-500 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-[2rem] z-50 hidden md:flex flex-col p-4 shadow-2xl overflow-hidden">
       
       {/* Brand */}
-      <div className="flex items-center gap-3 mb-10 px-2">
+      <div className="flex items-center gap-3 mb-1 px-2">
         <div className="min-w-[40px] h-[40px] rounded-2xl  flex items-center justify-center text-white shadow-lg">
            <img src="/logo2.png" className="w-10 h-10 rounded-full bg-black p-1" />
         </div>

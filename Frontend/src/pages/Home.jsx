@@ -22,7 +22,7 @@ function Home() {
         <TopBar onViewChange={handleViewChange} />
 
         {/* Page Content - Dynamic Padding to respect Sidebar hover state */}
-        <div className="pl-[70px] md:pl-[90px] lg:pl-[270px] transition-all duration-500 pt-6 pb-24 md:pb-8 px-4 max-w-[1600px] mx-auto">
+        <div className="pl-[20px] md:pl-[29px] lg:pl-[60px] transition-all duration-500 pt-1 pb-24 md:pb-8 px-4 max-w-[1600px] mx-auto">
           <Outlet />
         </div>
 
