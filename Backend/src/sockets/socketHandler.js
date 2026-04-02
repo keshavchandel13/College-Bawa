@@ -30,15 +30,15 @@ function initSocket(io) {
       });
 
       // Send message in a chat room
-      socket.on("send-message", ({ chatId, message, senderId }) => {
-        try {
-          if (!chatId || !message || !senderId) return;
-          const fullMessage = { ...message, senderId, timestamp: new Date() };
-          io.to(chatId).emit("receive-message", fullMessage);
-        } catch (error) {
-          console.error(" Error in send-message:", error.message);
-        }
-      });
+      // socket.on("send-message", ({ chatId, message, senderId }) => {
+      //   try {
+      //     if (!chatId || !message || !senderId) return;
+      //     const fullMessage = { ...message, senderId, timestamp: new Date() };
+      //     io.to(chatId).emit("receive-message", fullMessage);
+      //   } catch (error) {
+      //     console.error(" Error in send-message:", error.message);
+      //   }
+      // });
 
       // Typing indicator in a chat room
       socket.on("typing", ({ chatId }) => {

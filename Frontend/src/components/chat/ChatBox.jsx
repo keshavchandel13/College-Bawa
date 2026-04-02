@@ -98,10 +98,6 @@ const ChatBox = ({ token }) => {
     if (!selectedUser) return;
     try {
       const response = await sendMessage(chatId, messageContent, currentUser._id, token);
-      socket.emit("send-message", { chatId, message: response, senderId: currentUser._id });
-
-      // Optimistic update
-      setMessages((prev) => [...prev, response]);
       setTimeout(() => messageEndRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
     } catch {
       toast.error("Failed to send message. Try again.", { position: "top-right", autoClose: 3000 });
