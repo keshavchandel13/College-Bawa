@@ -21,7 +21,7 @@ const getDashboardStats = async (req, res) => {
             'Above 30': 0,
             'Unknown': 0
         };
-        const signupTrends = {}; // e.g., {'2025-03': 12}
+        const signupTrends = {}; 
         let googleUsersCount = 0;
         let passwordUsersCount = 0;
 
@@ -47,7 +47,7 @@ const getDashboardStats = async (req, res) => {
             // Signup Trends (Month-Year based)
             const monthYear = `${user.createdAt.getFullYear()}-${(user.createdAt.getMonth() + 1)
                 .toString()
-                .padStart(2, '0')}`; // e.g., "2025-03"
+                .padStart(2, '0')}`; 
             signupTrends[monthYear] = (signupTrends[monthYear] || 0) + 1;
         });
 
