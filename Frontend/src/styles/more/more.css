@@ -1,0 +1,62 @@
+.more-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .more-heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .more-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .more-item {
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+    color: #222;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .more-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+  }
+  
+  .logout-item {
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    color: white;
+    justify-content: center;
+  }
+  .logout-item button {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  
+  .logout-item:hover {
+    background: linear-gradient(to right, #ff5f6d, #ffc371);
+  }
+  

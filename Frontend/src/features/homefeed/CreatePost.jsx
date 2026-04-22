@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { createPost } from "../../api/homefeed/makePost";
 const CreatePost = ({ token, onPostSuccess }) => {
   const [content, setContent] = useState("");
   const [imageFile, setImageFile] = useState(null);
@@ -15,26 +15,18 @@ const CreatePost = ({ token, onPostSuccess }) => {
     }
 
     setLoading(true);
-    const formData = new FormData();
-    formData.append("content", content);
-    if (imageFile) formData.append("image", imageFile);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/posts`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Failed to post");
+      await createPost({ content, imageFile });
 
       toast.success("Post shared successfully!");
       setContent("");
       setImageFile(null);
       setPreviewUrl(null);
+
       if (onPostSuccess) onPostSuccess();
     } catch (err) {
-      toast.error("Error creating post.");
+      toast.error(err || "Error creating post.");
     } finally {
       setLoading(false);
     }
@@ -57,8 +49,9 @@ const CreatePost = ({ token, onPostSuccess }) => {
     return (
       <div className="p-8 text-center bg-indigo-50/50 dark:bg-slate-800/50 rounded-2xl border-2 border-dashed border-indigo-200 dark:border-slate-700">
         <p className="text-slate-600 dark:text-slate-400 font-medium">
-          Join the conversation! 🚀 <br /> 
-          <span className="text-indigo-500 font-bold">Log in</span> to post updates.
+          Join the conversation! 🚀 <br />
+          <span className="text-indigo-500 font-bold">Log in</span> to post
+          updates.
         </p>
       </div>
     );
@@ -108,7 +101,14 @@ const CreatePost = ({ token, onPostSuccess }) => {
             htmlFor="imageUpload"
             className="flex items-center gap-2 px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-indigo-500 rounded-2xl cursor-pointer hover:bg-indigo-500 hover:text-white transition-all font-bold text-sm"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
               <circle cx="8.5" cy="8.5" r="1.5" />
               <polyline points="21 15 16 10 5 21" />

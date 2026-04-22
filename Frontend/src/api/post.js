@@ -1,81 +1,65 @@
-import axios from "axios";
-
-const API_URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/posts`; 
+import api from "./api";
+const API_URL = "/api/posts";
 
 // Create a new post
-export const createPost = async (content, image, token) => {
+export const createPost = async (content, image) => {
   try {
     const formData = new FormData();
     formData.append("content", content);
     if (image) formData.append("image", image);
 
-    const response = await axios.post(API_URL, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        // Let Axios automatically set the correct Content-Type
-      },
-    });
-
+    const response = await api.post(API_URL, formData);
     return response.data;
   } catch (error) {
     console.error("Error creating post:", error?.response?.data || error.message);
-    return null;
+    throw error;
   }
 };
 
 // Like a post
-export const likePost = async (postId, token) => {
+export const likePost = async (postId) => {
   try {
-    const response = await axios.post(`${API_URL}/${postId}/like`, {}, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
+    const response = await api.post(`${API_URL}/${postId}/like`);
     return response.data;
   } catch (error) {
     console.error("Error liking post:", error?.response?.data || error.message);
+    throw error;
   }
 };
 
 // Comment on a post
-export const commentOnPost = async (postId, text, token, parentComment = null) => {
+export const commentOnPost = async (postId, text, parentComment = null) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/${postId}/comment`,
-      { text, parentComment },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error("Error commenting:", error?.response?.data || error.message);
-  }
-};
-
-// Share a post
-export const sharePost = async (postId, token) => {
-  try {
-    const response = await axios.post(`${API_URL}/${postId}/share`, {}, {
-      headers: { Authorization: `Bearer ${token}` },
+    const response = await api.post(`${API_URL}/${postId}/comment`, {
+      text,
+      parentComment,
     });
 
     return response.data;
   } catch (error) {
-    console.error("Error sharing post:", error?.response?.data || error.message);
+    console.error("Error commenting:", error?.response?.data || error.message);
+    throw error;
   }
 };
 
-// get comment
-export const getComment=async(postId, token)=>{
-  try{
-    const res = await axios.get(`${API_URL}/${postId}/comment`,{
-      headers: {Authorization: `Bearer ${token}`}
-    })
-    console.log(res.data);
-    return res.data
+// Share a post
+export const sharePost = async (postId) => {
+  try {
+    const response = await api.post(`${API_URL}/${postId}/share`);
+    return response.data;
+  } catch (error) {
+    console.error("Error sharing post:", error?.response?.data || error.message);
+    throw error;
   }
-  catch(err){
-    console.log(err);
+};
+
+// Get comments
+export const getComment = async (postId) => {
+  try {
+    const res = await api.get(`${API_URL}/${postId}/comment`);
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching comments:", err?.response?.data || err.message);
+    throw err;
   }
-}
+};
