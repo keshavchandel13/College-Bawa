@@ -1,6 +1,5 @@
-import axios from "axios";
+import api from './api'
 
-const BASE_URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/user`;
 
 // Submit user profile
 export const submitUserProfile = async (formData) => {
@@ -10,13 +9,7 @@ export const submitUserProfile = async (formData) => {
       data.append(key, value);
     });
 
-    const res = await axios.post(
-      `${import.meta.env.VITE_APP_BACKEND_URL}/api/user/addUserDetails`,
-      data,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+    const res = await api.post(`/api/user/addUserDetails`, data);
 
     return res.data;
   } catch (err) {
@@ -26,40 +19,22 @@ export const submitUserProfile = async (formData) => {
 };
 
 // Get User Profile
-export const getUserProfile = async (token) => {
+export const getUserProfile = async () => {
   const userString = localStorage.getItem("user");
 
   if (!userString) throw new Error("No user logged in!");
 
   const user = JSON.parse(userString);
-  if (!token) throw new Error("No auth token found!");
 
-  const res = await axios.get(`${BASE_URL}/user/${user._id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await api.get(`/api/user/user/${user._id}`);
   return res.data;
 };
-
-// ✅ Create axios instance using env variable
-const API = axios.create({
-  baseURL: `${import.meta.env.VITE_APP_BACKEND_URL}/api`,
-});
-
-// ✅ Add token from localStorage
-API.interceptors.request.use((req) => {
-  const token = localStorage.getItem("token");
-  if (token) req.headers.Authorization = `Bearer ${token}`;
-  return req;
-});
-
 export const getUserPosts = async (userId) => {
-  const res = await API.get(`/posts/userpost/${userId}`);
+  const res = await api.get(`/api/posts/userpost/${userId}`);
   return res.data.userPost;
 };
 
 export const deletePost = async (id) => {
-  const res = await API.delete(`/posts/${id}`);
+  const res = await api.delete(`/api/posts/${id}`);
   return res.data;
 };

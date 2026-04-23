@@ -1,14 +1,9 @@
-import axios from 'axios';
-
-export const fetchUsersByQuery = async (token,query,currentUserId) => {
+import api from '../../api/api';
+export const fetchUsersByQuery = async (query,currentUserId) => {
   try {
 
-    const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/user/all-users?query=${query}&currentUserId=${currentUserId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(response.data)
+    const response = await api.get(`api/user/all-users?query=${query}&currentUserId=${currentUserId}`
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);

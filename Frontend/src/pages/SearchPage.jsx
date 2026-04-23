@@ -14,7 +14,6 @@ const SearchPage = () => {
   const [error, setError] = useState(null);
 
   const { currentUser } = useChat();
-  const token = localStorage.getItem("token");
   const categories = [
     { id: "users", label: "Students", icon: "🎓" },
     { id: "colleges", label: "Campuses", icon: "🏛️" },
@@ -57,7 +56,7 @@ const SearchPage = () => {
 
 return (
     <div className="max-w-6xl mx-auto px-6 py-10 min-h-screen">
-      {/* Header with Gen Z Slang/Vibe */}
+      {/* Header  */}
       <header className="mb-10">
         <h1 className="text-4xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
           Find Your Tribe
@@ -87,7 +86,7 @@ return (
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
 
-      {/* Results Grid - Using Masonry-style or standard Bento */}
+      {/* Results Grid */}
       <motion.div 
         layout
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"

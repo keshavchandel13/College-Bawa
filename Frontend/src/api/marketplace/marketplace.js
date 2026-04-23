@@ -1,25 +1,25 @@
-import axios from "axios";
+import api from "../api";
 import { toast } from "react-toastify";
 
-const API_URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/marketplace`;
-
-export const getMarketplaceItems = async (token, page = 1) => {
-  const res = await axios.get(`${API_URL}?page=${page}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
+// GET marketplace items
+export const getMarketplaceItems = async (page = 1) => {
+  try {
+    const res = await api.get(`/api/marketplace?page=${page}`);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching marketplace items:", error);
+    return null;
+  }
 };
 
-export const postMarketplaceItem = async (formData, token) => {
+// POST marketplace item
+export const postMarketplaceItem = async (formData) => {
   try {
-    const config = {
+    const res = await api.post(`/api/marketplace/postItem`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data", 
       },
-    };
-
-    const res = await axios.post(`${API_URL}/postItem`, formData, config);
+    });
 
     return res.data;
   } catch (error) {

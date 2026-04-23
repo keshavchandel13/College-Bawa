@@ -1,10 +1,9 @@
-import axios from "axios";
+import api from "../../api/api";
 
-export const fetchMessages = async (chatId, token) => {
+// Fetch messages
+export const fetchMessages = async (chatId) => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/messages/${chatId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await api.get(`/api/messages/${chatId}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching messages:", error);
@@ -12,19 +11,19 @@ export const fetchMessages = async (chatId, token) => {
   }
 };
 
-export const sendMessage = async (chatId, content, id, token) => {
+// Send message
+export const sendMessage = async (chatId, content, id) => {
   try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_APP_BACKEND_URL}/api/messages`,
-      { chatId, content, id },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    console.log("Data from backend: ",res.data)
+    const res = await api.post(`/api/messages`, {
+      chatId,
+      content,
+      id,
+    });
+
+    console.log("Data from backend:", res.data);
     return res.data;
   } catch (error) {
     console.error("Error sending message:", error);
     throw error;
   }
 };
-
-
