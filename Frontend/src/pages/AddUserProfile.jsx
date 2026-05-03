@@ -11,7 +11,7 @@ import { submitUserProfile } from "../api/profile";
 const AddUserProfile = ({ onEditClick }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [message, setmessage] = useState()
+  const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
