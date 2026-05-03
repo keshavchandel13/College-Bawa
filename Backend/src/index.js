@@ -59,6 +59,7 @@ app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/marketplace", require("./routes/marketPlaceRoute"));
 app.use("/api/search", require("./routes/searchRoutes"));
+app.use("/api/community", require("./routes/communityRoutes"));
 
 // Root route
 app.get("/", (req, res) => {

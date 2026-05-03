@@ -1,35 +1,57 @@
 import React from 'react';
+import { FiUsers, FiMessageSquare, FiLogOut, FiLogIn } from 'react-icons/fi';
 
-const CommunityCard = ({ name, description, members }) => {
+const CommunityCard = ({ community, isMember, onJoin, onLeave, onChat }) => {
+  const { name, description, memberCount, tags = [] } = community;
+
   return (
-    <div className="
-      bg-white dark:bg-gray-800
-      text-gray-900 dark:text-gray-100
-      p-5 rounded-[14px]
-      shadow-[0_4px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_10px_rgba(0,0,0,0.6)]
-      hover:shadow-[0_6px_18px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_18px_rgba(0,0,0,0.4)]
-      transition-shadow duration-300
-    ">
-      <h3 className="text-[#003366] dark:text-gray-100 text-[1.2rem] font-semibold">
-        {name}
-      </h3>
+    <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col gap-3">
+      <div>
+        <h3 className="text-[#003366] dark:text-gray-100 text-lg font-bold truncate">{name}</h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">{description}</p>
+      </div>
 
-      <p className="text-[0.95rem] my-2.5 text-[#555] dark:text-gray-300">
-        {description}
-      </p>
+      {tags.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {tags.slice(0, 4).map(tag => (
+            <span key={tag} className="text-[10px] font-bold px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded-full">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
 
-      <p className="text-[0.95rem] my-2.5 text-[#555] dark:text-gray-300">
-        <strong>{members}</strong> members
-      </p>
+      <div className="flex items-center gap-1 text-xs text-gray-400">
+        <FiUsers className="text-sm" />
+        <span>{memberCount ?? community.members?.length ?? 0} members</span>
+      </div>
 
-      <button className="
-        px-3.5 py-2 text-[0.9rem] rounded-lg border-none cursor-pointer
-        bg-[#003366] dark:bg-blue-600 dark:hover:bg-blue-800
-        text-white
-        transition-colors duration-200
-      ">
-        Join
-      </button>
+      <div className="flex gap-2 mt-auto pt-2">
+        {isMember ? (
+          <>
+            <button
+              onClick={onChat}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#003366] hover:bg-[#00264d] text-white rounded-xl text-sm font-semibold transition-colors"
+            >
+              <FiMessageSquare /> Chat
+            </button>
+            <button
+              onClick={onLeave}
+              aria-label="Leave community"
+              className="p-2.5 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 text-red-500 rounded-xl transition-colors"
+            >
+              <FiLogOut />
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={onJoin}
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition-colors"
+          >
+            <FiLogIn /> Join
+          </button>
+        )}
+      </div>
     </div>
   );
 };

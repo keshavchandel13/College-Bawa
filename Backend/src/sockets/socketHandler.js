@@ -60,6 +60,18 @@ function initSocket(io) {
         }
       });
 
+      socket.on("community:join_room", (communityId) => {
+        if (!communityId) return;
+        socket.join(`community:${communityId}`);
+        console.log(`Socket ${socket.id} joined community room: ${communityId}`);
+      });
+
+      socket.on("community:leave_room", (communityId) => {
+        if (!communityId) return;
+        socket.leave(`community:${communityId}`);
+        console.log(`Socket ${socket.id} left community room: ${communityId}`);
+      });
+
       socket.on("disconnect", () => {
         let disconnectedUserId = null;
 

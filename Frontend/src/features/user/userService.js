@@ -1,12 +1,18 @@
 import api from '../../api/api';
-export const fetchUsersByQuery = async (query,currentUserId) => {
-  try {
 
-    const response = await api.get(`api/user/all-users?query=${query}&currentUserId=${currentUserId}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw error;
-  }
+export const fetchUsersByQuery = async (
+  query,
+  currentUserId,
+  signal,
+  { page = 1, limit = 20 } = {}
+) => {
+  const params = new URLSearchParams({
+    query: query.trim(),
+    currentUserId,
+    page,
+    limit,
+  });
+
+  const response = await api.get(`/api/user/all-users?${params}`, { signal });
+  return response.data;
 };
