@@ -47,7 +47,7 @@ const io = new Server(server, {
     credentials: true
   }
 });
-initSocket(io);  //  initSocket function
+initSocket(io);  
 
 // Routes
 app.use("/api/auth", authRoutes);

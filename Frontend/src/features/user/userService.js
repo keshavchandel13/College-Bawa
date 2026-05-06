@@ -14,5 +14,5 @@ export const fetchUsersByQuery = async (
   });
 
   const response = await api.get(`/api/user/all-users?${params}`, { signal });
-  return response.data;
+  return response.data.users;
 };
