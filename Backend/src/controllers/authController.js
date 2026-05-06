@@ -8,12 +8,12 @@ const axios = require('axios');
 require('dotenv').config();
 
 
-//  Signup Api
+// Signup handler
 exports.signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        //  validate the inputs
+        // Validate user input
         if (!name || !email || !password) {
             return res.status(400).json({ message: "All fields are required" })
         }
@@ -24,10 +24,10 @@ exports.signup = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash the password only if it exists
+        // Hash the password
         const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
 
-        // Create new user
+        // Create a new user
         const newUser = new User({ name, email, password: hashedPassword });
         await newUser.save();
 
@@ -41,12 +41,12 @@ exports.signup = async (req, res) => {
 };
 
 
-// login APi: 
+// Login handler
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        //Check User's Existence
+        // Verify user exists
         const user = await User.findOne({ email })
         if (!user) {
             return res.status(400).json({
@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
             })
         }
 
-        //Validate Password
+        // Check password
         const match = await bcrypt.compare(password, user.password);
         if (!match) {
             return res.status(400).json({
@@ -62,10 +62,10 @@ exports.login = async (req, res) => {
             })
         }
 
-        //Generate Token
+        // Generate auth token
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-        //Send Response with Token
+        // Send login response
         res.status(200).json({
             message: "Successful Login",
             user,
@@ -80,7 +80,7 @@ exports.login = async (req, res) => {
     }
 };
 
-// reset-pass APi:
+// Password reset handler:
 exports.resetPassword = async (req, res) => {
     try {
         const { token, newPassword } = req.body;
@@ -111,7 +111,7 @@ exports.resetPassword = async (req, res) => {
     }
 };
 
-// Forget password
+// Password reset request handler
 exports.forgetPassword = async (req, res) => {
     try {
         const { email } = req.body;
@@ -131,7 +131,7 @@ exports.forgetPassword = async (req, res) => {
 
         res.status(200).json({ message: "Reset link sent" });
     } catch (error) {
-        console.log('nhi ho paya')
+        console.log('Password reset email failed');
         res.status(500).json({ error: error.message });
     }
 };

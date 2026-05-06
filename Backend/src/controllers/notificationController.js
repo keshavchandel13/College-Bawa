@@ -8,7 +8,7 @@ const getNotifications = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-// clear this block if not used in frontend (till keep it)
+// Keep this available for real-time notification delivery
 const createNotification = async (req, res) => {
   try {
     const { userId, message } = req.body;
@@ -24,7 +24,7 @@ const createNotification = async (req, res) => {
   }
 };
 
-// markAs read
+// Mark notifications as read
 const markAsRead = async (req, res) => {
   try {
     await Notification.updateMany({ recipient: req.user.id, isRead: false }, { isRead: true });

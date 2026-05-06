@@ -41,7 +41,7 @@ const accessOrCreateChat = async (req, res) => {
 
         const skip = (page - 1) * limit;
 
-        // 🔍 Find the chat document between the two users
+        // Find the chat between these two users
         const chat = await Chat.findOne({
             isGroupChat: false,
             users: { $all: [userId, selectedUserId] }  // Ensure both users are in the chat
@@ -51,7 +51,7 @@ const accessOrCreateChat = async (req, res) => {
             return res.status(404).json({ message: "Chat not found" });
         }
 
-        //  Fetch messages for this chat
+        // Fetch messages for this chat
         const messages = await Message.find({ chat: chat._id }) 
             .sort({ createdAt: -1 })  // Latest messages first
             .skip(skip)
@@ -64,7 +64,7 @@ const accessOrCreateChat = async (req, res) => {
         const totalPages = Math.ceil(totalMessages / limit);
 
         res.status(200).json({
-            chat: {  // ✅ Send chatId along with messages
+            chat: {
                 _id: chat._id,
                 isGroupChat: chat.isGroupChat,
                 users: chat.users,

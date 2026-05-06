@@ -10,7 +10,7 @@ const SearchCard = ({ user }) => {
       exit={{ opacity: 0, scale: 0.95 }}
       className="relative bg-white dark:bg-gray-800 p-5 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all border border-gray-100 dark:border-gray-700 overflow-hidden group"
     >
-      {/* Profile Image with 'Active' Ring */}
+      {/* User photo and active status */}
       <div className="relative w-20 h-20 mx-auto mb-4">
         <img
           src={user.profileImage || "/default.jpg"}
@@ -25,7 +25,7 @@ const SearchCard = ({ user }) => {
           {user.major || "Computer Science"}
         </p>
         
-        {/* Interests/Skills Tags */}
+        {/* Interest tags */}
         <div className="flex flex-wrap justify-center gap-2 mb-6">
           {['MERN', 'Python'].map(tag => (
             <span key={tag} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg text-[10px] font-bold">

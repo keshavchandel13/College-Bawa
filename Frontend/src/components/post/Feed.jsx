@@ -1,4 +1,4 @@
-//Ye post display kregi file frontend mai backend se
+// Display posts fetched from the backend
 
 import React, { useEffect, useState } from "react";
 import { likePost, commentOnPost, sharePost } from "../../api/post";
