@@ -72,38 +72,39 @@ const SearchPage = () => {
   const { currentUser } = useChat();
   const abortRef = useRef(null);
 
-  const fetchUsers = useCallback(async () => {
-    if (searchMode !== "users") return;
+ const fetchUsers = useCallback(async () => {
+  if (searchMode !== "users") return;
 
-    // Cancel any previous in-flight request
-    abortRef.current?.abort();
-    abortRef.current = new AbortController();
+  if (!currentUser?._id) return;
 
-    if (!debouncedTerm.trim()) {
+  abortRef.current?.abort();
+  abortRef.current = new AbortController();
+
+  if (!debouncedTerm.trim()) {
+    setUserResults([]);
+    return;
+  }
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    const users = await fetchUsersByQuery(
+      debouncedTerm,
+      currentUser._id,
+      abortRef.current.signal
+    );
+
+    setUserResults(users ?? []);
+  } catch (err) {
+    if (err.name !== "CanceledError" && err.name !== "AbortError") {
+      setError("Failed to fetch users");
       setUserResults([]);
-      return;
     }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const users = await fetchUsersByQuery(
-        debouncedTerm,
-        currentUser._id,
-        abortRef.current.signal
-      );
-      setUserResults(users ?? []);
-    } catch (err) {
-      if (err.name !== "CanceledError" && err.name !== "AbortError") {
-        setError("Failed to fetch users");
-        setUserResults([]);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [debouncedTerm, searchMode, currentUser._id, retryKey]);
-
+  } finally {
+    setLoading(false);
+  }
+}, [debouncedTerm, searchMode, currentUser, retryKey]);
   useEffect(() => {
     fetchUsers();
     return () => abortRef.current?.abort();
@@ -151,7 +152,11 @@ const SearchPage = () => {
 
         <AnimatePresence>
           {showResults && userResults.map((user, i) => (
-            <SearchCard key={user._id} user={user} index={i} />
+            <SearchCard
+  key={user?._id || i}
+  user={user}
+  index={i}
+/>
           ))}
         </AnimatePresence>
 
